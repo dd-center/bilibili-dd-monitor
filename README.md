@@ -23,26 +23,16 @@ vue create .
 vue add electron-builder
 ```
 
-
-## Project setup
+## Project command line
 ```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
+"serve": "vue-cli-service serve",
+"build": "vue-cli-service build",
+"lint": "vue-cli-service lint",
+"electron:build": "vue-cli-service electron:build",
+"electron:serve": "vue-cli-service electron:serve",
+"postinstall": "electron-builder install-app-deps",
+"postuninstall": "electron-builder install-app-deps"
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
+## Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

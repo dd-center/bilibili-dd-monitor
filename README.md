@@ -18,7 +18,7 @@ vue create .
 ? Where do you prefer placing config for Babel, ESLint, etc.? In dedicated config files
 ? Save this as a preset for future projects? (y/N) N
 ```
-### Electron features
+### Electron
 ```bash
 vue add electron-builder
 ```

@@ -1,7 +1,11 @@
 # vue-electron-app-starter
 
-## features
-### vue
+## Features
+
+### Vue
+```bash
+vue create .
+```
 ```
 ? Check the features needed for your project: Choose Vue version, Babel, TS, Router, Vuex, CSS Pre-processors, Linter
 ? Choose a version of Vue.js that you want to start the project with 2.x
@@ -14,7 +18,10 @@
 ? Where do you prefer placing config for Babel, ESLint, etc.? In dedicated config files
 ? Save this as a preset for future projects? (y/N) N
 ```
-### electron
+### Electron features
+```bash
+vue add electron-builder
+```
 
 
 ## Project setup

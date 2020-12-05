@@ -27,7 +27,6 @@ export const createPlayerWindow = (
     height: 360,
     enableLargerThanScreen: true,
     useContentSize: true,
-    icon: 'public/favicon.ico',
     title: vtbInfo.title || '',
     webPreferences: {}
   })

@@ -22,10 +22,10 @@
         <td class="living-list-body-cell">
           <div class="living-list-body-cell-media-info">
             <div v-if="vtbInfo.liveStatus === 1" class="living-list-body-cell-media-online">
-              <i class="far fa-play-circle living-list-body-cell-media-online-icon"></i>
+              <font-awesome-icon :icon="['fas', 'signal']" class="living-list-body-cell-media-online-icon"/>
             </div>
             <div v-if="vtbInfo.liveStatus !== 1" class="living-list-body-cell-media-offline">
-              <i class="fas fa-ban living-list-body-cell-media-offline-icon"></i>
+              <font-awesome-icon :icon="['fas', 'ban']" class="living-list-body-cell-media-offline-icon"/>
             </div>
           </div>
         </td>

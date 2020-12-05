@@ -5,16 +5,28 @@
       <nav id="nav" class="nav">
         <ul class="nav-list">
           <li class="nav-list-item">
-            <router-link to="/" class="nav-list-item-link">Home</router-link>
+            <router-link to="/" class="nav-list-item-link">
+              <font-awesome-icon :icon="['fas', 'signal']" class="nav-list-item-icon"/>
+              Home
+            </router-link>
           </li>
           <li class="nav-list-item">
-            <router-link to="/follow" class="nav-list-item-link">Follow</router-link>
+            <router-link to="/follow" class="nav-list-item-link">
+              <font-awesome-icon :icon="['fas', 'heart']" class="nav-list-item-icon"/>
+              Follow
+            </router-link>
           </li>
           <li class="nav-list-item">
-            <router-link to="/vtbList" class="nav-list-item-link">VtbList</router-link>
+            <router-link to="/vtbList" class="nav-list-item-link">
+              <font-awesome-icon :icon="['fas', 'list-ul']" class="nav-list-item-icon"/>
+              VtbList
+            </router-link>
           </li>
           <li class="nav-list-item">
-            <router-link to="/setting" class="nav-list-item-link">Setting</router-link>
+            <router-link to="/setting" class="nav-list-item-link">
+              <font-awesome-icon :icon="['fas', 'cog']" class="nav-list-item-icon"/>
+              Setting
+            </router-link>
           </li>
         </ul>
       </nav>
@@ -81,10 +93,14 @@
 
   &-list-item {
     list-style: none;
+
+    &-icon {
+      margin-right: 8px;
+    }
   }
 
   &-list-item-link {
-    padding: 10px 0 10px 30px;
+    padding: 10px 0 10px 20px;
     display: block;
     color: #2c3e50;
     text-decoration: none;

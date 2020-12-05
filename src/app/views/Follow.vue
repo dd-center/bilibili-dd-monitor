@@ -4,20 +4,22 @@
       <div class="follow-nav-header">
         <div class="follow-nav-header-label">我的关注</div>
         <div class="follow-nav-header-action">
-          <span @click="showCreateListModal"><i class="fas fa-plus-circle follow-nav-header-action-add"></i></span>
+          <span @click="showCreateListModal">
+            <font-awesome-icon class="follow-nav-header-action-add" :icon="['fas', 'plus-circle']"/>
+          </span>
         </div>
       </div>
 
       <ul class="follow-list">
         <li class="follow-list-item">
           <router-link class="follow-list-item-link" to="/list/-1">
-            <i class="follow-list-item-link-icon fas fa-globe"></i>
+            <font-awesome-icon class="follow-list-item-link-icon" :icon="['fas', 'globe']"/>
             <span class="follow-list-item-link-name">全部关注</span>
           </router-link>
         </li>
         <li v-for="list in followLists" :key="list.id" class="follow-list-item">
           <router-link :to="{ path: `/list/${list.id}` }" class="follow-list-item-link">
-            <i class="follow-list-item-link-icon fas fa-users"></i>
+            <font-awesome-icon class="follow-list-item-link-icon" :icon="['fas', 'user-friends']"/>
             <span class="follow-list-item-link-name">{{ list.name }}</span>
             <span class="follow-list-item-link-count">{{ list.mids.length }}</span>
             <ul class="follow-list-item-link-dropdown dropdown-menu">

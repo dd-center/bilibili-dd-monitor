@@ -4,7 +4,7 @@
     <div class="search">
       <input class="search-input" v-model="userInput"/>
       <button class="search-button" @click="filter(userInput)">
-        <i class="fas fa-search search-icon"></i>
+        <font-awesome-icon class="search-icon" :icon="['fas', 'search']"/>
       </button>
     </div>
 

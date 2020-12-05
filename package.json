@@ -13,6 +13,12 @@
   },
   "main": "background.js",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.1",
+    "electron-settings": "^4.0.2",
+    "request": "^2.88.0",
+    "rxjs": "^6.6.3",
+    "socket.io-client": "^2.3.0",
+    "vue-auto-virtual-scroll-list": "^0.3.0",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
@@ -20,6 +26,9 @@
   },
   "devDependencies": {
     "@types/electron-devtools-installer": "^2.2.0",
+    "@types/electron-settings": "^3.1.2",
+    "@types/request": "^2.48.5",
+    "@types/socket.io-client": "^1.4.34",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-babel": "~4.5.0",

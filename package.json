@@ -14,13 +14,16 @@
   "main": "background.js",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.1",
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/vue-fontawesome": "^2.0.0",
+    "core-js": "^3.6.5",
     "electron-settings": "^4.0.2",
     "request": "^2.88.0",
     "rxjs": "^6.6.3",
     "socket.io-client": "^2.3.0",
-    "vue-auto-virtual-scroll-list": "^0.3.0",
-    "core-js": "^3.6.5",
     "vue": "^2.6.11",
+    "vue-auto-virtual-scroll-list": "^0.3.0",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
   },

@@ -1,10 +1,6 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import VtbLiving from '../views/VtbLiving.vue'
-import Follow from '../views/Follow.vue'
-import VtbList from '../views/VtbList.vue'
-import Setting from '../views/Setting.vue'
-import FollowList from '../components/FollowList.vue'
 
 Vue.use(VueRouter)
 
@@ -16,7 +12,7 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/follow',
-    component: Follow,
+    component: () => import('../views/Follow.vue'),
     children: [
       {
         path: '',
@@ -24,19 +20,19 @@ const routes: Array<RouteConfig> = [
       },
       {
         path: '/list/:id',
-        component: FollowList
+        component: () => import('../components/FollowList.vue'),
       }
     ]
   },
   {
     path: '/vtbList',
     name: 'VtbList',
-    component: VtbList
+    component: () => import('../views/VtbList.vue'),
   },
   {
     path: '/setting',
     name: 'Setting',
-    component: Setting
+    component: () => import('../views/Setting.vue'),
   }
 ]
 

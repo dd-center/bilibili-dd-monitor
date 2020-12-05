@@ -4,7 +4,15 @@ import { app, protocol, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 import path from 'path'
+import settings from 'electron-settings'
 
+import { FollowListService, SettingService, VtbInfoService } from '@/electron/services'
+import { PlayerObj, VtbInfo } from '@/interfaces'
+import { createPlayerWindow } from '@/electron/playerWindow'
+
+let vtbInfosService: VtbInfoService
+let mainWindow: BrowserWindow
+const playerObjMap = new Map<number, PlayerObj>()
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Scheme must be registered before the app is ready

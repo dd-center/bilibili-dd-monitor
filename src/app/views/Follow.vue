@@ -27,9 +27,8 @@
               <font-awesome-icon :icon="['fas', 'ellipsis-v']"/>
             </span>
 
-            <!-- enable only in list id >=1 (exclude id -1 and 0)-->
-            <!-- show if on (mouseOverListId!==0)&&(mouseOverListId===list.id)-->
-            <ul v-if="list.id>=1" v-show="mouseOverListId===list.id" class="follow-list-item-link-dropdown dropdown-menu">
+            <ul v-if="list.id>=1" v-show="(mouseHoveringListId===list.id)||(mouseOverListId===list.id)" @mouseenter="handleMouseHovering(list.id)"
+                class="follow-list-item-link-dropdown dropdown-menu">
               <li class="dropdown-menu-item dropdown-menu-item-rename" @click="showRenameListModal(list.id,list.name)">修改名称</li>
               <li class="dropdown-menu-item dropdown-menu-item-delete" @click="handleDeleteList(list.id)">删除</li>
             </ul>
@@ -89,7 +88,7 @@ export default {
     return {
       mouseOverListId: -1, // 我的关注 = 全部关注
       setMouseOverIdTimeout: null,
-      lastMouseEnterTime: null,
+      mouseHoveringListId: -1,
       followLists: [],
       createListModalValue: '', // 创建分组的对话框的文本值
       isCreateListModalVisible: false, // 创建分组的显示状态
@@ -114,22 +113,18 @@ export default {
       })
     },
     mouseEnter (listId) {
-      if (!this.lastMouseEnterTime) this.lastMouseEnterTime = Date.now()
-      const triggerMouseEnterInterval = Date.now() - this.lastMouseEnterTime
-      if (triggerMouseEnterInterval < 600) {
-        if (this.setMouseOverIdTimeout) {
-          clearTimeout(this.setMouseOverIdTimeout)
-        }
-      }
+      if (this.setMouseOverIdTimeout) clearTimeout(this.setMouseOverIdTimeout)
       this.mouseOverListId = listId
-      this.lastMouseEnterTime = Date.now()
     },
     mouseLeave (listId) {
       if (this.setMouseOverIdTimeout) clearTimeout(this.setMouseOverIdTimeout)
       this.setMouseOverIdTimeout = setTimeout(() => {
         this.mouseOverListId = -1
         this.setMouseOverIdTimeout = null
-      }, 600)
+      }, 1000)
+    },
+    handleMouseHovering (listId) {
+      this.mouseHoveringListId = listId
     },
     handleDeleteList (id) {
       // get all follow list ids, then check whether include id that parameter passes
@@ -332,8 +327,6 @@ export default {
           border-radius: 5px;
           position: absolute;
           top: 100%;
-          width: 120px;
-          height: 30px;
           right: 0;
           list-style: none;
           z-index: 1;

@@ -45,23 +45,22 @@ export default {
   name: 'VtbLiving',
   data () {
     return {
+      loading: false,
       followedVtbInfos: []
     }
   },
   created () {
     this.initServices()
-    this.loadData()
+    this.loading = true
+    this.vtbInfoService.getFollowedVtbInfos().subscribe((followedVtbInfos) => {
+      this.loading = false
+      this.followedVtbInfos = followedVtbInfos
+    })
   },
   methods: {
     initServices () {
       this.vtbInfoService = new VtbInfoService()
       this.livePlayService = new LivePlayService()
-    },
-    loadData () {
-      this.vtbInfoService.getFollowedVtbInfos().subscribe((followedVtbInfos) => {
-        console.log(followedVtbInfos)
-        this.followedVtbInfos = followedVtbInfos
-      })
     },
     enterRoom (roomid) {
       this.livePlayService.enterRoom(roomid)

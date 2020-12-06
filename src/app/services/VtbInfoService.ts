@@ -16,6 +16,9 @@ export default class VtbInfoService {
     return new Observable(this.sequenceSubscriber('getVtbInfos'))
   }
 
+  /**
+   * useless
+   */
   updateVtbInfos (): Observable<VtbInfo[]> {
     return new Observable(this.sequenceSubscriber('updateVtbInfos'))
   }

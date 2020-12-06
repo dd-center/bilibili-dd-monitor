@@ -20,19 +20,19 @@ const routes: Array<RouteConfig> = [
       },
       {
         path: '/list/:id',
-        component: () => import('../components/FollowList.vue'),
+        component: () => import('../components/FollowList.vue')
       }
     ]
   },
   {
     path: '/vtbList',
     name: 'VtbList',
-    component: () => import('../views/VtbList.vue'),
+    component: () => import('../views/VtbList.vue')
   },
   {
     path: '/setting',
     name: 'Setting',
-    component: () => import('../views/Setting.vue'),
+    component: () => import('../views/Setting.vue')
   }
 ]
 

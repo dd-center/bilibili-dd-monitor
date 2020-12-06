@@ -46,6 +46,20 @@ async function createWindow () {
     await mainWindow.loadURL('app://./index.html')
   }
 
+  mainWindow.on('close', () => {
+    // clean up vtbInfo service
+    if (vtbInfosService) vtbInfosService.stopUpdate()
+
+    // clean up playerObjMap
+    playerObjMap.forEach((playerObj: PlayerObj) => {
+      if (playerObj.playerWindow) playerObj.playerWindow.close();
+    })
+    playerObjMap.clear();
+
+    // exit app
+    app.quit();
+  })
+
   return mainWindow
 }
 
@@ -62,11 +76,6 @@ const initSettingsConfiguration = () => {
 
 const initServices = () => {
   vtbInfosService = new VtbInfoService()
-  mainWindow.on('close', () => {
-    // clean up vtbInfo update
-    vtbInfosService.stopUpdate()
-  })
-
   FollowListService.initFollowListsSync()
 }
 
@@ -169,8 +178,14 @@ app.on('ready', async () => {
       console.error('Vue Devtools failed to install:', e.toString())
     }
   }
+
+  try {
+    initApp()
+  } catch (e) {
+    console.error('init app failed:', e.toString())
+  }
+
   mainWindow = await createWindow()
-  initApp()
 })
 
 // Exit cleanly on request from parent process in development mode.

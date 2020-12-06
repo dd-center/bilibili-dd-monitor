@@ -27,7 +27,9 @@
               <font-awesome-icon :icon="['fas', 'ellipsis-v']"/>
             </span>
 
-            <ul v-if="list.id>=1" v-show="(mouseHoveringListId===list.id)||(mouseOverListId===list.id)" @mouseenter="handleMouseHovering(list.id)"
+            <ul v-if="list.id>=1" v-show="(mouseHoveringListId===list.id)||(mouseOverListId===list.id)"
+                @mouseenter="handleMouseHovering(list.id)"
+                @mouseleave="handleMouseHoveringLeave(list.id)"
                 class="follow-list-item-link-dropdown dropdown-menu">
               <li class="dropdown-menu-item dropdown-menu-item-rename" @click="showRenameListModal(list.id,list.name)">修改名称</li>
               <li class="dropdown-menu-item dropdown-menu-item-delete" @click="handleDeleteList(list.id)">删除</li>
@@ -89,14 +91,15 @@ export default {
       mouseOverListId: -1, // 我的关注 = 全部关注
       setMouseOverIdTimeout: null,
       mouseHoveringListId: -1,
-      followLists: [],
       createListModalValue: '', // 创建分组的对话框的文本值
       isCreateListModalVisible: false, // 创建分组的显示状态
       isCreateListModalSuccessLoading: false, // 创建分组成功后的通知信息
       renameListName: '', // 重命名列表的名称
       renameListId: 0, // 重命名列表的id
       isRenameListModalVisible: false, // 重命名分组的显示状态
-      isRenameListModalSuccessLoading: false // 重命名分组成功后的通知
+      isRenameListModalSuccessLoading: false, // 重命名分组成功后的通知
+      // backend data
+      followLists: []
     }
   },
   created () {
@@ -126,14 +129,16 @@ export default {
     handleMouseHovering (listId) {
       this.mouseHoveringListId = listId
     },
+    handleMouseHoveringLeave (listId) {
+      this.mouseHoveringListId = -1
+    },
     handleDeleteList (id) {
       // get all follow list ids, then check whether include id that parameter passes
       if (this.followLists.map((followList) => followList.id).includes(id)) {
         this.followListService.deleteFollowList(id).subscribe((followLists) => {
           this.followLists = followLists
           console.log('分组删除成功')
-          // todo reset active router
-          // this.router.navigateByUrl("follow/list/-1");
+          this.$router.push('/list/-1')
         })
       }
     },
@@ -174,7 +179,6 @@ export default {
       this.isCreateListModalSuccessLoading = true
       this.followListService.addFollowList(this.createListModalValue).subscribe((followLists) => {
         this.followLists = followLists
-        console.table(followLists)
         // cancel loading
         this.isCreateListModalSuccessLoading = false
         // hidden modal
@@ -323,13 +327,10 @@ export default {
         }
 
         &-dropdown {
-          border: #e2e2e2 solid 1px;
-          border-radius: 5px;
           position: absolute;
           top: 100%;
-          right: 0;
-          list-style: none;
-          z-index: 1;
+          left: 40%;
+          z-index: 9999;
         }
       }
     }
@@ -337,6 +338,22 @@ export default {
 
   &-content {
     flex: 1;
+  }
+}
+
+.dropdown-menu {
+  border: #e2e2e2 solid 1px;
+  border-radius: 4px;
+  width: 160px;
+  background-color: white;
+  list-style: none;
+
+  &-item {
+    padding: 10px;
+
+    &:hover {
+      background-color: rgba(66, 185, 131, 0.1);
+    }
   }
 }
 

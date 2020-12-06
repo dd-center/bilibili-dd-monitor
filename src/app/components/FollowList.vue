@@ -34,8 +34,7 @@
         </div>
         <div class="modal-body">
           <select class="modal-select" v-model="selectedListId">
-            <option class="modal-select-option"
-                    v-for="list in followLists" :key="list.id" :value="list.id">{{ list.name }}
+            <option class="modal-select-option" v-for="list in followLists" :key="list.id" :value="list.id">{{ list.name }}
             </option>
           </select>
         </div>
@@ -68,7 +67,9 @@ export default {
       activeListId: -1, // - 1, 0,...
       activeFollowList: {}, // for show in content page
       activeFollowedVtbInfos: [], // for show in content page
-      followLists: [] // only get from backend
+
+      // backend data
+      followLists: []
     }
   },
   components: {
@@ -125,6 +126,8 @@ export default {
       })
     },
     handleSetListModalShow (selectedMid) {
+      // MUST load newest followLists
+      this.loadData()
       this.selectedVtbInfo = this.activeFollowedVtbInfos.find((vtbInfo) => vtbInfo.mid === selectedMid)
       this.isSetListModalVisible = true
     },

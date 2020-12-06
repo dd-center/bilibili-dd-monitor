@@ -20,6 +20,7 @@ work in progress.
 - [x] 设置
   - [ ] 启动时通知正在进行的直播
 - [ ] 左下角Socket.IO指示器：socket.io 事件 + vtb条数
+- [ ] custom action message feedback UI
 - [ ] 菜单栏
   - [ ] 窗口
     - 自动布局所有播放器窗口：等分网格法

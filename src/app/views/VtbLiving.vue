@@ -51,16 +51,25 @@ export default {
   },
   created () {
     this.initServices()
-    this.loading = true
-    this.vtbInfoService.getFollowedVtbInfos().subscribe((followedVtbInfos) => {
-      this.loading = false
-      this.followedVtbInfos = followedVtbInfos
-    })
+    this.loadData()
+    this.watchForVtbInfosUpdate()
   },
   methods: {
     initServices () {
       this.vtbInfoService = new VtbInfoService()
       this.livePlayService = new LivePlayService()
+    },
+    loadData () {
+      this.loading = true
+      this.vtbInfoService.getFollowedVtbInfos().subscribe((followedVtbInfos) => {
+        this.loading = false
+        this.followedVtbInfos = followedVtbInfos
+      })
+    },
+    watchForVtbInfosUpdate () {
+      this.vtbInfoService.updateVtbInfos().subscribe((vtbInfos) => {
+        this.followedVtbInfos = vtbInfos
+      })
     },
     enterRoom (roomid) {
       this.livePlayService.enterRoom(roomid)

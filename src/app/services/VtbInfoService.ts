@@ -17,7 +17,7 @@ export default class VtbInfoService {
   }
 
   /**
-   * useless
+   * 监听后端vtb数据更新
    */
   updateVtbInfos (): Observable<VtbInfo[]> {
     return new Observable(this.sequenceSubscriber('updateVtbInfos'))

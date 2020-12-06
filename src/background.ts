@@ -52,22 +52,23 @@ async function createWindow () {
 
     // clean up playerObjMap
     playerObjMap.forEach((playerObj: PlayerObj) => {
-      if (playerObj.playerWindow) playerObj.playerWindow.close();
+      if (playerObj.playerWindow) playerObj.playerWindow.close()
     })
-    playerObjMap.clear();
+    playerObjMap.clear()
 
     // exit app
-    app.quit();
+    app.quit()
   })
 
   return mainWindow
 }
 
 const initUpdate = () => {
-  // noop
+  console.log('initUpdate')
 }
 
 const initSettingsConfiguration = () => {
+  console.log('initSettingsConfiguration')
   settings.configure({
     numSpaces: 2,
     prettify: true
@@ -75,8 +76,66 @@ const initSettingsConfiguration = () => {
 }
 
 const initServices = () => {
+  console.log('initServices')
+
+  // init socket.io
   vtbInfosService = new VtbInfoService()
+
+  // init follow setting
   FollowListService.initFollowListsSync()
+
+  // register live change notifications
+  // 上次记录的vtbs（已经处理上播和下播提醒）
+  let lastLiveVtbs: number[] = []
+  vtbInfosService.onUpdate((vtbInfos) => {
+    if (mainWindow) {
+      mainWindow.webContents.send('updateVtbInfos', vtbInfosService.getFollowedVtbInfos())
+
+      const followVtbs = FollowListService.getFollowedVtbMidsSync()
+      // 现在正在直播的vtbs
+      const nowLiveFollowedVtbs =
+        vtbInfos
+          .filter((vtbInfo: VtbInfo) => (followVtbs.includes(vtbInfo.mid) && vtbInfo.liveStatus === 1))
+          .map((vtbInfo: VtbInfo) => vtbInfo.mid)
+      console.log(`nowLiveFollowedVtbs: ${nowLiveFollowedVtbs.length}`)
+
+      // 上播vtbs
+      const upLiveFollowedVtbs: number[] = []
+      // 下播vtbs
+      const downLiveFollowedVtbs: number[] = []
+
+      // 对于lastLiveVtbs，使用【现在正在直播的vtbs】更新【上播vtbs】
+      nowLiveFollowedVtbs.forEach(nowLiveFollowedVtb => {
+        if (!lastLiveVtbs.includes(nowLiveFollowedVtb)) {
+          upLiveFollowedVtbs.push(nowLiveFollowedVtb)
+        }
+      })
+
+      // 对于lastLiveVtbs，使用【现在正在直播的vtbs】更新【下播vtbs】
+      lastLiveVtbs.forEach(lastLiveVtb => {
+        if (!nowLiveFollowedVtbs.includes(lastLiveVtb)) {
+          downLiveFollowedVtbs.push(lastLiveVtb)
+        }
+      })
+
+      console.log(`upLiveFollowedVtbs: ${upLiveFollowedVtbs.length}`)
+      console.log(`downLiveFollowedVtbs: ${downLiveFollowedVtbs.length}`)
+
+      // 当前记录的vtbs数量不为0，或者设置启动时接受通知为true。派发上播和下播提醒。
+      // optimize：使用debounce避免某个时刻通知过多而导致疯狂弹窗。
+      if ((lastLiveVtbs.length !== 0) || SettingService.getIsNotifiedOnStartSync()) {
+        upLiveFollowedVtbs.forEach((mid: number) => {
+          mainWindow.webContents.send('liveNotice', vtbInfos.find((vtbInfo: VtbInfo) => vtbInfo.mid === mid), '上播提醒')
+        })
+        downLiveFollowedVtbs.forEach((mid: number) => {
+          mainWindow.webContents.send('liveNotice', vtbInfos.find((vtbInfo: VtbInfo) => vtbInfo.mid === mid), '下播提醒')
+        })
+      }
+
+      // 将当前直播vtbs记录赋值为lastLiveVtbs
+      lastLiveVtbs = nowLiveFollowedVtbs
+    }
+  })
 }
 
 const initIpcMainListeners = () => {

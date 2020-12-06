@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './app/App.vue'
 import router from './app/router'
 import store from './app/store'
+import { NoticeService } from '@/app/services'
 
 // import font awesome icon
 // https://github.com/FortAwesome/vue-fontawesome#installation
@@ -39,5 +40,9 @@ Vue.config.productionTip = false
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  created () {
+    const noticeService = new NoticeService()
+    console.log('init notice service in app.')
+  }
 }).$mount('#app')

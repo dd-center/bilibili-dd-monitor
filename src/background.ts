@@ -141,10 +141,10 @@ const initServices = () => {
 const initIpcMainListeners = () => {
   // region VtbInfo
   ipcMain.on('getVtbInfos', (event: Electron.IpcMainEvent) => {
-    event.reply('getVtbInfosReply', vtbInfosService.getVtbInfosMock())
+    event.reply('getVtbInfosReply', vtbInfosService.getVtbInfos())
   })
   ipcMain.on('getFollowedVtbInfos', (event: Electron.IpcMainEvent) => {
-    event.reply('getFollowedVtbInfosReply', vtbInfosService.getFollowedVtbInfosMock())
+    event.reply('getFollowedVtbInfosReply', vtbInfosService.getFollowedVtbInfos())
   })
   // endregion
 
@@ -191,7 +191,7 @@ const initIpcMainListeners = () => {
     if (playerObjMap.has(roomid)) {
       playerObjMap.get(roomid)!.playerWindow.focus()
     } else {
-      const vtbInfo: VtbInfo = vtbInfosService.getVtbInfosMock().find((vtbInfo: VtbInfo) => {
+      const vtbInfo: VtbInfo = vtbInfosService.getVtbInfos().find((vtbInfo: VtbInfo) => {
         return vtbInfo.roomid === roomid
       })!
       playerObjMap.set(roomid, createPlayerWindow(app, vtbInfo, playerObjMap))

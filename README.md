@@ -18,9 +18,10 @@ work in progress.
   - [x] 列表项：关注/取关
   - [x] 列表项：进入直播间
 - [x] 设置
-  - [ ] 启动时通知正在进行的直播
+  - [x] 启动时通知正在进行的直播
 - [ ] 左下角Socket.IO指示器：socket.io 事件 + vtb条数
 - [ ] custom action message feedback UI
+- [ ] migrate NgZone API to vue[important]
 - [ ] 菜单栏
   - [ ] 窗口
     - 自动布局所有播放器窗口：等分网格法
@@ -32,5 +33,5 @@ work in progress.
 
 ## bug fix
 - [ ] /follow router doesn't highlight
-- [ ] modal input box can't accept focus after second time
+- 修改前端vue数据更新逻辑，由后端IPC主动推送数据更新到前端。前端只负责订阅，然后处理
 

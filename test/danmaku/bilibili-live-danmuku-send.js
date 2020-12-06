@@ -59,4 +59,3 @@ const fire = () => {
     _timer = setInterval(seedDanmuku, SEND_INTERVAL_IN_MILLISECONDS)
   }
 }
-

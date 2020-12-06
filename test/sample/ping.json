@@ -1,0 +1,15 @@
+{
+  "host": "vtbs.moe",
+  "alive": true,
+  "output": "...",
+  "time": 43,
+  "times": [
+    43
+  ],
+  "min": "43.000",
+  "max": "43.000",
+  "avg": "43.000",
+  "stddev": "0.000",
+  "packetLoss": "0.000",
+  "numeric_host": "149.129.88.136"
+}

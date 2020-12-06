@@ -1,12 +1,13 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const io = require('socket.io-client')
 
 const apiCDNList = [
   'https://api.vtbs.moe',
   'https://api.tokyo.vtbs.moe',
-  'https://vtbs.musedash.moe',
+  'https://vtbs.musedash.moe'
 ]
 
-const socket = io(apiCDNList[0])
+const socket = io(apiCDNList[1])
 
 socket.on('connect', () => {
   console.log('connect.')
@@ -16,15 +17,13 @@ let totalTimeInterval = 0
 let infoEventCount = 0
 let lastInfoTime = Date.now()
 socket.on('info', (infos) => {
-  let timeInterval = Date.now() - lastInfoTime
+  const timeInterval = Date.now() - lastInfoTime
   console.log(timeInterval)
   lastInfoTime = Date.now()
 
   totalTimeInterval += timeInterval
   infoEventCount++
-  const averageInternalInMilliSeconds = Math.round(
-    totalTimeInterval / infoEventCount
-  )
+  const averageInternalInMilliSeconds = Math.round(totalTimeInterval / infoEventCount)
   console.log(`average internal statistics: ${averageInternalInMilliSeconds}`)
 
   console.log(`infos.length=${infos.length}`)

@@ -21,11 +21,19 @@
           <router-link :to="{ path: `/list/${list.id}` }" class="follow-list-item-link">
             <font-awesome-icon class="follow-list-item-link-icon" :icon="['fas', 'user-friends']"/>
             <span class="follow-list-item-link-name">{{ list.name }}</span>
+
             <span class="follow-list-item-link-count">{{ list.mids.length }}</span>
-            <ul class="follow-list-item-link-dropdown dropdown-menu">
+            <span v-if="list.id>=1" @mouseenter="mouseEnter(list.id)" @mouseleave="mouseLeave(list.id)" class="follow-list-item-link-more">
+              <font-awesome-icon :icon="['fas', 'ellipsis-v']"/>
+            </span>
+
+            <!-- enable only in list id >=1 (exclude id -1 and 0)-->
+            <!-- show if on (mouseOverListId!==0)&&(mouseOverListId===list.id)-->
+            <ul v-if="list.id>=1" v-show="mouseOverListId===list.id" class="follow-list-item-link-dropdown dropdown-menu">
               <li class="dropdown-menu-item dropdown-menu-item-rename" @click="showRenameListModal(list.id,list.name)">修改名称</li>
               <li class="dropdown-menu-item dropdown-menu-item-delete" @click="handleDeleteList(list.id)">删除</li>
             </ul>
+
           </router-link>
         </li>
       </ul>
@@ -80,6 +88,8 @@ export default {
   data () {
     return {
       mouseOverListId: -1, // 我的关注 = 全部关注
+      setMouseOverIdTimeout: null,
+      lastMouseEnterTime: null,
       followLists: [],
       createListModalValue: '', // 创建分组的对话框的文本值
       isCreateListModalVisible: false, // 创建分组的显示状态
@@ -104,12 +114,22 @@ export default {
       })
     },
     mouseEnter (listId) {
+      if (!this.lastMouseEnterTime) this.lastMouseEnterTime = Date.now()
+      const triggerMouseEnterInterval = Date.now() - this.lastMouseEnterTime
+      if (triggerMouseEnterInterval < 600) {
+        if (this.setMouseOverIdTimeout) {
+          clearTimeout(this.setMouseOverIdTimeout)
+        }
+      }
       this.mouseOverListId = listId
+      this.lastMouseEnterTime = Date.now()
     },
-    mouseleave () {
-      setTimeout(() => {
+    mouseLeave (listId) {
+      if (this.setMouseOverIdTimeout) clearTimeout(this.setMouseOverIdTimeout)
+      this.setMouseOverIdTimeout = setTimeout(() => {
         this.mouseOverListId = -1
-      }, 1000)
+        this.setMouseOverIdTimeout = null
+      }, 600)
     },
     handleDeleteList (id) {
       // get all follow list ids, then check whether include id that parameter passes
@@ -284,7 +304,27 @@ export default {
         }
 
         &-count {
+          width: 20px;
+          height: 20px;
           justify-self: end;
+
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+        }
+
+        &-more {
+          width: 15px;
+          height: 15px;
+          justify-self: end;
+          cursor: pointer;
+
+          color: #282525;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
         }
 
         &-dropdown {
@@ -292,6 +332,8 @@ export default {
           border-radius: 5px;
           position: absolute;
           top: 100%;
+          width: 120px;
+          height: 30px;
           right: 0;
           list-style: none;
           z-index: 1;

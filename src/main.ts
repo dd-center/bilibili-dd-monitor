@@ -25,6 +25,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css'
 
+// https://github.com/euvl/vue-notification/
+import Notifications from 'vue-notification'
+
 library.add(
   faSignal,
   faHeart,
@@ -42,6 +45,23 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('v-select', vSelect)
 
 Vue.config.productionTip = false
+
+Vue.use(Notifications)
+
+Vue.mixin({
+  methods: {
+    actionNotify: (type, text) => {
+      Vue.notify({
+        group: 'action-feedback',
+        // @ts-ignore
+        position: 'top',
+        duration: 1500,
+        type: type,
+        text: text
+      })
+    }
+  }
+})
 
 new Vue({
   router,

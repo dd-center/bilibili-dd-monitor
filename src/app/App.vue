@@ -35,11 +35,17 @@
     <main class="content">
       <router-view/>
     </main>
+
+    <!-- for custom style: https://github.com/euvl/vue-notification#style-->
+    <notifications group="action-feedback" position="top center"/>
   </div>
 </template>
 
 <script>
 export default {
+  mounted () {
+    // warning: only after mounted() , we can use vue-notifications
+  },
   methods: {
     subIsActive (routePath) {
       const paths = Array.isArray(routePath) ? routePath : [routePath]
@@ -133,5 +139,10 @@ export default {
 
 .content {
   flex: 1;
+}
+
+// override default style
+.vue-notification-group {
+  top: 30% !important;
 }
 </style>

@@ -137,7 +137,7 @@ export default {
       if (this.followLists.map((followList) => followList.id).includes(id)) {
         this.followListService.deleteFollowList(id).subscribe((followLists) => {
           this.followLists = followLists
-          console.log('分组删除成功')
+          this.actionNotify('success', '分组删除成功。')
           this.handleRouterChange()
         })
       }
@@ -155,24 +155,23 @@ export default {
     },
 
     handleCreateListModalSuccess () {
-      // use fast failed and exit early methodology
       if (this.followLists.length >= 10) {
-        console.log('最多只能有十个分组')
+        this.actionNotify('warn', '最多只能有十个分组。')
         return
       }
 
       if (this.isEmpty(this.createListModalValue)) {
-        console.log('分组名字不能为空')
+        this.actionNotify('warn', '分组名字不能为空。')
         return
       }
 
       if (this.createListModalValue.length > 20) {
-        console.log('分组名字过长，最多20个字符')
+        this.actionNotify('warn', '分组名字过长，最多20个字符。')
         return
       }
 
       if (this.followLists.map((followList) => followList.name).includes(this.createListModalValue)) {
-        console.log('分组名字重复')
+        this.actionNotify('warn', '分组名字重复')
         return
       }
 
@@ -183,7 +182,7 @@ export default {
         this.isCreateListModalSuccessLoading = false
         // hidden modal
         this.isCreateListModalVisible = false
-        console.log('分组创建成功')
+        this.actionNotify('success', '分组创建成功。')
         this.handleRouterChange()
       })
     },
@@ -220,13 +219,13 @@ export default {
             this.followLists = followLists
             this.isRenameListModalSuccessLoading = false
             this.isRenameListModalVisible = false
-            console.log('分组名字修改成功')
+            this.actionNotify('success', '分组名字修改成功。')
           })
         } else {
-          console.log('分组名字重复')
+          this.actionNotify('warn', '分组名字重复。')
         }
       } else {
-        console.log('分组名字过长')
+        this.actionNotify('warn', '分组名字过长。')
       }
     },
     foo () {
@@ -338,7 +337,7 @@ export default {
           position: absolute;
           top: 100%;
           left: 40%;
-          z-index: 9999;
+          z-index: 1000;
         }
       }
     }
@@ -367,7 +366,7 @@ export default {
 
 .modal {
   position: fixed;
-  z-index: 9999;
+  z-index: 3000;
   top: 0;
   right: 0;
   bottom: 0;

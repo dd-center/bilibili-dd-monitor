@@ -133,12 +133,8 @@ export default {
     },
     handleSetListModalSuccess () {
       if (!this.isValidListId(this.selectedListId)) {
-        console.log('请选择分组')
+        this.actionNotify('warn', '请选择分组。')
         return
-      }
-
-      if (!this.selectedVtbInfo) {
-        throw Error('BUG:[FollowList#handleSetListModalSuccess]this.selectedVtbInfo is null')
       }
 
       this.isSetListModalSuccessLoading = true
@@ -146,7 +142,7 @@ export default {
         this.updateByData(followLists)
         this.isSetListModalSuccessLoading = false
         this.isSetListModalVisible = false
-        console.log('设置成功')
+        this.actionNotify('success', '设置成功。')
         this.$parent.loadData()
       })
     },
@@ -272,7 +268,7 @@ export default {
 
 .modal {
   position: fixed;
-  z-index: 9999;
+  z-index: 3000;
   top: 0;
   right: 0;
   bottom: 0;

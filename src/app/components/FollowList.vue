@@ -76,7 +76,6 @@ export default {
     VueAutoVirtualScrollList
   },
   created () {
-    // this.activeListId = parseInt(this.$route.params.id)
     this.initServices()
     this.loadData()
   },

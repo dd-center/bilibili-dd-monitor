@@ -138,7 +138,7 @@ export default {
         this.followListService.deleteFollowList(id).subscribe((followLists) => {
           this.followLists = followLists
           console.log('分组删除成功')
-          this.$router.push('/list/-1')
+          this.handleRouterChange()
         })
       }
     },
@@ -184,6 +184,7 @@ export default {
         // hidden modal
         this.isCreateListModalVisible = false
         console.log('分组创建成功')
+        this.handleRouterChange()
       })
     },
     /**
@@ -200,7 +201,13 @@ export default {
       this.renameListName = name
       this.isRenameListModalVisible = true
     },
-
+    handleRouterChange () {
+      // NavigationDuplicated: Avoided redundant navigation to current location
+      const currentRoutePath = this.$router.currentRoute.path
+      if (!currentRoutePath.includes('-1')) {
+        this.$router.replace('/list/-1')
+      }
+    },
     handleRenameListModalCancel () {
       this.isRenameListModalVisible = false
     },
@@ -210,7 +217,6 @@ export default {
         if (!this.followLists.map((followList) => followList.name).includes(this.renameListName)) {
           this.isRenameListModalSuccessLoading = true
           this.followListService.renameFollowList(this.renameListId, this.renameListName).subscribe((followLists) => {
-            console.log(followLists)
             this.followLists = followLists
             this.isRenameListModalSuccessLoading = false
             this.isRenameListModalVisible = false

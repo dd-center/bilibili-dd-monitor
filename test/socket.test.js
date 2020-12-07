@@ -7,7 +7,7 @@ const apiCDNList = [
   'https://vtbs.musedash.moe'
 ]
 
-const socket = io(apiCDNList[1])
+const socket = io(apiCDNList[0])
 
 socket.on('connect', () => {
   console.log('connect.')

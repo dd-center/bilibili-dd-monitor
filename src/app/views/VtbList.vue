@@ -61,7 +61,7 @@ export default {
 
   created () {
     this.initService()
-    this.initData()
+    this.loadData()
   },
 
   methods: {
@@ -71,7 +71,7 @@ export default {
       this.livePlayService = new LivePlayService()
     },
 
-    initData () {
+    loadData () {
       this.vtbInfoService.getVtbInfos().subscribe((vtbInfos) => {
         // init vtbInfos
         this.vtbInfos = vtbInfos
@@ -88,9 +88,7 @@ export default {
 
     filter (userInput) {
       this.vtbInfoService.getVtbInfos().subscribe((vtbInfos) => {
-        this.filteredVtbInfos = vtbInfos.filter((vtbInfo) =>
-          vtbInfo.uname.includes(userInput)
-        )
+        this.filteredVtbInfos = vtbInfos.filter((vtbInfo) => vtbInfo.uname.includes(userInput))
       })
     },
 
@@ -216,7 +214,7 @@ export default {
       color: #3da2ff;
     }
 
-    &-unfollow{
+    &-unfollow {
       cursor: pointer;
       color: #f57373;
     }

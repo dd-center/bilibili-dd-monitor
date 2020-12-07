@@ -7,16 +7,15 @@ const socket = io('https://api.vtbs.moe')
 
 export class VtbInfoService {
   private vtbInfosMap: Map<number, VtbInfo> = new Map<number, VtbInfo>()
-  private _vtbInfosMapMock: Map<number, VtbInfo> = new Map<number, VtbInfo>()
   private update: Function | null = null
   private _onceUpdate: Function | null = null
 
   constructor () {
     // init socket.IO
-    this.initSocketIO()
+    // this.initSocketIO()
 
     // init mock data
-    // this._initMockData()
+    this._initMockData()
   }
 
   initSocketIO () {
@@ -72,9 +71,9 @@ export class VtbInfoService {
 
   _initMockData () {
     vtbInfosMock.forEach((info: VtbInfo) => {
-      this._vtbInfosMapMock.set(info.mid, info)
+      this.vtbInfosMap.set(info.mid, info)
     })
-    console.log(`this._vtbInfosMapMock.size: ${this._vtbInfosMapMock.size}`)
+    console.log(`this._vtbInfosMapMock.size: ${this.vtbInfosMap.size}`)
   }
 
   stopUpdate () {
@@ -94,17 +93,6 @@ export class VtbInfoService {
   }
 
   /**
-   * mock get vtbInfos
-   */
-  getVtbInfosMock (): VtbInfo[] {
-    return [...this._vtbInfosMapMock.values()].sort(this._compareByOnlineDesc)
-  }
-
-  _compareByOnlineDesc (vtbInfoA: VtbInfo, vtbInfoB: VtbInfo): number {
-    return vtbInfoB.online - vtbInfoA.online
-  }
-
-  /**
    * get followed vtb infos
    */
   getFollowedVtbInfos (): VtbInfo[] {
@@ -112,26 +100,17 @@ export class VtbInfoService {
     const vtbInfos = this.getVtbInfos()
     FollowListService.getFollowListsSync().forEach((followList: FollowList) => {
       followedVtbInfos = [
+        ...followedVtbInfos,
         ...vtbInfos.filter((vtbInfo) => {
-          followList.mids.includes(vtbInfo.mid)
+          return followList.mids.includes(vtbInfo.mid)
         })
       ]
     })
+    console.log(`followedVtbInfos.length:${followedVtbInfos.length}`)
     return followedVtbInfos.sort(this._compareByOnlineDesc)
   }
 
-  /**
-   * mock get followed vtb infos
-   */
-  getFollowedVtbInfosMock (): VtbInfo[] {
-    let followedVtbInfos: VtbInfo[] = []
-    const vtbInfos = this.getVtbInfosMock()
-    FollowListService.getFollowListsSync().forEach((followList: FollowList) => {
-      followedVtbInfos = [
-        ...followedVtbInfos,
-        ...vtbInfos.filter((vtbInfo) => followList.mids.includes(vtbInfo.mid))
-      ]
-    })
-    return followedVtbInfos.sort(this._compareByOnlineDesc)
+  _compareByOnlineDesc (vtbInfoA: VtbInfo, vtbInfoB: VtbInfo): number {
+    return vtbInfoB.online - vtbInfoA.online
   }
 }

@@ -21,7 +21,6 @@ work in progress.
   - [x] 启动时通知正在进行的直播
 - [ ] 左下角Socket.IO指示器：socket.io 事件 + vtb条数
 - [ ] custom action message feedback UI
-- [ ] migrate NgZone API to vue[important]
 - [ ] 菜单栏
   - [ ] 窗口
     - 自动布局所有播放器窗口：等分网格法
@@ -30,6 +29,10 @@ work in progress.
     - 关闭所有播放器窗口
   - 其他/后期支持/关于/检查更新
 - [ ] Tray mode
+
+## code refactor
+- [ ] icons lazy load
+- [ ] migrate NgZone API to vue[important] watch update
 
 ## bug fix
 - [ ] /follow router doesn't highlight

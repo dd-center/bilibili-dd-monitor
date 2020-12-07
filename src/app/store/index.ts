@@ -1,19 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { FollowList, VtbInfo } from '@/interfaces'
-import { FollowListService, LivePlayService, VtbInfoService } from '@/app/services'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    // services => singleton pattern
-    vtbInfoService: new VtbInfoService(),
-    followListService: new FollowListService(),
-    livePlayService: new LivePlayService(),
-
     // vtb info map
-    vtbInfos: new Map<number, VtbInfo>(),
+    vtbInfosMap: new Map<number, VtbInfo>(),
 
     // follow
     followLists: [] as Array<FollowList>,
@@ -28,15 +22,24 @@ export default new Vuex.Store({
 
     // followedVtbMids
 
+    // vtbInfos
+    vtbInfos: (state): VtbInfo[] => {
+      return [...state.vtbInfosMap.values()]
+    },
+
     // compute filterVtbInfosByName()
+    filterVtbInfosByName: (state) => (name: string): VtbInfo[] => {
+      return [...state.vtbInfosMap.values()].filter((vtbInfo: VtbInfo) => vtbInfo.uname?.includes(name))
+    }
   },
   // MUST sync
   mutations: {
     // for init or create vtbInfos
     updateVtbInfos (state, vtbInfos) {
       vtbInfos.forEach((vtbInfo: VtbInfo) => {
-        state.vtbInfos.set(vtbInfo.mid, vtbInfo)
+        state.vtbInfosMap.set(vtbInfo.mid, vtbInfo)
       })
+      console.log(`now vtb count: ${state.vtbInfosMap.size}`)
     },
     increment (state) {
       state.count++
@@ -47,7 +50,7 @@ export default new Vuex.Store({
     updateVtbInfos ({ commit, state }, vtbInfos) {
       commit('updateVtbInfos', vtbInfos)
     },
-    incrementCount ({ commit }) {
+    increment ({ commit }) {
       commit('increment')
     }
   },

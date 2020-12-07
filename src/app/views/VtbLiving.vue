@@ -51,7 +51,7 @@ export default {
   },
   created () {
     this.initServices()
-    // this.loadData()
+    this.loadData()
     // this.watchForVtbInfosUpdate()
   },
   methods: {
@@ -64,11 +64,6 @@ export default {
       this.vtbInfoService.getFollowedVtbInfos().subscribe((followedVtbInfos) => {
         this.loading = false
         this.followedVtbInfos = followedVtbInfos
-      })
-    },
-    watchForVtbInfosUpdate () {
-      this.vtbInfoService.updateVtbInfos().subscribe((vtbInfos) => {
-        this.followedVtbInfos = vtbInfos
       })
     },
     enterRoom (roomid) {

@@ -16,12 +16,9 @@ export default class VtbInfoUpdateListenerService {
   }
 
   initVtbInfosUpdateListener () {
-    this.ipcRenderer.on('vtbInfosUpdate', (event: Electron.Event, vtbInfos: VtbInfo[]) => {
-      console.log('vtbInfosUpdate reply')
-      console.log(`vtbInfosUpdate reply:${vtbInfos.length}`)
-      // call vuex actions
+    this.ipcRenderer.on('updateVtbInfos', (event: Electron.Event, vtbInfos: VtbInfo[]) => {
+      console.log(`[ipcRenderer]updateVtbInfos:${vtbInfos.length}`)
       this.store.dispatch('updateVtbInfos', vtbInfos)
-      console.log('store dispatch updateVtbInfos action')
     })
   }
 }

@@ -11,7 +11,7 @@
     <br/>
     <vue-auto-virtual-scroll-list :totalHeight="700" :defaultHeight="80" style="width: 100%;">
       <uL class="virtual-list">
-        <li v-for="vtbInfo in filteredVtbInfos" :key="vtbInfo.mid" :style="{ height: `${vtbInfo.height}px` }" class="virtual-list-item">
+        <li v-for="vtbInfo in vtbInfos" :key="vtbInfo.mid" :style="{ height: `${vtbInfo.height}px` }" class="virtual-list-item">
           <div class="virtual-list-item-media">
             <img class="virtual-list-item-media-avatar" :src="vtbInfo.face" alt=""/>
             <div class="virtual-list-item-media-body">
@@ -43,6 +43,8 @@
 import VueAutoVirtualScrollList from 'vue-auto-virtual-scroll-list'
 import { VtbInfoService, FollowListService, LivePlayService } from '@/app/services/index'
 import store from '../store'
+import { mapGetters } from 'vuex'
+import { VtbInfo } from '@/interfaces'
 
 export default {
   name: 'VtbList',
@@ -52,22 +54,18 @@ export default {
   data () {
     return {
       userInput: '',
-      filteredVtbInfos: [] // filtered from vtbInfos
+      filteredVtbInfos: [], // filtered from vtbInfos
+
+      followedVtbMids: [] // for showing follow/unfollow text
     }
   },
   computed: {
-    vtbInfos: [],
-    followedVtbMids: [] // for showing follow/unfollow text
+    vtbInfos: () => store.state.vtbInfosMap.values()
   },
   created () {
-    console.log(store)
+    console.log(store.state.count)
     // this.initService()
     // this.loadData()
-  },
-  watch: {
-    vtbInfos: () => {
-      console.log(`watch: ${this.vtbInfos.length}`)
-    }
   },
   methods: {
     initService () {

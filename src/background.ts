@@ -93,16 +93,17 @@ const initServices = () => {
   // register live change notifications
   // 上次记录的vtbs（已经处理上播和下播提醒）
   let lastLiveVtbs: number[] = []
-  vtbInfosService.onUpdate((vtbInfos) => {
+  vtbInfosService.onUpdate((allVtbInfos, updatedVtbInfos: VtbInfo[]) => {
     if (mainWindow) {
       // mainWindow.webContents.send('updateVtbInfos', vtbInfosService.getFollowedVtbInfos())
+      mainWindow.webContents.send('updateVtbInfos', updatedVtbInfos)
 
       const followVtbs = FollowListService.getFollowedVtbMidsSync()
       // 现在正在直播的vtbs
       const nowLiveFollowedVtbs =
-        vtbInfos
-          .filter((vtbInfo: VtbInfo) => (followVtbs.includes(vtbInfo.mid) && vtbInfo.liveStatus === 1))
-          .map((vtbInfo: VtbInfo) => vtbInfo.mid)
+        allVtbInfos
+        .filter((vtbInfo: VtbInfo) => (followVtbs.includes(vtbInfo.mid) && vtbInfo.liveStatus === 1))
+        .map((vtbInfo: VtbInfo) => vtbInfo.mid)
       console.log(`nowLiveFollowedVtbs: ${nowLiveFollowedVtbs.length}`)
 
       // 上播vtbs
@@ -131,10 +132,10 @@ const initServices = () => {
       // optimize：使用debounce避免某个时刻通知过多而导致疯狂弹窗。
       if ((lastLiveVtbs.length !== 0) || SettingService.getIsNotifiedOnStartSync()) {
         upLiveFollowedVtbs.forEach((mid: number) => {
-          mainWindow.webContents.send('liveNotice', vtbInfos.find((vtbInfo: VtbInfo) => vtbInfo.mid === mid), '上播提醒')
+          mainWindow.webContents.send('liveNotice', allVtbInfos.find((vtbInfo: VtbInfo) => vtbInfo.mid === mid), '上播提醒')
         })
         downLiveFollowedVtbs.forEach((mid: number) => {
-          mainWindow.webContents.send('liveNotice', vtbInfos.find((vtbInfo: VtbInfo) => vtbInfo.mid === mid), '下播提醒')
+          mainWindow.webContents.send('liveNotice', allVtbInfos.find((vtbInfo: VtbInfo) => vtbInfo.mid === mid), '下播提醒')
         })
       }
 

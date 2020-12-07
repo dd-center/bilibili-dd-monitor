@@ -104,7 +104,7 @@ export default {
   },
   created () {
     this.initService()
-    this.loadData()
+    // this.loadData()
   },
   methods: {
     initService () {

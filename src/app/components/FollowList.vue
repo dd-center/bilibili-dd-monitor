@@ -74,7 +74,7 @@ export default {
   },
   created () {
     this.initServices()
-    this.loadData()
+    // this.loadData()
   },
   beforeRouteUpdate (to, from, next) {
     this.activeListId = parseInt(to.params.id)

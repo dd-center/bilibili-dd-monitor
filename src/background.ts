@@ -210,7 +210,6 @@ const initApp = () => {
   initUpdate()
   initSettingsConfiguration()
   initServices()
-  // todo 上播提醒
   initIpcMainListeners()
 }
 

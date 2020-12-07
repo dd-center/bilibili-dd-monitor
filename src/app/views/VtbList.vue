@@ -53,9 +53,10 @@ export default {
   data () {
     return {
       userInput: '',
+      filteredVtbInfos: [], // filtered from vtbInfos
+
       vtbInfos: [],
-      followedVtbMids: [], // for showing follow/unfollow text
-      filteredVtbInfos: [] // filtered from vtbInfos
+      followedVtbMids: [] // for showing follow/unfollow text
     }
   },
 

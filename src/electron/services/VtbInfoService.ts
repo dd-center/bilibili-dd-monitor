@@ -12,17 +12,13 @@ export class VtbInfoService {
 
   constructor () {
     // init socket.IO
-    // this.initSocketIO()
+    this.initSocketIO()
 
     // init mock data
-    this._initMockData()
+    // this._initMockData()
   }
 
   initSocketIO () {
-    socket.on('connect', () => {
-      console.log('connect.')
-    })
-
     let totalTimeInterval = 0
     let infoEventCount = 0
     let lastInfoTime = Date.now()
@@ -55,16 +51,32 @@ export class VtbInfoService {
       }
     })
 
+    socket.on('connect', () => {
+      console.log('connect.')
+    })
     socket.on('disconnect', () => {
       console.log('disconnect.')
     })
-
     socket.on('reconnect', () => {
       console.log('reconnect')
     })
-
     socket.on('reconnecting', () => {
       console.log('reconnecting')
+    })
+    socket.on('reconnect_error', (error: any) => {
+      console.log('reconnect_error')
+    })
+    socket.on('reconnect_failed', () => {
+      console.log('reconnect_failed')
+    })
+    socket.on('connect_error', (error: any) => {
+      console.log('connect_error')
+    })
+    socket.on('connect_timeout', (timeout: any) => {
+      console.log('connect_timeout')
+    })
+    socket.on('error', (error: any) => {
+      console.log('error')
     })
   }
 

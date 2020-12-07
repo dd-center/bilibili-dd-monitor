@@ -20,7 +20,6 @@ work in progress.
 - [x] 设置
   - [x] 启动时通知正在进行的直播
 - [ ] 左下角Socket.IO指示器：socket.io 事件 + vtb条数
-
 - [ ] 菜单栏
   - [ ] 窗口
     - 自动布局所有播放器窗口：等分网格法
@@ -32,8 +31,8 @@ work in progress.
 
 ## code refactor
 - [x] custom action message feedback UI
+- [ ] migrate NgZone API to vuex store and incremental update
 - [ ] icons lazy load
-- [ ] migrate NgZone API to vue[important] watch update
 
 ## bug fix
 - [x] /follow router doesn't highlight when navigate to its sub route

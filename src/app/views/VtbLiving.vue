@@ -51,8 +51,8 @@ export default {
   },
   created () {
     this.initServices()
-    this.loadData()
-    this.watchForVtbInfosUpdate()
+    // this.loadData()
+    // this.watchForVtbInfosUpdate()
   },
   methods: {
     initServices () {

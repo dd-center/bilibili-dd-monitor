@@ -42,29 +42,32 @@
 <script>
 import VueAutoVirtualScrollList from 'vue-auto-virtual-scroll-list'
 import { VtbInfoService, FollowListService, LivePlayService } from '@/app/services/index'
+// import { mapGetters } from 'vuex'
 
 export default {
   name: 'VtbList',
-
   components: {
     VueAutoVirtualScrollList
   },
-
   data () {
     return {
       userInput: '',
-      filteredVtbInfos: [], // filtered from vtbInfos
-
-      vtbInfos: [],
-      followedVtbMids: [] // for showing follow/unfollow text
+      filteredVtbInfos: [] // filtered from vtbInfos
     }
   },
-
-  created () {
-    this.initService()
-    this.loadData()
+  computed: {
+    vtbInfos: this.$store.state.vtbInfos,
+    followedVtbMids: [] // for showing follow/unfollow text
   },
-
+  created () {
+    // this.initService()
+    // this.loadData()
+  },
+  watch: {
+    vtbInfos: () => {
+      console.log(`watch: ${this.vtbInfos.length}`)
+    }
+  },
   methods: {
     initService () {
       this.vtbInfoService = new VtbInfoService()

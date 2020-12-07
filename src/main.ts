@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './app/App.vue'
 import router from './app/router'
 import store from './app/store'
-import { NoticeService } from '@/app/services'
+import { NoticeService, VtbInfoUpdateListenerService } from '@/app/services'
 
 // import font awesome icon
 // https://github.com/FortAwesome/vue-fontawesome#installation
@@ -70,5 +70,7 @@ new Vue({
   created () {
     const noticeService = new NoticeService()
     console.log('init notice service in app.')
+    const vtbInfoUpdateListenerService = new VtbInfoUpdateListenerService()
+    console.log('vtbInfoUpdateListenerService init.')
   }
 }).$mount('#app')

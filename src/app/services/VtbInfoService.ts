@@ -4,6 +4,10 @@ import { VtbInfo } from '@/interfaces'
 
 declare const window: any
 
+/**
+ * @deprecated by code logic refactor,
+ * @see listenerService
+ */
 export default class VtbInfoService {
   private ipcRenderer: IpcRenderer
 

@@ -95,7 +95,7 @@ const initServices = () => {
   let lastLiveVtbs: number[] = []
   vtbInfosService.onUpdate((vtbInfos) => {
     if (mainWindow) {
-      mainWindow.webContents.send('updateVtbInfos', vtbInfosService.getFollowedVtbInfos())
+      // mainWindow.webContents.send('updateVtbInfos', vtbInfosService.getFollowedVtbInfos())
 
       const followVtbs = FollowListService.getFollowedVtbMidsSync()
       // 现在正在直播的vtbs
@@ -243,12 +243,14 @@ app.on('ready', async () => {
     }
   }
 
+  // main process
   try {
     initApp()
   } catch (e) {
     console.error('init app failed:', e.toString())
   }
 
+  // renderer process
   mainWindow = await createWindow()
 })
 

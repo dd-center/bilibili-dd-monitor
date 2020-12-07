@@ -42,7 +42,7 @@
 <script>
 import VueAutoVirtualScrollList from 'vue-auto-virtual-scroll-list'
 import { VtbInfoService, FollowListService, LivePlayService } from '@/app/services/index'
-// import { mapGetters } from 'vuex'
+import store from '../store'
 
 export default {
   name: 'VtbList',
@@ -56,10 +56,11 @@ export default {
     }
   },
   computed: {
-    vtbInfos: this.$store.state.vtbInfos,
+    vtbInfos: [],
     followedVtbMids: [] // for showing follow/unfollow text
   },
   created () {
+    console.log(store)
     // this.initService()
     // this.loadData()
   },

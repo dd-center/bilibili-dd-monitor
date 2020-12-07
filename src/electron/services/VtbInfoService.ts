@@ -12,10 +12,10 @@ export class VtbInfoService {
 
   constructor () {
     // init socket.IO
-    this.initSocketIO()
+    // this.initSocketIO()
 
     // init mock data
-    // this._initMockData()
+    this._initMockData()
   }
 
   initSocketIO () {

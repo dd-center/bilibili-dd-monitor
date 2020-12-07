@@ -17,7 +17,10 @@ export default new Vuex.Store({
 
     // follow
     followLists: [] as Array<FollowList>,
-    followedVtbMids: [] as number[]
+    followedVtbMids: [] as number[],
+
+    // for test
+    count: 0
   },
   // aim for computed/derived data design API
   getters: {
@@ -34,12 +37,18 @@ export default new Vuex.Store({
       vtbInfos.forEach((vtbInfo: VtbInfo) => {
         state.vtbInfos.set(vtbInfo.mid, vtbInfo)
       })
+    },
+    increment (state) {
+      state.count++
     }
   },
   // can be Async
   actions: {
     updateVtbInfos ({ commit, state }, vtbInfos) {
       commit('updateVtbInfos', vtbInfos)
+    },
+    incrementCount ({ commit }) {
+      commit('increment')
     }
   },
   modules: {}

@@ -38,9 +38,10 @@ const routes: Array<RouteConfig> = [
 
 const router = new VueRouter({
   // https://nklayman.github.io/vue-cli-plugin-electron-builder/guide/commonIssues.html#blank-screen-on-builds-but-works-fine-on-serve
-  // mode: process.env.IS_ELECTRON ? 'hash' : 'history',
-  // base: process.env.BASE_URL,
-  routes
+  mode: process.env.IS_ELECTRON ? 'hash' : 'history',
+  base: process.env.BASE_URL,
+  routes,
+  linkActiveClass: ''
 })
 
 export default router

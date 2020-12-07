@@ -279,13 +279,14 @@ export default {
       cursor: pointer;
 
       &-link {
+        position: relative;
         display: flex;
         flex-direction: row;
         align-items: center;
         text-decoration: none;
         color: #666262;
         padding: 12px 8px 12px 16px;
-        position: relative;
+        border-right: white solid 2px;
 
         &:hover {
           color: #42b983;
@@ -294,6 +295,7 @@ export default {
         &.router-link-exact-active {
           color: #42b983;
           background-color: rgba(66, 185, 131, 0.1);
+          border-right: #42b983 solid 2px;
         }
 
         &-icon {

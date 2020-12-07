@@ -66,7 +66,6 @@ export class VtbInfoService {
     socket.on('reconnecting', () => {
       console.log('reconnecting')
     })
-
   }
 
   _initMockData () {

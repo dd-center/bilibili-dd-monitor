@@ -33,10 +33,7 @@
           <span class="modal-close" @click="handleSetListModalCancel">×</span>
         </div>
         <div class="modal-body">
-          <select class="modal-select" v-model="selectedListId">
-            <option class="modal-select-option" v-for="list in followLists" :key="list.id" :value="list.id">{{ list.name }}
-            </option>
-          </select>
+          <v-select label="name" :options="followLists" v-model="selectedListId" :reduce="followList => followList.id"></v-select>
         </div>
         <div class="modal-footer">
           <button class="modal-button modal-button-ok" @click="handleSetListModalSuccess">确定</button>
@@ -324,6 +321,14 @@ export default {
     padding: 16px;
     flex: 1;
     border-bottom: #e2e2e2 solid 1px;
+  }
+
+  &-select {
+    width: 100%;
+
+    &-option {
+
+    }
   }
 
   &-input {

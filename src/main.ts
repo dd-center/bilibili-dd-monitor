@@ -21,6 +21,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+// https://vue-select.org/guide/
+import vSelect from 'vue-select'
+import 'vue-select/dist/vue-select.css'
+
 library.add(
   faSignal,
   faHeart,
@@ -34,6 +38,8 @@ library.add(
   faEllipsisV
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
+
+Vue.component('v-select', vSelect)
 
 Vue.config.productionTip = false
 

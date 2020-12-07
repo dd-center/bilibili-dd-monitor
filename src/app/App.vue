@@ -11,7 +11,7 @@
             </router-link>
           </li>
           <li class="nav-list-item">
-            <router-link to="/follow" class="nav-list-item-link">
+            <router-link to="/follow" class="nav-list-item-link" :class="{'router-link-active':subIsActive('/list')}">
               <font-awesome-icon :icon="['fas', 'heart']" class="nav-list-item-icon"/>
               Follow
             </router-link>
@@ -37,6 +37,19 @@
     </main>
   </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    subIsActive (routePath) {
+      const paths = Array.isArray(routePath) ? routePath : [routePath]
+      return paths.some((path) => {
+        return this.$router.currentRoute.path.indexOf(path) !== -1
+      })
+    }
+  }
+}
+</script>
 
 <style lang="scss">
 // my free style reset
@@ -109,6 +122,7 @@
       color: #42b983;
     }
 
+    &.router-link-active,
     &.router-link-exact-active {
       color: #42b983;
       background-color: rgba(66, 185, 131, 0.1);

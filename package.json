@@ -25,9 +25,11 @@
     "vue": "^2.6.11",
     "vue-auto-virtual-scroll-list": "^0.3.0",
     "vue-router": "^3.2.0",
+    "vue-select": "^3.10.8",
     "vuex": "^3.4.0"
   },
   "devDependencies": {
+    "@types/vue-select": "^2.5.1",
     "@types/electron-devtools-installer": "^2.2.0",
     "@types/electron-settings": "^3.1.2",
     "@types/ping": "^0.2.0",

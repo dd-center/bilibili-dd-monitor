@@ -35,6 +35,6 @@ work in progress.
 - [ ] migrate NgZone API to vue[important] watch update
 
 ## bug fix
-- [ ] /follow router doesn't highlight
+- [x] /follow router doesn't highlight when navigate to its sub route
 - 修改前端vue数据更新逻辑，由后端IPC主动推送数据更新到前端。前端只负责订阅，然后处理
 

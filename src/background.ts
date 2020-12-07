@@ -23,8 +23,14 @@ protocol.registerSchemesAsPrivileged([
 async function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1250,
+    height: 850,
+    maximizable: false,
+    fullscreen: false,
+    fullscreenable: false,
+    resizable: false,
+    icon: 'public/favicon.ico',
+    title: 'bilibili-dd-monitor',
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info

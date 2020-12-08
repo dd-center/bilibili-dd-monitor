@@ -32,3 +32,43 @@ Vue切换路由时，
 - original => 每10次/s
 - debounce 限制为最多20次/s，那么callback fn不会触发
 - debounce 限制为最高频率为5次/s，那么callback fn触发最多也就5次/s
+
+## vue Reactivity in Depth
+- https://vuejs.org/v2/guide/reactivity.html
+- https://vuejs.org/v2/api/#Vue-set
+
+## page need what data
+### vuex
+```
+state: {
+  vtbInfos: [] as Array<VtbInfo>,
+  followLists: [] as Array<FollowList>,
+},
+```
+### init
+```
+followLists(vuex) 
+followedVtbMid(vuex)
+vtbInfos(vuex)
+```
+### page 
+- living
+```
+followedVtbInfos: followedVtbMids(followLists)(vuex) + vtbInfos(vuex) =>
+```
+- follow
+```
+followLists(vuex)
+```
+- followList  
+```
+followLists(vuex)
+activeFollowList: local activeListId + followLists(vuex) =>
+activeFollowedVtbInfos: activeFollowList + vtbInfos(vuex) =>
+```   
+- vtbList
+```
+vtbInfos(vuex) => show long list
+followedVtbMids => show follow/unfollow
+```
+

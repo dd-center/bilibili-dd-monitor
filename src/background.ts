@@ -187,7 +187,7 @@ const initIpcMainListeners = () => {
   })
   ipcMain.on('toggleFollow', (event: Electron.IpcMainEvent, mid: number) => {
     FollowListService.toggleFollowSync(mid)
-    event.reply('toggleFollowReply', FollowListService.getFollowedVtbMidsSync())
+    event.reply('toggleFollowReply', FollowListService.getFollowListsSync())
   })
   ipcMain.on('setFollowList', (event: Electron.IpcMainEvent, mids: number[], listId: number) => {
     FollowListService.addMidsToFollowListSync(mids, listId)

@@ -1,14 +1,16 @@
 <template>
   <div class="vtuber-list">
-    <!-- search button -->
     <div class="search">
       <input class="search-input" v-model="searchInput"/>
-      <button class="search-button" @click="filter(searchInput)">
+      <button class="search-button">
         <font-awesome-icon class="search-icon" :icon="['fas', 'search']"/>
       </button>
-      <span>{{ searchIndicator }}</span>
     </div>
-
+    <p>{{ searchIndicator }}</p>
+    <p>{{ 'vtbInfos.length: ' + vtbInfos.length }}</p>
+    <p>{{ 'filteredVtbInfos.length: ' + filteredVtbInfos.length }}</p>
+    <p>{{ updateInfo }}</p>
+    <p>{{ 'followedVtbMids ' + followedVtbMids.length }}</p>
     <br/>
     <!--https://github.com/tangbc/vue-virtual-scroll-list/issues/237#issuecomment-641935872-->
     <virtual-list style="height: 700px; overflow-y: auto;"
@@ -24,7 +26,6 @@
 import VirtualListItem from '../components/VirtualListItem'
 import VirtualList from 'vue-virtual-scroll-list'
 import { FollowListService, LivePlayService } from '@/app/services/index'
-import store from '../store'
 import { mapGetters } from 'vuex'
 import _ from 'lodash'
 
@@ -35,15 +36,11 @@ export default {
   },
   data () {
     return {
-      // virtual list item
       itemComponent: VirtualListItem,
-
-      // search
       searchInput: '',
       searchInputIsDirty: false,
       isSearchCalculating: false,
-
-      followedVtbMids: [] // for showing follow/unfollow text
+      filteredVtbInfos: []
     }
   },
   computed: {
@@ -57,13 +54,18 @@ export default {
       }
     },
     ...mapGetters([
-      'filteredVtbInfos'
+      'vtbInfos',
+      'followedVtbMids',
+      'updateInfo'
     ])
   },
   watch: {
     searchInput: function () {
       this.searchInputIsDirty = true
       this.computeSearch()
+    },
+    vtbInfos: function () {
+      this.searchVtbInfosByName(this.searchInput)
     }
   },
   created () {
@@ -77,24 +79,22 @@ export default {
     },
     loadData () {
       // trigger init search by ''
-      store.dispatch('searchVtbInfosByName', this.searchInput)
-
-      // refactor to vuex
-      this.followListService.getFollowedVtbMids().subscribe((followedVtbMids) => {
-        this.followedVtbMids = followedVtbMids
-      })
+      this.searchVtbInfosByName(this.searchInput)
     },
     computeSearch: _.debounce(function () {
       this.isSearchCalculating = true
       setTimeout(() => {
         this.isSearchCalculating = false
         this.searchInputIsDirty = false
-        store.dispatch('searchVtbInfosByName', this.searchInput)
+        this.searchVtbInfosByName(this.searchInput)
       }, 1000)
     }, 500),
+    searchVtbInfosByName (name) {
+      this.filteredVtbInfos = this.vtbInfos.filter((vtbInfo) => vtbInfo.uname?.includes(name))
+    },
     toggleFollow (mid) {
-      this.followListService.toggleFollow(mid).subscribe((followedVtbMids) => {
-        this.followedVtbMids = followedVtbMids
+      this.followListService.toggleFollow(mid).subscribe((followLists) => {
+        this.$store.dispatch('updateFollowLists', followLists)
       })
     },
     enterRoom (roomid) {

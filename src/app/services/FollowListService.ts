@@ -109,9 +109,9 @@ export default class FollowListService {
    * toggle follow
    * @param mid
    */
-  toggleFollow (mid: number): Observable<number[]> {
+  toggleFollow (mid: number): Observable<FollowList[]> {
     this.ipcRenderer.send('toggleFollow', mid)
-    return new Observable<number[]>(this.sequenceSubscriber('toggleFollowReply'))
+    return new Observable<FollowList[]>(this.sequenceSubscriber('toggleFollowReply'))
   }
 
   /**

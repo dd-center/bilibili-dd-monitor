@@ -71,12 +71,10 @@ new Vue({
   created () {
     const noticeService = new NoticeService()
     console.log('init notice service in app.')
-    // init followList to vuex
     const followListService = new FollowListService()
-    // get followLists can be async
     followListService.getFollowLists().subscribe((followLists: FollowList[]) => {
-      console.log('INIT', 'GET followLists done', followLists.length)
-      store.dispatch('initFollowLists', followLists)
+      console.log('update followlists')
+      store.dispatch('updateFollowLists', followLists)
     })
     const vtbInfoUpdateListenerService = new VtbInfoUpdateListenerService()
     console.log('vtbInfoUpdateListenerService init.')

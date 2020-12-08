@@ -4,69 +4,73 @@ import { FollowList, VtbInfo } from '@/interfaces'
 
 Vue.use(Vuex)
 
+const _compareByOnlineDesc = (vtbInfoA: VtbInfo, vtbInfoB: VtbInfo): number => {
+  return vtbInfoB.online - vtbInfoA.online
+}
+
 export default new Vuex.Store({
   state: {
-    // vtb info map
-    vtbInfosMap: new Map<number, VtbInfo>(),
-
-    filteredVtbInfos: [] as Array<VtbInfo>,
-
-    // follow
-    followLists: [] as Array<FollowList>
-    // followedVtbMids: [] as number[],
+    vtbInfos: [] as Array<VtbInfo>,
+    followLists: [] as Array<FollowList>,
+    updateInfo: '' as string
   },
-  // aim for computed/derived data design API
   getters: {
-    // compute followedVtbInfos from vtbInfos by followedVtbMids
-
-    // followedVtbMids
-
-    // vtbInfos
-    vtbInfos: (state): VtbInfo[] => {
-      return [...state.vtbInfosMap.values()]
+    vtbInfos: (state) => {
+      return state.vtbInfos
     },
-    filteredVtbInfos: (state) => {
-      return state.filteredVtbInfos
-    },
-    followedVtbMids: (state) => {
+    followedVtbMids: (state): number[] => {
       const followedVtbMids: number[] = []
       state.followLists.forEach((followList: FollowList) => {
         followedVtbMids.push(...followList.mids)
       })
       return followedVtbMids
+    },
+    followedVtbInfos: (state, getters) => {
+      let followedVtbInfos: VtbInfo[] = []
+      followedVtbInfos = [
+        ...getters.vtbInfos.filter((vtbInfo: VtbInfo) => {
+          return getters.followedVtbMids.includes(vtbInfo.mid)
+        })
+      ]
+      return followedVtbInfos.sort(_compareByOnlineDesc)
+    },
+    updateInfo: (state) => {
+      return state.updateInfo + ' from getters'
     }
   },
-  // MUST sync
   mutations: {
-    // for init or create vtbInfos
-    updateVtbInfos (state, vtbInfos) {
-      vtbInfos.forEach((vtbInfo: VtbInfo) => {
-        state.vtbInfosMap.set(vtbInfo.mid, vtbInfo)
-      })
-      console.log(`now vtb count: ${state.vtbInfosMap.size}`)
+    updateVtbInfos (state, newVtbInfos: VtbInfo[]) {
+      // is first update. init vtbInfos
+      if (state.vtbInfos.length === 0) {
+        state.vtbInfos.push(...newVtbInfos)
+      } else {
+        // next update
+        newVtbInfos.forEach((newVtbInfo: VtbInfo) => {
+          const index = state.vtbInfos.findIndex(vtbInfo => vtbInfo.mid === newVtbInfo.mid)
+          // found => update existed object
+          if (index !== -1) {
+            // todo show diff parts
+            Vue.set(state.vtbInfos, index, newVtbInfo)
+          } else {
+            // not found, add this newVtbInfo to state.vtbInfos
+            state.vtbInfos.push(newVtbInfo)
+          }
+        })
+      }
+      state.updateInfo = `update vtb count: ${newVtbInfos.length}`
+      console.log('Now vtbInfos:', state.vtbInfos.length)
     },
-    // filter vtbInfos by search
-    searchVtbInfosByName (state, name: string) {
-      console.log(`[vuex:mutations:searchVtbInfosByName start]: ${name}`)
-      state.filteredVtbInfos = [...state.vtbInfosMap.values()].filter((vtbInfo: VtbInfo) => vtbInfo.uname?.includes(name))
-      console.log('[vuex:mutations:searchVtbInfosByName end]')
-      console.log(`[vuex:mutations:searchVtbInfosByName state.filteredVtbInfos.length]: ${state.filteredVtbInfos.length}`)
-    },
-    initFollowLists (state, followLists: FollowList[]) {
+    //todo diff compare and update
+    updateFollowLists (state, followLists: FollowList[]) {
       state.followLists = followLists
     }
   },
-  // can be Async
   actions: {
     updateVtbInfos ({ commit, state }, vtbInfos: VtbInfo[]) {
       commit('updateVtbInfos', vtbInfos)
     },
-    searchVtbInfosByName ({ commit, state }, name: string) {
-      console.log(`[vuex:actions:searchVtbInfosByName]: ${name}`)
-      commit('searchVtbInfosByName', name)
-    },
-    initFollowLists ({ commit, state }, followLists: FollowList[]) {
-      commit('initFollowLists', followLists)
+    updateFollowLists ({ commit, state }, followLists: FollowList[]) {
+      commit('updateFollowLists', followLists)
     }
   },
   modules: {}

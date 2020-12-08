@@ -124,7 +124,6 @@ export class VtbInfoService {
         })
       ]
     })
-    console.log(`followedVtbInfos.length:${followedVtbInfos.length}`)
     return followedVtbInfos.sort(this._compareByOnlineDesc)
   }
 

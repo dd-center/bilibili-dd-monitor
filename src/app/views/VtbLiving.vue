@@ -39,31 +39,27 @@
 </template>
 
 <script>
-import { LivePlayService, VtbInfoService } from '@/app/services'
+import { LivePlayService } from '@/app/services'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'VtbLiving',
   data () {
     return {
-      loading: false,
-      followedVtbInfos: []
+      //
     }
   },
   created () {
     this.initServices()
-    // this.loadData()
+  },
+  computed: {
+    ...mapGetters([
+      'followedVtbInfos'
+    ])
   },
   methods: {
     initServices () {
-      this.vtbInfoService = new VtbInfoService()
       this.livePlayService = new LivePlayService()
-    },
-    loadData () {
-      this.loading = true
-      this.vtbInfoService.getFollowedVtbInfos().subscribe((followedVtbInfos) => {
-        this.loading = false
-        this.followedVtbInfos = followedVtbInfos
-      })
     },
     enterRoom (roomid) {
       this.livePlayService.enterRoom(roomid)

@@ -83,6 +83,7 @@
 
 <script>
 import { FollowListService } from '@/app/services'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Follow',
@@ -105,6 +106,11 @@ export default {
   created () {
     this.initService()
     // this.loadData()
+  },
+  computed: {
+    // ...mapGetters([
+    //   ''
+    // ])
   },
   methods: {
     initService () {

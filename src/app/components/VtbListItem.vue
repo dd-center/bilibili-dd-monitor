@@ -1,5 +1,5 @@
 <template>
-  <li :key="source.mid" :style="{ height: `${source.height}px` }" class="virtual-list-item">
+  <div :key="source.mid" class="virtual-list-item">
     <div class="virtual-list-item-media">
       <img class="virtual-list-item-media-avatar" :src="source.face" alt=""/>
       <div class="virtual-list-item-media-body">
@@ -21,7 +21,7 @@
         <a class="virtual-list-item-media-enter-room" @click="enterRoom(source.roomid)">进入直播间</a>
       </div>
     </div>
-  </li>
+  </div>
 </template>
 
 <script>

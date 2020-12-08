@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import VirtualListItem from '../components/VirtualListItem'
+import VtbListItem from '../components/VtbListItem'
 import VirtualList from 'vue-virtual-scroll-list'
 import { FollowListService, LivePlayService } from '@/app/services/index'
 import { mapGetters } from 'vuex'
@@ -32,7 +32,7 @@ export default {
   },
   data () {
     return {
-      itemComponent: VirtualListItem,
+      itemComponent: VtbListItem,
       searchInput: '',
       searchInputIsDirty: false,
       isSearchCalculating: false,

@@ -1,26 +1,13 @@
 <template>
   <div class="follow-vtb-list">
     <h3 class="follow-vtb-list-title">{{ activeFollowList.name }}</h3>
-    <vue-auto-virtual-scroll-list :totalHeight="700" :defaultHeight="80" style="width: 100%;">
-      <uL class="virtual-list">
-        <li v-for="vtbInfo in activeFollowedVtbInfos" :key="vtbInfo.mid" :style="{ height: `${vtbInfo.height}px` }" class="virtual-list-item">
-          <div class="virtual-list-item-media">
-            <img class="virtual-list-item-media-avatar" :src="vtbInfo.face" alt=""/>
-            <div class="virtual-list-item-media-body">
-              <h3 class="virtual-list-item-media-title">{{ vtbInfo.uname }}</h3>
-              <p class="virtual-list-item-media-content">{{ vtbInfo.sign }}</p>
-            </div>
-            <div class="virtual-list-item-media-action">
-              <a class="virtual-list-item-media-unfollow" @click="toggleFollow(vtbInfo.mid)">取关</a>
-              |
-              <a class="virtual-list-item-media-enter-room" @click="enterRoom(vtbInfo.roomid)">进入直播间</a>
-              |
-              <a class="virtual-list-item-media-set-list" @click="handleSetListModalShow(vtbInfo.mid)">设置分组</a>
-            </div>
-          </div>
-        </li>
-      </uL>
-    </vue-auto-virtual-scroll-list>
+
+    <virtual-list style="height: 700px; overflow-y: auto;"
+                  :data-key="'mid'"
+                  :data-sources="activeFollowedVtbInfos"
+                  :data-component="itemComponent"
+                  :extra-props="{toggleFollow: toggleFollow, enterRoom:enterRoom, handleSetListModalShow:handleSetListModalShow }"
+    />
 
     <div v-show="isSetListModalVisible" id="modal-set-list" class="modal">
       <div class="modal-content">
@@ -47,13 +34,15 @@
 
 <script>
 import { FollowListService, LivePlayService } from '@/app/services'
-import VueAutoVirtualScrollList from 'vue-auto-virtual-scroll-list'
 import { mapGetters } from 'vuex'
+import FollowListItem from './FollowListItem'
+import VirtualList from 'vue-virtual-scroll-list'
 
 export default {
   name: 'FollowList',
   data () {
     return {
+      itemComponent: FollowListItem,
       followListService: null,
       isSetListModalVisible: false,
       selectedVtbInfo: null,
@@ -93,7 +82,7 @@ export default {
     }
   },
   components: {
-    VueAutoVirtualScrollList
+    VirtualList
   },
   created () {
     this.initServices()

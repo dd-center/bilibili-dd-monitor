@@ -98,28 +98,25 @@ export default {
       renameListName: '', // 重命名列表的名称
       renameListId: 0, // 重命名列表的id
       isRenameListModalVisible: false, // 重命名分组的显示状态
-      isRenameListModalSuccessLoading: false, // 重命名分组成功后的通知
-      // backend data
-      followLists: []
+      isRenameListModalSuccessLoading: false // 重命名分组成功后的通知
     }
   },
   created () {
     this.initService()
-    // this.loadData()
   },
   computed: {
-    // ...mapGetters([
-    //   ''
-    // ])
+    ...mapGetters([
+      'followLists'
+    ])
+  },
+  watch: {
+    followLists: function () {
+      console.log('followLists changed')
+    }
   },
   methods: {
     initService () {
       this.followListService = new FollowListService()
-    },
-    loadData () {
-      this.followListService.getFollowLists().subscribe((followedLists) => {
-        this.followLists = followedLists
-      })
     },
     mouseEnter (listId) {
       if (this.setMouseOverIdTimeout) clearTimeout(this.setMouseOverIdTimeout)
@@ -142,51 +139,41 @@ export default {
       // get all follow list ids, then check whether include id that parameter passes
       if (this.followLists.map((followList) => followList.id).includes(id)) {
         this.followListService.deleteFollowList(id).subscribe((followLists) => {
-          this.followLists = followLists
+          this.$store.dispatch('updateFollowLists', followLists)
           this.actionNotify('success', '分组删除成功。')
           this.handleRouterChange()
         })
       }
     },
-    // show create list modal
     showCreateListModal () {
       this.createListModalValue = ''
       this.isCreateListModalVisible = true
     },
-
-    // reset modal state
     handleCreateListModalCancel () {
       this.createListModalValue = ''
       this.isCreateListModalVisible = false
     },
-
     handleCreateListModalSuccess () {
       if (this.followLists.length >= 10) {
         this.actionNotify('warn', '最多只能有十个分组。')
         return
       }
-
       if (this.isEmpty(this.createListModalValue)) {
         this.actionNotify('warn', '分组名字不能为空。')
         return
       }
-
       if (this.createListModalValue.length > 20) {
         this.actionNotify('warn', '分组名字过长，最多20个字符。')
         return
       }
-
       if (this.followLists.map((followList) => followList.name).includes(this.createListModalValue)) {
         this.actionNotify('warn', '分组名字重复')
         return
       }
-
       this.isCreateListModalSuccessLoading = true
       this.followListService.addFollowList(this.createListModalValue).subscribe((followLists) => {
-        this.followLists = followLists
-        // cancel loading
+        this.$store.dispatch('updateFollowLists', followLists)
         this.isCreateListModalSuccessLoading = false
-        // hidden modal
         this.isCreateListModalVisible = false
         this.actionNotify('success', '分组创建成功。')
         this.handleRouterChange()
@@ -194,9 +181,6 @@ export default {
     },
     /**
      * "", "    ", => true
-     *
-     * @param str
-     * @return {boolean|*|string}
      */
     isEmpty (str) {
       return !str || str.trim().length === 0
@@ -207,7 +191,7 @@ export default {
       this.isRenameListModalVisible = true
     },
     handleRouterChange () {
-      // NavigationDuplicated: Avoided redundant navigation to current location
+      // fix case NavigationDuplicated: Avoided redundant navigation to current location
       const currentRoutePath = this.$router.currentRoute.path
       if (!currentRoutePath.includes('-1')) {
         this.$router.replace('/list/-1')
@@ -222,7 +206,7 @@ export default {
         if (!this.followLists.map((followList) => followList.name).includes(this.renameListName)) {
           this.isRenameListModalSuccessLoading = true
           this.followListService.renameFollowList(this.renameListId, this.renameListName).subscribe((followLists) => {
-            this.followLists = followLists
+            this.$store.dispatch('updateFollowLists', followLists)
             this.isRenameListModalSuccessLoading = false
             this.isRenameListModalVisible = false
             this.actionNotify('success', '分组名字修改成功。')
@@ -233,9 +217,6 @@ export default {
       } else {
         this.actionNotify('warn', '分组名字过长。')
       }
-    },
-    foo () {
-      console.log('foo')
     }
   }
 }

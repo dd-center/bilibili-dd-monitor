@@ -46,52 +46,29 @@
 </template>
 
 <script>
-import { FollowListService, LivePlayService, VtbInfoService } from '@/app/services'
+import { FollowListService, LivePlayService } from '@/app/services'
 import VueAutoVirtualScrollList from 'vue-auto-virtual-scroll-list'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'FollowList',
   data () {
     return {
       followListService: null,
-      vtbInfoService: null,
-
       isSetListModalVisible: false,
       selectedVtbInfo: null,
       selectedListId: null,
       isSetListModalSuccessLoading: false,
-
-      activeListId: -1, // - 1, 0,...
-      activeFollowList: {}, // for show in content page
-      activeFollowedVtbInfos: [], // for show in content page
-
-      // backend data
-      followLists: []
+      activeListId: -1 // - 1, 0,...
     }
   },
-  components: {
-    VueAutoVirtualScrollList
-  },
-  created () {
-    this.initServices()
-    // this.loadData()
-  },
-  beforeRouteUpdate (to, from, next) {
-    this.activeListId = parseInt(to.params.id)
-    this.updateByData(this.followLists)
-    next()
-  },
-  methods: {
-    initServices () {
-      this.followListService = new FollowListService()
-      this.vtbInfoService = new VtbInfoService()
-      this.livePlayService = new LivePlayService()
-    },
-    updateByData (followLists) {
-      // init followLists
-      this.followLists = followLists
-
-      // init activeFollowList
+  computed: {
+    ...mapGetters([
+      'followLists',
+      'followedVtbInfos'
+    ]),
+    activeFollowList () {
+      let activeFollowList = {}
       // handle "全部关注"
       if (this.activeListId === -1) {
         const allFollow = {
@@ -99,32 +76,38 @@ export default {
           name: '全部关注',
           mids: []
         }
-        followLists.forEach((followList) => allFollow.mids.push(...followList.mids))
-        this.activeFollowList = allFollow
+        this.followLists.forEach((followList) => allFollow.mids.push(...followList.mids))
+        activeFollowList = allFollow
       } else {
         // handle listId >=0
-        followLists.forEach((followList) => {
+        this.followLists.forEach((followList) => {
           if (followList.id === this.activeListId) {
-            this.activeFollowList = followList
+            activeFollowList = followList
           }
         })
       }
-      // make sure activeFollowList NOT be {}
-      if (this.activeFollowList.length === 0) return
-
-      // init activeFollowedVtbInfos by activeFollowList from backend followedVtbInfos
-      this.vtbInfoService.getFollowedVtbInfos().subscribe((followedVtbInfos) => {
-        this.activeFollowedVtbInfos = followedVtbInfos.filter((vtbInfo) => this.activeFollowList.mids.includes(vtbInfo.mid))
-      })
+      return activeFollowList
     },
-    loadData () {
-      this.followListService.getFollowLists().subscribe((followLists) => {
-        this.updateByData(followLists)
-      })
+    activeFollowedVtbInfos () {
+      return this.followedVtbInfos.filter((vtbInfo) => this.activeFollowList.mids.includes(vtbInfo.mid))
+    }
+  },
+  components: {
+    VueAutoVirtualScrollList
+  },
+  created () {
+    this.initServices()
+  },
+  beforeRouteUpdate (to, from, next) {
+    this.activeListId = parseInt(to.params.id)
+    next()
+  },
+  methods: {
+    initServices () {
+      this.followListService = new FollowListService()
+      this.livePlayService = new LivePlayService()
     },
     handleSetListModalShow (selectedMid) {
-      // MUST load newest followLists
-      this.loadData()
       this.selectedVtbInfo = this.activeFollowedVtbInfos.find((vtbInfo) => vtbInfo.mid === selectedMid)
       this.isSetListModalVisible = true
     },
@@ -137,31 +120,24 @@ export default {
         this.actionNotify('warn', '请选择分组。')
         return
       }
-
       this.isSetListModalSuccessLoading = true
       this.followListService.addMidsToFollowList([this.selectedVtbInfo.mid], this.selectedListId).subscribe((followLists) => {
-        this.updateByData(followLists)
         this.isSetListModalSuccessLoading = false
         this.isSetListModalVisible = false
         this.actionNotify('success', '设置成功。')
-        this.$parent.loadData()
+        this.$store.dispatch('updateFollowLists', followLists)
       })
     },
     isValidListId (listId) {
       return listId !== null && listId !== undefined
     },
     toggleFollow (mid) {
-      this.followListService.toggleFollow(mid).subscribe(() => {
-        this.loadData()
+      this.followListService.toggleFollow(mid).subscribe((followLists) => {
+        this.$store.dispatch('updateFollowLists', followLists)
       })
-      // better optimization: The parent passes data down to the child via props, and the child sends messages to the parent via events.
-      this.$parent.loadData()
     },
     enterRoom (roomid) {
       this.livePlayService.enterRoom(roomid)
-    },
-    bar () {
-      console.log('bar')
     }
   }
 }

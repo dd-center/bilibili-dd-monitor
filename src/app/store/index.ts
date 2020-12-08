@@ -18,6 +18,9 @@ export default new Vuex.Store({
     vtbInfos: (state) => {
       return state.vtbInfos
     },
+    followLists: (state) => {
+      return state.followLists
+    },
     followedVtbMids: (state): number[] => {
       const followedVtbMids: number[] = []
       state.followLists.forEach((followList: FollowList) => {
@@ -60,7 +63,7 @@ export default new Vuex.Store({
       state.updateInfo = `update vtb count: ${newVtbInfos.length}`
       console.log('Now vtbInfos:', state.vtbInfos.length)
     },
-    //todo diff compare and update
+    // todo diff compare and update
     updateFollowLists (state, followLists: FollowList[]) {
       state.followLists = followLists
     }

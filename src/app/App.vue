@@ -30,6 +30,11 @@
           </li>
         </ul>
       </nav>
+      <div class="real-time-info">
+        <p>{{ 'vtbInfos : ' + vtbInfos.length }}</p>
+        <p>{{ updateInfo }}</p>
+        <p>{{ 'followedVtbMids ' + followedVtbMids.length }}</p>
+      </div>
     </div>
     <!-- main-->
     <main class="content">
@@ -42,9 +47,15 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  mounted () {
-    // warning: only after mounted() , we can use vue-notifications
+  computed: {
+    ...mapGetters([
+      'vtbInfos',
+      'followedVtbMids',
+      'updateInfo'
+    ])
   },
   methods: {
     subIsActive (routePath) {
@@ -139,6 +150,12 @@ export default {
 
 .content {
   flex: 1;
+}
+
+.real-time-info {
+  position: fixed;
+  bottom: 0;
+  width: 12.5em;
 }
 
 // override default style

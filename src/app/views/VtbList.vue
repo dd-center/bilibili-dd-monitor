@@ -7,10 +7,6 @@
       </button>
     </div>
     <p>{{ searchIndicator }}</p>
-    <p>{{ 'vtbInfos.length: ' + vtbInfos.length }}</p>
-    <p>{{ 'filteredVtbInfos.length: ' + filteredVtbInfos.length }}</p>
-    <p>{{ updateInfo }}</p>
-    <p>{{ 'followedVtbMids ' + followedVtbMids.length }}</p>
     <br/>
     <!--https://github.com/tangbc/vue-virtual-scroll-list/issues/237#issuecomment-641935872-->
     <virtual-list style="height: 700px; overflow-y: auto;"

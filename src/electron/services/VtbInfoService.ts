@@ -26,9 +26,8 @@ export class VtbInfoService {
     socket.on('info', (infos: VtbInfo[]) => {
       // here are network statistics
       const timeInterval = Date.now() - lastInfoTime
-      console.log('info.')
-
       lastInfoTime = Date.now()
+
       totalTimeInterval += timeInterval
       infoEventCount++
       const averageInternalInMilliSeconds = Math.round(totalTimeInterval / infoEventCount)
@@ -42,7 +41,7 @@ export class VtbInfoService {
 
       // if have update function, call it
       if (this.update) {
-        this.update([...this.vtbInfosMap.values()], infos)
+        this.update([...this.vtbInfosMap.values()], infos.sort(this._compareByOnlineDesc))
       }
 
       // if has once update function, call it and reset to null
@@ -105,10 +104,6 @@ export class VtbInfoService {
   getVtbInfos (): VtbInfo[] {
     return [...this.vtbInfosMap.values()].sort(this._compareByOnlineDesc)
   }
-
-  // sortVtbInfos (): VtbInfo[] {
-  //
-  // }
 
   /**
    * get followed vtb infos

@@ -133,7 +133,6 @@ export class FollowListService {
   }
 
   /**
-   * @deprecated don't use
    * get all mids of followed vtb infos
    */
   static getFollowedVtbMidsSync (): number[] {

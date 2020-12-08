@@ -249,19 +249,8 @@ app.on('ready', async () => {
   initUpdate()
   initSettingsConfiguration()
   initIpcMainListeners()
-
-  // renderer process
-  // make sure firstly start app to avoid lose first vtbInfos
   mainWindow = await createWindow()
-
   initServices()
-
-  // main process
-  try {
-    // initApp()
-  } catch (e) {
-    console.error('init app failed:', e.toString())
-  }
 })
 
 // Exit cleanly on request from parent process in development mode.

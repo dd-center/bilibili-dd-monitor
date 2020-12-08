@@ -38,6 +38,7 @@ reduce subsequent request network traffic significantly
 - [x] in vtbList page, when user searches by input, use debounce/throttle to decrease DOM event trigger rate to reduce memory usage.
 - [ ] icons lazy load
 - [ ] highlight search result text
+- [ ] make follow menu layout fixed 
 
 ## bug fix
 - [x] /follow router doesn't highlight when navigate to its sub route

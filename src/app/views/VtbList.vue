@@ -9,62 +9,42 @@
     </div>
 
     <br/>
-    <vue-auto-virtual-scroll-list :totalHeight="700" :defaultHeight="80" style="width: 100%;">
-      <uL class="virtual-list">
-        <li v-for="vtbInfo in vtbInfos" :key="vtbInfo.mid" :style="{ height: `${vtbInfo.height}px` }" class="virtual-list-item">
-          <div class="virtual-list-item-media">
-            <img class="virtual-list-item-media-avatar" :src="vtbInfo.face" alt=""/>
-            <div class="virtual-list-item-media-body">
-              <h3 class="virtual-list-item-media-title">{{ vtbInfo.uname }}</h3>
-              <p class="virtual-list-item-media-content">{{ vtbInfo.sign }}</p>
-            </div>
-            <div class="virtual-list-item-media-info">
-              <div v-if="vtbInfo.liveStatus === 1" class="virtual-list-item-media-online">
-                online
-                <i class="fas fa-fire"></i>
-                {{ vtbInfo.online }}
-              </div>
-              <div v-if="vtbInfo.liveStatus !== 1" class="virtual-list-item-media-offline">offline</div>
-            </div>
-            <div class="virtual-list-item-media-action">
-              <a v-if="followedVtbMids.includes(vtbInfo.mid)" class="virtual-list-item-media-unfollow" @click="toggleFollow(vtbInfo.mid)">取关</a>
-              <a v-if="!followedVtbMids.includes(vtbInfo.mid)" class="virtual-list-item-media-follow" @click="toggleFollow(vtbInfo.mid)">关注</a>
-              |
-              <a class="virtual-list-item-media-enter-room" @click="enterRoom(vtbInfo.roomid)">进入直播间</a>
-            </div>
-          </div>
-        </li>
-      </uL>
-    </vue-auto-virtual-scroll-list>
+    <!--https://github.com/tangbc/vue-virtual-scroll-list/issues/237#issuecomment-641935872-->
+    <virtual-list style="height: 700px; overflow-y: auto;"
+                  :data-key="'mid'"
+                  :data-sources="vtbInfos"
+                  :data-component="itemComponent"
+                  :extra-props="{ followedVtbMids, toggleFollow: toggleFollow, enterRoom:enterRoom }"
+    />
   </div>
 </template>
 
 <script>
-import VueAutoVirtualScrollList from 'vue-auto-virtual-scroll-list'
+import VirtualListItem from '../components/VirtualListItem'
+import VirtualList from 'vue-virtual-scroll-list'
 import { VtbInfoService, FollowListService, LivePlayService } from '@/app/services/index'
 import store from '../store'
-import { mapGetters } from 'vuex'
-import { VtbInfo } from '@/interfaces'
 
 export default {
   name: 'VtbList',
   components: {
-    VueAutoVirtualScrollList
+    VirtualList
   },
   data () {
     return {
       userInput: '',
       filteredVtbInfos: [], // filtered from vtbInfos
+      followedVtbMids: [], // for showing follow/unfollow text
 
-      followedVtbMids: [] // for showing follow/unfollow text
+      itemComponent: VirtualListItem
     }
   },
   computed: {
-    vtbInfos: () => store.state.vtbInfosMap.values()
+    vtbInfos: () => [...store.state.vtbInfosMap.values()]
   },
   created () {
     console.log(store.state.count)
-    // this.initService()
+    this.initService()
     // this.loadData()
   },
   methods: {
@@ -102,12 +82,11 @@ export default {
     },
 
     enterRoom (roomid) {
+      console.log('vtb list:enter room')
       this.livePlayService.enterRoom(roomid)
     },
-
-    scrollToLastViewLocation () {
-      // https://github.com/cristovao-trevisan/vue-auto-virtual-scroll-list
-      // setIndex() method utility
+    foo () {
+      console.log('vtb list: foo')
     }
   }
 }
@@ -140,92 +119,4 @@ export default {
   }
 }
 
-.virtual-list-item {
-  border-bottom: #e2e2e2 solid 1px;
-  list-style: none;
-  margin-left: 20px;
-  margin-right: 20px;
-  color: #666262;
-  font-size: 1rem;
-
-  &:hover {
-    background-color: rgba(66, 185, 131, 0.1);
-  }
-
-  &-media {
-    display: flex;
-    align-items: center;
-
-    &-body {
-      margin-top: 5px;
-      margin-bottom: 5px;
-    }
-
-    &-title {
-      font-size: 1em;
-      line-height: 2em;
-      font-weight: 400;
-    }
-
-    &-content {
-      font-size: 0.85em;
-      line-height: 2em;
-    }
-
-    &-info {
-      flex: 0 0 140px;
-      font-size: 0.85em;
-    }
-
-    &-online {
-      display: inline;
-      color: #4cd495;
-      border: #4cd495 solid 1px;
-      border-radius: 5px;
-      padding: 2px 4px;
-    }
-
-    &-offline {
-      display: inline;
-      color: #df7373;
-      border: #df7373 solid 1px;
-      border-radius: 5px;
-      padding: 2px 4px;
-    }
-
-    &-avatar {
-      margin-left: 1em;
-      margin-right: 1em;
-      width: 40px;
-      height: 40px;
-
-      border-radius: 50%;
-      display: block;
-    }
-
-    &-body {
-      flex: 1;
-    }
-
-    &-action {
-      font-size: 0.85em;
-      margin-right: 1em;
-    }
-
-    &-follow {
-      cursor: pointer;
-      color: #3da2ff;
-    }
-
-    &-unfollow {
-      cursor: pointer;
-      color: #f57373;
-    }
-
-    &-enter-room {
-      cursor: pointer;
-      color: #3da2ff;
-    }
-  }
-}
 </style>

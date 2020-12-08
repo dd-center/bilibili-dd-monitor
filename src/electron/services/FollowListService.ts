@@ -15,7 +15,7 @@ export class FollowListService {
         name: '默认分组',
         mids: []
       }
-      setting.set(FollowListService.FOLLOW_LISTS, JSON.stringify([defaultFollowList]))
+      setting.setSync(FollowListService.FOLLOW_LISTS, JSON.stringify([defaultFollowList]))
     }
   }
 

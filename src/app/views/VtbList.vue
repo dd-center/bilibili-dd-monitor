@@ -79,9 +79,9 @@ export default {
       // trigger init search by ''
       store.dispatch('searchVtbInfosByName', this.searchInput)
 
+      // refactor to vuex
       this.followListService.getFollowedVtbMids().subscribe((followedVtbMids) => {
         this.followedVtbMids = followedVtbMids
-        console.log(`vtblist: this.followedVtbMids:${this.followedVtbMids.length}`)
       })
     },
     computeSearch: _.debounce(function () {
@@ -89,10 +89,7 @@ export default {
       setTimeout(() => {
         this.isSearchCalculating = false
         this.searchInputIsDirty = false
-        // search
-        console.log(`search input: ${this.searchInput}`)
         store.dispatch('searchVtbInfosByName', this.searchInput)
-        console.log('search done')
       }, 1000)
     }, 500),
     toggleFollow (mid) {

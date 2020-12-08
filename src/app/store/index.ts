@@ -12,11 +12,8 @@ export default new Vuex.Store({
     filteredVtbInfos: [] as Array<VtbInfo>,
 
     // follow
-    followLists: [] as Array<FollowList>,
-    followedVtbMids: [] as number[],
-
-    // for test
-    count: 0
+    followLists: [] as Array<FollowList>
+    // followedVtbMids: [] as number[],
   },
   // aim for computed/derived data design API
   getters: {
@@ -29,8 +26,14 @@ export default new Vuex.Store({
       return [...state.vtbInfosMap.values()]
     },
     filteredVtbInfos: (state) => {
-      console.log(`state.filteredVtbInfos.length:${state.filteredVtbInfos.length}`)
       return state.filteredVtbInfos
+    },
+    followedVtbMids: (state) => {
+      const followedVtbMids: number[] = []
+      state.followLists.forEach((followList: FollowList) => {
+        followedVtbMids.push(...followList.mids)
+      })
+      return followedVtbMids
     }
   },
   // MUST sync
@@ -48,16 +51,22 @@ export default new Vuex.Store({
       state.filteredVtbInfos = [...state.vtbInfosMap.values()].filter((vtbInfo: VtbInfo) => vtbInfo.uname?.includes(name))
       console.log('[vuex:mutations:searchVtbInfosByName end]')
       console.log(`[vuex:mutations:searchVtbInfosByName state.filteredVtbInfos.length]: ${state.filteredVtbInfos.length}`)
+    },
+    initFollowLists (state, followLists: FollowList[]) {
+      state.followLists = followLists
     }
   },
   // can be Async
   actions: {
-    updateVtbInfos ({ commit, state }, vtbInfos) {
+    updateVtbInfos ({ commit, state }, vtbInfos: VtbInfo[]) {
       commit('updateVtbInfos', vtbInfos)
     },
-    searchVtbInfosByName ({ commit, state }, name) {
+    searchVtbInfosByName ({ commit, state }, name: string) {
       console.log(`[vuex:actions:searchVtbInfosByName]: ${name}`)
       commit('searchVtbInfosByName', name)
+    },
+    initFollowLists ({ commit, state }, followLists: FollowList[]) {
+      commit('initFollowLists', followLists)
     }
   },
   modules: {}

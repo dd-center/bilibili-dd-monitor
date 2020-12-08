@@ -28,8 +28,9 @@ work in progress.
     - 关闭所有播放器窗口
   - 其他/后期支持/关于/检查更新
 - [ ] Tray mode
+- [ ] loading indicator UI
 
-## code refactor & performance improvement
+## performance improvement & feature enhances
 - [x] custom action message feedback UI by vue-notification
 - [x] migrate NgZone API to vuex store
 - [x] change vtbInfo update logic to ipcMain/ipcRenderer model(server push mode) to

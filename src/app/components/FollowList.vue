@@ -74,7 +74,7 @@ export default {
   },
   created () {
     this.initServices()
-    this.loadData()
+    // this.loadData()
   },
   beforeRouteUpdate (to, from, next) {
     this.activeListId = parseInt(to.params.id)
@@ -110,6 +110,7 @@ export default {
         })
       }
       // make sure activeFollowList NOT be {}
+      if (this.activeFollowList.length === 0) return
 
       // init activeFollowedVtbInfos by activeFollowList from backend followedVtbInfos
       this.vtbInfoService.getFollowedVtbInfos().subscribe((followedVtbInfos) => {

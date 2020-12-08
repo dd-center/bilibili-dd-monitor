@@ -86,6 +86,14 @@ const initServices = () => {
 
   // init socket.io
   vtbInfosService = new VtbInfoService()
+  // region VtbInfo
+  ipcMain.on('getVtbInfos', (event: Electron.IpcMainEvent) => {
+    event.reply('getVtbInfosReply', vtbInfosService.getVtbInfos())
+  })
+  ipcMain.on('getFollowedVtbInfos', (event: Electron.IpcMainEvent) => {
+    event.reply('getFollowedVtbInfosReply', vtbInfosService.getFollowedVtbInfos())
+  })
+  // endregion
 
   // init follow setting
   FollowListService.initFollowListsSync()
@@ -145,16 +153,10 @@ const initServices = () => {
   })
 }
 
+/**
+ * depend on vtbInfosService, must init after new VtbInfosService()
+ */
 const initIpcMainListeners = () => {
-  // region VtbInfo
-  ipcMain.on('getVtbInfos', (event: Electron.IpcMainEvent) => {
-    event.reply('getVtbInfosReply', vtbInfosService.getVtbInfos())
-  })
-  ipcMain.on('getFollowedVtbInfos', (event: Electron.IpcMainEvent) => {
-    event.reply('getFollowedVtbInfosReply', vtbInfosService.getFollowedVtbInfos())
-  })
-  // endregion
-
   // region notification
   ipcMain.on('setIsNotifiedOnStart', (event: Electron.IpcMainEvent, isNotifiedOnStart: boolean) => {
     event.reply('setIsNotifiedOnStartReply', SettingService.setIsNotifiedOnStartSync(isNotifiedOnStart))
@@ -208,10 +210,10 @@ const initIpcMainListeners = () => {
 }
 
 const initApp = () => {
-  initUpdate()
-  initSettingsConfiguration()
-  initServices()
-  initIpcMainListeners()
+  // initUpdate()
+  // initSettingsConfiguration()
+  // initServices()
+  // initIpcMainListeners()
 }
 
 // Quit when all windows are closed.
@@ -244,13 +246,19 @@ app.on('ready', async () => {
     }
   }
 
+  initUpdate()
+  initSettingsConfiguration()
+  initIpcMainListeners()
+
   // renderer process
   // make sure firstly start app to avoid lose first vtbInfos
   mainWindow = await createWindow()
 
+  initServices()
+
   // main process
   try {
-    initApp()
+    // initApp()
   } catch (e) {
     console.error('init app failed:', e.toString())
   }

@@ -17,7 +17,6 @@ export default class VtbInfoUpdateListenerService {
 
   initVtbInfosUpdateListener () {
     this.ipcRenderer.on('updateVtbInfos', (event: Electron.Event, vtbInfos: VtbInfo[]) => {
-      console.log(`[ipcRenderer]updateVtbInfos:${vtbInfos.length}`)
       this.store.dispatch('updateVtbInfos', vtbInfos)
     })
   }

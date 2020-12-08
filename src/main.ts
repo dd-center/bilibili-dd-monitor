@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './app/App.vue'
 import router from './app/router'
 import store from './app/store'
-import { NoticeService, VtbInfoUpdateListenerService } from '@/app/services'
+import { FollowListService, NoticeService, VtbInfoUpdateListenerService } from '@/app/services'
 
 // import font awesome icon
 // https://github.com/FortAwesome/vue-fontawesome#installation
@@ -27,6 +27,7 @@ import 'vue-select/dist/vue-select.css'
 
 // https://github.com/euvl/vue-notification/
 import Notifications from 'vue-notification'
+import { FollowList } from '@/interfaces'
 
 library.add(
   faSignal,
@@ -70,6 +71,13 @@ new Vue({
   created () {
     const noticeService = new NoticeService()
     console.log('init notice service in app.')
+    // init followList to vuex
+    const followListService = new FollowListService()
+    // get followLists can be async
+    followListService.getFollowLists().subscribe((followLists: FollowList[]) => {
+      console.log('INIT', 'GET followLists done', followLists.length)
+      store.dispatch('initFollowLists', followLists)
+    })
     const vtbInfoUpdateListenerService = new VtbInfoUpdateListenerService()
     console.log('vtbInfoUpdateListenerService init.')
   }

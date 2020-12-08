@@ -9,6 +9,8 @@ export default new Vuex.Store({
     // vtb info map
     vtbInfosMap: new Map<number, VtbInfo>(),
 
+    filteredVtbInfos: [] as Array<VtbInfo>,
+
     // follow
     followLists: [] as Array<FollowList>,
     followedVtbMids: [] as number[],
@@ -26,10 +28,9 @@ export default new Vuex.Store({
     vtbInfos: (state): VtbInfo[] => {
       return [...state.vtbInfosMap.values()]
     },
-
-    // compute filterVtbInfosByName()
-    filterVtbInfosByName: (state) => (name: string): VtbInfo[] => {
-      return [...state.vtbInfosMap.values()].filter((vtbInfo: VtbInfo) => vtbInfo.uname?.includes(name))
+    filteredVtbInfos: (state) => {
+      console.log(`state.filteredVtbInfos.length:${state.filteredVtbInfos.length}`)
+      return state.filteredVtbInfos
     }
   },
   // MUST sync
@@ -41,8 +42,12 @@ export default new Vuex.Store({
       })
       console.log(`now vtb count: ${state.vtbInfosMap.size}`)
     },
-    increment (state) {
-      state.count++
+    // filter vtbInfos by search
+    searchVtbInfosByName (state, name: string) {
+      console.log(`[vuex:mutations:searchVtbInfosByName start]: ${name}`)
+      state.filteredVtbInfos = [...state.vtbInfosMap.values()].filter((vtbInfo: VtbInfo) => vtbInfo.uname?.includes(name))
+      console.log('[vuex:mutations:searchVtbInfosByName end]')
+      console.log(`[vuex:mutations:searchVtbInfosByName state.filteredVtbInfos.length]: ${state.filteredVtbInfos.length}`)
     }
   },
   // can be Async
@@ -50,8 +55,9 @@ export default new Vuex.Store({
     updateVtbInfos ({ commit, state }, vtbInfos) {
       commit('updateVtbInfos', vtbInfos)
     },
-    increment ({ commit }) {
-      commit('increment')
+    searchVtbInfosByName ({ commit, state }, name) {
+      console.log(`[vuex:actions:searchVtbInfosByName]: ${name}`)
+      commit('searchVtbInfosByName', name)
     }
   },
   modules: {}

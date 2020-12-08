@@ -244,15 +244,16 @@ app.on('ready', async () => {
     }
   }
 
+  // renderer process
+  // make sure firstly start app to avoid lose first vtbInfos
+  mainWindow = await createWindow()
+
   // main process
   try {
     initApp()
   } catch (e) {
     console.error('init app failed:', e.toString())
   }
-
-  // renderer process
-  mainWindow = await createWindow()
 })
 
 // Exit cleanly on request from parent process in development mode.

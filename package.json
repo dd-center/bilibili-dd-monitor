@@ -19,6 +19,7 @@
     "@fortawesome/vue-fontawesome": "^2.0.0",
     "core-js": "^3.6.5",
     "electron-settings": "^4.0.2",
+    "lodash": "^4.17.20",
     "request": "^2.88.0",
     "rxjs": "^6.6.3",
     "socket.io-client": "^2.3.0",

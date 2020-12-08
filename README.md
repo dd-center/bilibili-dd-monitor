@@ -29,10 +29,14 @@ work in progress.
   - 其他/后期支持/关于/检查更新
 - [ ] Tray mode
 
-## code refactor
-- [x] custom action message feedback UI
-- [ ] migrate NgZone API to vuex store and incremental update
+## code refactor & performance improvement
+- [x] custom action message feedback UI by vue-notification
+- [x] migrate NgZone API to vuex store
+- [x] change vtbInfo update logic to ipcMain/ipcRenderer model(server push mode) to
+reduce subsequent request network traffic significantly 
+- [x] in vtbList page, when user searches by input, use debounce/throttle to decrease DOM event trigger rate to reduce memory usage.
 - [ ] icons lazy load
+- [ ] highlight search result text
 
 ## bug fix
 - [x] /follow router doesn't highlight when navigate to its sub route

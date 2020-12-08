@@ -23,3 +23,12 @@ Vue切换路由时，
 这样，只有第一次数据量较大，后续更新压力很小。
 - 创建 VtbInfoUpdateListenerService。专门监听后端数据更新，后端在数据更新时会使用IPC发送到前端，
 前端触发actions，最终更新到vuex。
+
+## input search performance improvement
+- visual difference about original/debounce/throttle event
+> http://demo.nimius.net/debounce_throttle/
+
+假设你鼠标来回移动的频率是:每10次/s
+- original => 每10次/s
+- debounce 限制为最多20次/s，那么callback fn不会触发
+- debounce 限制为最高频率为5次/s，那么callback fn触发最多也就5次/s

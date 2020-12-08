@@ -49,8 +49,7 @@ export default {
     enterRoom: {
       type: Function
     }
-  },
-  methods: {}
+  }
 }
 </script>
 

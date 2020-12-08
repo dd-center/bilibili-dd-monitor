@@ -2,17 +2,18 @@
   <div class="vtuber-list">
     <!-- search button -->
     <div class="search">
-      <input class="search-input" v-model="userInput"/>
-      <button class="search-button" @click="filter(userInput)">
+      <input class="search-input" v-model="searchInput"/>
+      <button class="search-button" @click="filter(searchInput)">
         <font-awesome-icon class="search-icon" :icon="['fas', 'search']"/>
       </button>
+      <span>{{ searchIndicator }}</span>
     </div>
 
     <br/>
     <!--https://github.com/tangbc/vue-virtual-scroll-list/issues/237#issuecomment-641935872-->
     <virtual-list style="height: 700px; overflow-y: auto;"
                   :data-key="'mid'"
-                  :data-sources="vtbInfos"
+                  :data-sources="filteredVtbInfos"
                   :data-component="itemComponent"
                   :extra-props="{ followedVtbMids, toggleFollow: toggleFollow, enterRoom:enterRoom }"
     />
@@ -22,8 +23,10 @@
 <script>
 import VirtualListItem from '../components/VirtualListItem'
 import VirtualList from 'vue-virtual-scroll-list'
-import { VtbInfoService, FollowListService, LivePlayService } from '@/app/services/index'
+import { FollowListService, LivePlayService } from '@/app/services/index'
 import store from '../store'
+import { mapGetters } from 'vuex'
+import _ from 'lodash'
 
 export default {
   name: 'VtbList',
@@ -32,61 +35,73 @@ export default {
   },
   data () {
     return {
-      userInput: '',
-      filteredVtbInfos: [], // filtered from vtbInfos
-      followedVtbMids: [], // for showing follow/unfollow text
+      // virtual list item
+      itemComponent: VirtualListItem,
 
-      itemComponent: VirtualListItem
+      // search
+      searchInput: '',
+      searchInputIsDirty: false,
+      isSearchCalculating: false,
+
+      followedVtbMids: [] // for showing follow/unfollow text
     }
   },
   computed: {
-    vtbInfos: () => [...store.state.vtbInfosMap.values()]
+    searchIndicator: function () {
+      if (this.isSearchCalculating) {
+        return '⟳ Fetching new results'
+      } else if (this.searchInputIsDirty) {
+        return '... Typing'
+      } else {
+        return `✓ Done : ${this.filteredVtbInfos.length} results`
+      }
+    },
+    ...mapGetters([
+      'filteredVtbInfos'
+    ])
+  },
+  watch: {
+    searchInput: function () {
+      this.searchInputIsDirty = true
+      this.computeSearch()
+    }
   },
   created () {
-    console.log(store.state.count)
     this.initService()
-    // this.loadData()
+    this.loadData()
   },
   methods: {
     initService () {
-      this.vtbInfoService = new VtbInfoService()
       this.followListService = new FollowListService()
       this.livePlayService = new LivePlayService()
     },
-
     loadData () {
-      this.vtbInfoService.getVtbInfos().subscribe((vtbInfos) => {
-        // init vtbInfos
-        this.vtbInfos = vtbInfos
+      // trigger init search by ''
+      store.dispatch('searchVtbInfosByName', this.searchInput)
 
-        // init followedVtbMids
-        this.followListService.getFollowedVtbMids().subscribe((followedVtbMids) => {
-          this.followedVtbMids = followedVtbMids
-        })
-
-        // init filteredVtbInfos
-        this.filteredVtbInfos = this.vtbInfos
+      this.followListService.getFollowedVtbMids().subscribe((followedVtbMids) => {
+        this.followedVtbMids = followedVtbMids
+        console.log(`vtblist: this.followedVtbMids:${this.followedVtbMids.length}`)
       })
     },
-
-    filter (userInput) {
-      this.vtbInfoService.getVtbInfos().subscribe((vtbInfos) => {
-        this.filteredVtbInfos = vtbInfos.filter((vtbInfo) => vtbInfo.uname.includes(userInput))
-      })
-    },
-
+    computeSearch: _.debounce(function () {
+      this.isSearchCalculating = true
+      setTimeout(() => {
+        this.isSearchCalculating = false
+        this.searchInputIsDirty = false
+        // search
+        console.log(`search input: ${this.searchInput}`)
+        store.dispatch('searchVtbInfosByName', this.searchInput)
+        console.log('search done')
+      }, 1000)
+    }, 500),
     toggleFollow (mid) {
       this.followListService.toggleFollow(mid).subscribe((followedVtbMids) => {
         this.followedVtbMids = followedVtbMids
       })
     },
-
     enterRoom (roomid) {
-      console.log('vtb list:enter room')
       this.livePlayService.enterRoom(roomid)
-    },
-    foo () {
-      console.log('vtb list: foo')
     }
   }
 }

@@ -30,10 +30,10 @@
           </li>
         </ul>
       </nav>
-      <div class="real-time-info">
-        <p>{{ 'vtbInfos ' + vtbInfos.length }}</p>
-        <p>{{ 'updateVtbCount ' + updateVtbCount }}</p>
-        <p>{{ 'followedVtbMids ' + followedVtbMids.length }}</p>
+      <div class="shield-container">
+        <vue-shield class="shield-item" :title="'已获取 vtubers'" :content="vtbCount"/>
+        <vue-shield class="shield-item" :title="'正在直播'" :content="livingVtbCount"/>
+        <vue-shield class="shield-item" :title="'正在更新...'" :content="updateVtbCount"/>
       </div>
     </div>
     <!-- main-->
@@ -48,12 +48,16 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import VueShield from '@/app/components/VueShield'
 
 export default {
+  components: {
+    VueShield
+  },
   computed: {
     ...mapGetters([
-      'vtbInfos',
-      'followedVtbMids',
+      'vtbCount',
+      'livingVtbCount',
       'updateVtbCount'
     ])
   },
@@ -152,10 +156,14 @@ export default {
   flex: 1;
 }
 
-.real-time-info {
+.shield-container {
   position: fixed;
   bottom: 0;
   width: 12.5em;
+}
+
+.shield-item {
+  margin: 6px;
 }
 
 // override default style

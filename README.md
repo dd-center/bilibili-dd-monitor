@@ -19,8 +19,7 @@ work in progress.
   - [x] 列表项：进入直播间
 - [x] 设置
   - [x] 启动时通知正在进行的直播
-- [ ] 左下角Socket.IO指示器：socket.io 事件 + vtb条数
-- [ ] 菜单栏
+- [x] 左下角实时更新指示器UI：vtubers/living/updating count
   - [ ] 窗口
     - 自动布局所有播放器窗口：等分网格法
     - 置顶所有播放器窗口
@@ -37,9 +36,9 @@ work in progress.
 reduce subsequent request network traffic significantly 
 - [x] in vtbList page, when user searches by input, use debounce/throttle to decrease DOM event trigger rate to reduce memory usage.
 - [x] icon images lazy load by browser-level lazy-loading
-- [ ] icon images zip size: different size (10kb-500kb),dimension(A x A)
+- [ ] ~~icon images zip size: different size (10kb-500kb),dimension(A x A)~~
 - [ ] highlight search result text
-- [ ] make follow menu layout fixed 
+- [ ] vtb list sort by `online` field
 
 ## bug fix
 - [x] /follow router doesn't highlight when navigate to its sub route

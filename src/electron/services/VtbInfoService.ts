@@ -41,7 +41,7 @@ export class VtbInfoService {
 
       // if have update function, call it
       if (this.update) {
-        this.update([...this.vtbInfosMap.values()], infos.sort(this._compareByOnlineDesc))
+        this.update([...this.vtbInfosMap.values()], infos)
       }
 
       // if has once update function, call it and reset to null

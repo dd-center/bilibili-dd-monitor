@@ -22,6 +22,9 @@ export default new Vuex.Store({
     vtbCount: (state) => {
       return state.vtbInfos.length
     },
+    livingVtbCount: (state): number => {
+      return state.vtbInfos.filter((vtb: VtbInfo) => vtb.liveStatus === 1).length
+    },
     updateVtbCount: (state) => {
       return state.updateVtbCount
     },
@@ -56,7 +59,7 @@ export default new Vuex.Store({
           const index = state.vtbInfos.findIndex(vtbInfo => vtbInfo.mid === newVtbInfo.mid)
           // found => update existed object
           if (index !== -1) {
-            // todo show diff parts
+            // todo sort and show diff parts
             Vue.set(state.vtbInfos, index, newVtbInfo)
           } else {
             // not found, add this newVtbInfo to state.vtbInfos
@@ -68,7 +71,6 @@ export default new Vuex.Store({
       slog('updateVtbCount', state.updateVtbCount)
       slog('vtbCount', state.vtbInfos.length)
     },
-    // todo diff compare and update
     updateFollowLists (state, followLists: FollowList[]) {
       state.followLists = followLists
     }

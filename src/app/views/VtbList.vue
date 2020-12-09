@@ -6,8 +6,7 @@
         <font-awesome-icon class="search-icon" :icon="['fas', 'search']"/>
       </button>
     </div>
-    <p>{{ searchIndicator }}</p>
-    <br/>
+    <p class="search-indicator">{{ searchIndicator }}</p>
     <!--https://github.com/tangbc/vue-virtual-scroll-list/issues/237#issuecomment-641935872-->
     <virtual-list style="height: 700px; overflow-y: auto;"
                   :data-key="'mid'"
@@ -42,11 +41,11 @@ export default {
   computed: {
     searchIndicator: function () {
       if (this.isSearchCalculating) {
-        return '⟳ Fetching new results'
+        return '⟳ 正在执行搜索...'
       } else if (this.searchInputIsDirty) {
-        return '... Typing'
+        return '⟳ 正在输入...'
       } else {
-        return `✓ Done : ${this.filteredVtbInfos.length} results`
+        return '✓ 搜索完成。结果数：' + this.filteredVtbInfos.length
       }
     },
     ...mapGetters([
@@ -79,10 +78,10 @@ export default {
     computeSearch: _.debounce(function () {
       this.isSearchCalculating = true
       setTimeout(() => {
+        this.searchVtbInfosByName(this.searchInput)
         this.isSearchCalculating = false
         this.searchInputIsDirty = false
-        this.searchVtbInfosByName(this.searchInput)
-      }, 1000)
+      }, 200)
     }, 500),
     searchVtbInfosByName (name) {
       this.filteredVtbInfos = this.vtbInfos.filter((vtbInfo) => vtbInfo.uname?.includes(name))
@@ -103,11 +102,10 @@ export default {
 .search {
   display: flex;
   flex-direction: row;
-  width: 300px;
   margin-left: 20px;
 
   &-input {
-    flex: 1;
+    width: 300px;
     border: 1px solid rgba(147, 128, 108, 0.25);
     border-radius: 4px 0 0 4px;
     padding: 0.5em 0.75em;
@@ -119,6 +117,12 @@ export default {
     border-radius: 0 4px 4px 0;
     background-color: #4cd495;
     cursor: pointer;
+  }
+
+  &-indicator {
+    margin-left: 20px;
+    padding: 4px;
+    border-bottom: #e2e2e2 solid 1px;
   }
 
   &-icon {

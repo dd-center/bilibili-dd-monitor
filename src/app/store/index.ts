@@ -9,7 +9,8 @@ export default new Vuex.Store({
   state: {
     vtbInfos: [] as Array<VtbInfo>,
     followLists: [] as Array<FollowList>,
-    updateVtbCount: 0 as number
+    updateVtbCount: 0 as number,
+    playerWindowCount: 0 as number
   },
   getters: {
     vtbInfos: (state) => {
@@ -17,6 +18,9 @@ export default new Vuex.Store({
     },
     vtbCount: (state) => {
       return state.vtbInfos.length
+    },
+    playerWindowCount: (state) => {
+      return state.playerWindowCount
     },
     livingVtbCount: (state): number => {
       return state.vtbInfos.filter((vtb: VtbInfo) => vtb.liveStatus === 1).length
@@ -64,11 +68,12 @@ export default new Vuex.Store({
         })
       }
       state.updateVtbCount = newVtbInfos.length
-      slog('updateVtbCount', state.updateVtbCount)
-      slog('vtbCount', state.vtbInfos.length)
     },
     updateFollowLists (state, followLists: FollowList[]) {
       state.followLists = followLists
+    },
+    updatePlayerWindowCount (state, count: number) {
+      state.playerWindowCount = count
     }
   },
   actions: {
@@ -77,6 +82,9 @@ export default new Vuex.Store({
     },
     updateFollowLists ({ commit, state }, followLists: FollowList[]) {
       commit('updateFollowLists', followLists)
+    },
+    updatePlayerWindowCount ({ commit, state }, count: number) {
+      commit('updatePlayerWindowCount', count)
     }
   },
   modules: {}

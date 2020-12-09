@@ -28,6 +28,7 @@ import 'vue-select/dist/vue-select.css'
 // https://github.com/euvl/vue-notification/
 import Notifications from 'vue-notification'
 import { FollowList, VtbInfo } from '@/interfaces'
+import PlayerWindowCountListener from '@/app/services/PlayerWindowCountListener'
 
 library.add(
   faSignal,
@@ -87,5 +88,7 @@ new Vue({
     })
     const vtbInfoUpdateListenerService = new VtbInfoUpdateListenerService()
     slog('INIT', 'VtbInfoUpdateListenerService')
+    const playerWindowCountListener = new PlayerWindowCountListener()
+    slog('INIT', 'playerWindowCountListener')
   }
 }).$mount('#app')

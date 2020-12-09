@@ -34,6 +34,7 @@
         <vue-shield class="shield-item" :title="'已获取 vtubers'" :content="vtbCount"/>
         <vue-shield class="shield-item" :title="'正在直播'" :content="livingVtbCount"/>
         <vue-shield class="shield-item" :title="'正在更新...'" :content="updateVtbCount"/>
+        <vue-shield class="shield-item" :title="'当前播放器窗口'" :content="playerWindowCount"/>
       </div>
     </div>
     <!-- main-->
@@ -58,7 +59,8 @@ export default {
     ...mapGetters([
       'vtbCount',
       'livingVtbCount',
-      'updateVtbCount'
+      'updateVtbCount',
+      'playerWindowCount'
     ])
   },
   methods: {

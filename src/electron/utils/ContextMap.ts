@@ -2,7 +2,7 @@ import { PlayerObj } from "@/interfaces";
 import { BrowserWindow } from "electron";
 
 export default class ContextMap<K, V> extends Map {
-  private context: BrowserWindow |undefined;
+  private context: BrowserWindow | undefined | null;
 
   constructor () {
     super()
@@ -10,25 +10,19 @@ export default class ContextMap<K, V> extends Map {
 
   delete (key: number): boolean {
     const result = super.delete(key);
-    if (this.context) {
-      console.log('delete', this.size)
-    }
+    this.handlePlayerWindowCountChange(this.size)
     return result;
   }
 
   set (key: number, value: PlayerObj): this {
     const map = super.set(key, value);
-    if (this.context) {
-      console.log('set', this.size)
-    }
+    this.handlePlayerWindowCountChange(this.size)
     return map
   }
 
   clear (): void {
     super.clear()
-    if (this.context) {
-      console.log('clear', this.size)
-    }
+    this.handlePlayerWindowCountChange(this.size)
   }
 
   attachContext (context: BrowserWindow) {
@@ -38,7 +32,17 @@ export default class ContextMap<K, V> extends Map {
     }
   }
 
+  handlePlayerWindowCountChange (count: number) {
+    if (this.context) {
+      this.context.webContents.send('updatePlayerWindowCount', count)
+    }
+  }
+
+  detachContext () {
+    this.context = null
+  }
+
   printContext () {
-    console.log(this.context)
+    console.log('ContextMap context: ', this.context)
   }
 }

@@ -24,7 +24,7 @@ work in progress.
   - [x] living count
   - [x] updating count
   - [ ] average update internal(ms)
-  - [ ] current window count
+  - [x] current window count
   - [ ] socket.io event
 - [x] 菜单栏：窗口处理
     - [x] 置顶所有播放器窗口

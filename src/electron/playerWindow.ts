@@ -7,17 +7,13 @@ import request from 'request'
 
 const downloadAndSetWindowIcon = (vtbInfo: VtbInfo, tempPath: string, win: Electron.BrowserWindow) => {
   request('' + vtbInfo.face)
-    .pipe(fs.createWriteStream(join(tempPath, `./faces/${vtbInfo.roomid}.jpg`)))
-    .on('close', () => {
-      win.setIcon(nativeImage.createFromPath(join(tempPath, `./faces/${vtbInfo.roomid}.jpg`)))
-    })
+  .pipe(fs.createWriteStream(join(tempPath, `./faces/${vtbInfo.roomid}.jpg`)))
+  .on('close', () => {
+    win.setIcon(nativeImage.createFromPath(join(tempPath, `./faces/${vtbInfo.roomid}.jpg`)))
+  })
 }
 
-export const createPlayerWindow = (
-  app: Electron.App,
-  vtbInfo: VtbInfo,
-  playerObjMap: Map<number, PlayerObj>
-): PlayerObj => {
+export const createPlayerWindow = (app: Electron.App, vtbInfo: VtbInfo, playerObjMap: Map<number, PlayerObj>): PlayerObj => {
   const tempPath = app.getPath('temp')
   // C:\Users\{your-name}\AppData\Local\Temp in windows 10
 
@@ -56,10 +52,10 @@ export const createPlayerWindow = (
   // region load live stream url
   // example https://www.bilibili.com/blackboard/live/live-activity-player.html?enterTheRoom=0&cid=8725120
   win.loadURL(`https://www.bilibili.com/blackboard/live/live-activity-player.html?enterTheRoom=0&cid=${vtbInfo.roomid}`)
-    .then(() => {
-      // inject custom CSS rules
-      win.webContents.insertCSS('.bilibili-live-player-video-logo{display:none}')
-    })
+  .then(() => {
+    // inject custom CSS rules
+    win.webContents.insertCSS('.bilibili-live-player-video-logo{display:none}')
+  })
   // endregion
 
   win.setMenu(null)

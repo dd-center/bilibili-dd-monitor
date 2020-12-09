@@ -1,0 +1,18 @@
+[
+  {
+    id: 2528732444,
+    bounds: { x: 0, y: 0, width: 1920, height: 1080 },
+    workArea: { x: 0, y: 0, width: 1920, height: 1040 },
+    accelerometerSupport: 'unknown',
+    monochrome: false,
+    colorDepth: 24,
+    colorSpace: '{primaries:BT709, transfer:IEC61966_2_1, matrix:RGB, range:FULL}',
+    depthPerComponent: 8,
+    size: { width: 1920, height: 1080 },
+    workAreaSize: { width: 1920, height: 1040 },
+    scaleFactor: 2,
+    rotation: 0,
+    internal: false,
+    touchSupport: 'unknown'
+  }
+]

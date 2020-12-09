@@ -9,6 +9,7 @@ import settings from 'electron-settings'
 import { FollowListService, SettingService, VtbInfoService } from '@/electron/services'
 import { PlayerObj, VtbInfo } from '@/interfaces'
 import { createPlayerWindow } from '@/electron/playerWindow'
+import { createMainWindow } from '@/electron/mainWindow'
 
 let vtbInfosService: VtbInfoService
 let mainWindow: BrowserWindow
@@ -20,54 +21,6 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
 ])
 
-async function createWindow (playerObjMap: Map<number, PlayerObj>) {
-  // Create the browser window.
-  const win = new BrowserWindow({
-    width: 1250,
-    height: 850,
-    maximizable: false,
-    fullscreen: false,
-    fullscreenable: false,
-    resizable: false,
-    icon: 'public/favicon.ico',
-    title: 'bilibili-dd-monitor',
-    webPreferences: {
-      // Use pluginOptions.nodeIntegration, leave this alone
-      // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-      nodeIntegration: (process.env
-        .ELECTRON_NODE_INTEGRATION as unknown) as boolean,
-      preload: path.join(__dirname, 'preload.js')
-    }
-  })
-
-  if (process.env.WEBPACK_DEV_SERVER_URL) {
-    // Load the url of the dev server if in development mode
-    await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL as string)
-    // await win.loadURL('https://www.bilibili.com/blackboard/live/live-activity-player.html?enterTheRoom=0&cid=21396545')
-
-    if (!process.env.IS_TEST) win.webContents.openDevTools()
-  } else {
-    createProtocol('app')
-    // Load the index.html when not in development
-    await win.loadURL('app://./index.html')
-  }
-
-  win.on('close', () => {
-    // clean up vtbInfo service
-    if (vtbInfosService) vtbInfosService.stopUpdate()
-
-    // clean up playerObjMap
-    playerObjMap.forEach((playerObj: PlayerObj) => {
-      if (playerObj.playerWindow) playerObj.playerWindow.close()
-    })
-    playerObjMap.clear()
-
-    // exit app
-    app.quit()
-  })
-
-  return win
-}
 
 const initUpdate = () => {
   console.log('initUpdate')
@@ -79,6 +32,8 @@ const initSettingsConfiguration = () => {
     numSpaces: 2,
     prettify: true
   })
+  // init follow setting
+  FollowListService.initFollowListsSync()
 }
 
 const initServices = () => {
@@ -95,9 +50,6 @@ const initServices = () => {
   })
   // endregion
 
-  // init follow setting
-  FollowListService.initFollowListsSync()
-
   // register live change notifications
   // 上次记录的vtbs（已经处理上播和下播提醒）
   let lastLiveVtbs: number[] = []
@@ -110,8 +62,8 @@ const initServices = () => {
       // 现在正在直播的vtbs
       const nowLiveFollowedVtbs =
         allVtbInfos
-          .filter((vtbInfo: VtbInfo) => (followVtbs.includes(vtbInfo.mid) && vtbInfo.liveStatus === 1))
-          .map((vtbInfo: VtbInfo) => vtbInfo.mid)
+        .filter((vtbInfo: VtbInfo) => (followVtbs.includes(vtbInfo.mid) && vtbInfo.liveStatus === 1))
+        .map((vtbInfo: VtbInfo) => vtbInfo.mid)
       console.log(`nowLiveFollowedVtbs: ${nowLiveFollowedVtbs.length}`)
 
       // 上播vtbs
@@ -200,20 +152,26 @@ const initIpcMainListeners = () => {
     if (playerObjMap.has(roomid)) {
       playerObjMap.get(roomid)!.playerWindow.focus()
     } else {
-      const vtbInfo: VtbInfo = vtbInfosService.getVtbInfos().find((vtbInfo: VtbInfo) => {
-        return vtbInfo.roomid === roomid
-      })!
-      playerObjMap.set(roomid, createPlayerWindow(app, vtbInfo, playerObjMap))
+      if (vtbInfosService) {
+        const vtbInfo: VtbInfo = vtbInfosService.getVtbInfos().find((vtbInfo: VtbInfo) => {
+          return vtbInfo.roomid === roomid
+        })!
+        playerObjMap.set(roomid, createPlayerWindow(app, vtbInfo, playerObjMap))
+      }
     }
   })
   // endregion
 }
 
-const initApp = () => {
-  // initUpdate()
-  // initSettingsConfiguration()
-  // initServices()
-  // initIpcMainListeners()
+const onMainWindowClose = () => {
+  if (mainWindow) {
+    mainWindow.on('close', () => {
+      // stop vtbInfo service
+      if (vtbInfosService) vtbInfosService.stopUpdate()
+      // clean ipcMain listeners
+      ipcMain.removeAllListeners()
+    })
+  }
 }
 
 // Quit when all windows are closed.
@@ -229,12 +187,10 @@ app.on('activate', async () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) {
-    mainWindow = await createWindow(playerObjMap)
+    mainWindow = await createMainWindow(app, playerObjMap)
   }
 })
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
   if (isDevelopment && !process.env.IS_TEST) {
@@ -246,10 +202,15 @@ app.on('ready', async () => {
     }
   }
 
+  // pre setup
   initUpdate()
   initSettingsConfiguration()
   initIpcMainListeners()
-  mainWindow = await createWindow(playerObjMap)
+
+  mainWindow = await createMainWindow(app, playerObjMap)
+  onMainWindowClose()
+
+  // post setup
   initServices()
 })
 

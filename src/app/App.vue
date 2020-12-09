@@ -31,8 +31,8 @@
         </ul>
       </nav>
       <div class="real-time-info">
-        <p>{{ 'vtbInfos : ' + vtbInfos.length }}</p>
-        <p>{{ updateInfo }}</p>
+        <p>{{ 'vtbInfos ' + vtbInfos.length }}</p>
+        <p>{{ 'updateVtbCount ' + updateVtbCount }}</p>
         <p>{{ 'followedVtbMids ' + followedVtbMids.length }}</p>
       </div>
     </div>
@@ -54,7 +54,7 @@ export default {
     ...mapGetters([
       'vtbInfos',
       'followedVtbMids',
-      'updateInfo'
+      'updateVtbCount'
     ])
   },
   methods: {

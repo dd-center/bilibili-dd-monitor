@@ -49,6 +49,11 @@ Vue.config.productionTip = false
 
 Vue.use(Notifications)
 
+declare const window: any
+export const slog = (title: any, content: any): void => {
+  window.slog({ title: title, content: content })
+}
+
 Vue.mixin({
   methods: {
     actionNotify: (type, text) => {
@@ -70,13 +75,13 @@ new Vue({
   render: h => h(App),
   created () {
     const noticeService = new NoticeService()
-    console.log('init notice service in app.')
+    slog('INIT', 'NoticeService')
     const followListService = new FollowListService()
     followListService.getFollowLists().subscribe((followLists: FollowList[]) => {
-      console.log('update followlists')
+      slog('INIT', 'followlists')
       store.dispatch('updateFollowLists', followLists)
     })
     const vtbInfoUpdateListenerService = new VtbInfoUpdateListenerService()
-    console.log('vtbInfoUpdateListenerService init.')
+    slog('INIT', 'VtbInfoUpdateListenerService')
   }
 }).$mount('#app')

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { FollowList, VtbInfo } from '@/interfaces'
+import { slog } from '@/main'
 
 Vue.use(Vuex)
 
@@ -12,11 +13,17 @@ export default new Vuex.Store({
   state: {
     vtbInfos: [] as Array<VtbInfo>,
     followLists: [] as Array<FollowList>,
-    updateInfo: '' as string
+    updateVtbCount: 0 as number
   },
   getters: {
     vtbInfos: (state) => {
       return state.vtbInfos
+    },
+    vtbCount: (state) => {
+      return state.vtbInfos.length
+    },
+    updateVtbCount: (state) => {
+      return state.updateVtbCount
     },
     followLists: (state) => {
       return state.followLists
@@ -36,9 +43,6 @@ export default new Vuex.Store({
         })
       ]
       return followedVtbInfos.sort(_compareByOnlineDesc)
-    },
-    updateInfo: (state) => {
-      return state.updateInfo + ' from getters'
     }
   },
   mutations: {
@@ -60,8 +64,9 @@ export default new Vuex.Store({
           }
         })
       }
-      state.updateInfo = `update vtb count: ${newVtbInfos.length}`
-      console.log('Now vtbInfos:', state.vtbInfos.length)
+      state.updateVtbCount = newVtbInfos.length
+      slog('updateVtbCount', state.updateVtbCount)
+      slog('vtbCount', state.vtbInfos.length)
     },
     // todo diff compare and update
     updateFollowLists (state, followLists: FollowList[]) {

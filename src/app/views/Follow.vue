@@ -109,11 +109,6 @@ export default {
       'followLists'
     ])
   },
-  watch: {
-    followLists: function () {
-      console.log('followLists changed')
-    }
-  },
   methods: {
     initService () {
       this.followListService = new FollowListService()

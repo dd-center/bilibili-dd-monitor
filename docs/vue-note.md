@@ -78,3 +78,8 @@ followedVtbMids => show follow/unfollow
 
 use browser-level image lazy loading ability
 
+## show real time update info 
+- vtubers 2700
+- living ？
+- updating ?
+

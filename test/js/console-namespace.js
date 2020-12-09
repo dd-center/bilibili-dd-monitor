@@ -1,9 +1,10 @@
-// console.log('[INIT]', 'some thing')
+console.log.apply(null, ['test'])
 
 const LOG = function (prefix) {
   prefix = prefix || ''
   return function (...args) {
-    console.log.apply(console, [prefix, ...args])
+    // eslint-disable-next-line no-useless-call
+    console.log.apply(null, [prefix, ...args])
   }
 }
 

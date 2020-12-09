@@ -51,8 +51,7 @@ export default {
     },
     ...mapGetters([
       'vtbInfos',
-      'followedVtbMids',
-      'updateInfo'
+      'followedVtbMids'
     ])
   },
   watch: {

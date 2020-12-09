@@ -1,13 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { FollowList, VtbInfo } from '@/interfaces'
-import { slog } from '@/main'
+import { slog, _compareByOnlineDesc } from '@/main'
 
 Vue.use(Vuex)
-
-const _compareByOnlineDesc = (vtbInfoA: VtbInfo, vtbInfoB: VtbInfo): number => {
-  return vtbInfoB.online - vtbInfoA.online
-}
 
 export default new Vuex.Store({
   state: {

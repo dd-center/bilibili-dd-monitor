@@ -51,7 +51,7 @@ export class VtbInfoService {
       }
     })
 
-    //region socket listeners
+    // region socket listeners
     socket.on('connect', () => {
       console.log('connect.')
     })
@@ -79,7 +79,7 @@ export class VtbInfoService {
     socket.on('error', (error: any) => {
       console.log('error')
     })
-    //endregion
+    // endregion
   }
 
   _initMockData () {

@@ -23,6 +23,7 @@ import VirtualList from 'vue-virtual-scroll-list'
 import { FollowListService, LivePlayService } from '@/app/services/index'
 import { mapGetters } from 'vuex'
 import _ from 'lodash'
+import { _compareByOnlineDesc } from '@/main'
 
 export default {
   name: 'VtbList',
@@ -84,7 +85,7 @@ export default {
       }, 200)
     }, 500),
     searchVtbInfosByName (name) {
-      this.filteredVtbInfos = this.vtbInfos.filter((vtbInfo) => vtbInfo.uname?.includes(name))
+      this.filteredVtbInfos = this.vtbInfos.filter((vtbInfo) => vtbInfo.uname?.includes(name)).sort(_compareByOnlineDesc)
     },
     toggleFollow (mid) {
       this.followListService.toggleFollow(mid).subscribe((followLists) => {

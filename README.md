@@ -36,11 +36,12 @@ work in progress.
 reduce subsequent request network traffic significantly 
 - [x] in vtbList page, when user searches by input, use debounce/throttle to decrease DOM event trigger rate to reduce memory usage.
 - [x] icon images lazy load by browser-level lazy-loading
+- [x] vtb list sort by `online` field
+- [x] change Logic for getting vtb infos data from client pull to server push mode
 - [ ] ~~icon images zip size: different size (10kb-500kb),dimension(A x A)~~
 - [ ] highlight search result text
-- [ ] vtb list sort by `online` field
 
 ## bug fix
 - [x] /follow router doesn't highlight when navigate to its sub route
-- 修改前端vue数据更新逻辑，由后端IPC主动推送数据更新到前端。前端只负责订阅，然后处理
+
 

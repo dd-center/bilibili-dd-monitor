@@ -110,8 +110,8 @@ const initServices = () => {
       // 现在正在直播的vtbs
       const nowLiveFollowedVtbs =
         allVtbInfos
-        .filter((vtbInfo: VtbInfo) => (followVtbs.includes(vtbInfo.mid) && vtbInfo.liveStatus === 1))
-        .map((vtbInfo: VtbInfo) => vtbInfo.mid)
+          .filter((vtbInfo: VtbInfo) => (followVtbs.includes(vtbInfo.mid) && vtbInfo.liveStatus === 1))
+          .map((vtbInfo: VtbInfo) => vtbInfo.mid)
       console.log(`nowLiveFollowedVtbs: ${nowLiveFollowedVtbs.length}`)
 
       // 上播vtbs

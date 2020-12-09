@@ -124,9 +124,6 @@ export class FollowListService {
 
     const followLists: FollowList[] = this.getFollowListsSync()
     const followListMids = followLists[followLists.findIndex((followList: FollowList) => followList.id === listId)].mids
-    if (followListMids.length === 0) {
-      console.log(mids, listId, followListMids)
-    }
     followListMids.push(...mids)
 
     this.setFollowListsSync(followLists)

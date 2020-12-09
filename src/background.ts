@@ -1,19 +1,18 @@
 'use strict'
 
 import { app, protocol, BrowserWindow, ipcMain } from 'electron'
-import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
-import path from 'path'
 import settings from 'electron-settings'
 
 import { FollowListService, SettingService, VtbInfoService } from '@/electron/services'
 import { PlayerObj, VtbInfo } from '@/interfaces'
 import { createPlayerWindow } from '@/electron/playerWindow'
 import { createMainWindow } from '@/electron/mainWindow'
+import ContextMap from "@/electron/utils/ContextMap";
 
 let vtbInfosService: VtbInfoService
 let mainWindow: BrowserWindow
-const playerObjMap = new Map<number, PlayerObj>()
+const playerObjMap = new ContextMap<number, PlayerObj>()
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Scheme must be registered before the app is ready
@@ -164,12 +163,23 @@ const initIpcMainListeners = () => {
 }
 
 const onMainWindowClose = () => {
+  //BUG: this method will call twice on dev environment
   if (mainWindow) {
     mainWindow.on('close', () => {
       // stop vtbInfo service
       if (vtbInfosService) vtbInfosService.stopUpdate()
+
       // clean ipcMain listeners
       ipcMain.removeAllListeners()
+
+      // clean up playerObjMap
+      playerObjMap.forEach((playerObj: PlayerObj) => {
+        if (playerObj.playerWindow) playerObj.playerWindow.close()
+      })
+      playerObjMap.clear()
+
+      // exit app
+      app.quit()
     })
   }
 }

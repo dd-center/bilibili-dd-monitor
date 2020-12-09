@@ -1,10 +1,11 @@
-import { app, BrowserWindow, ipcMain, Menu } from "electron";
+import { app, BrowserWindow, Menu } from "electron";
 import path from "path";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import { PlayerObj } from "@/interfaces";
 import { createMainWindowMenu } from "@/electron/mainWindowMenu";
+import ContextMap from "@/electron/utils/ContextMap";
 
-export const createMainWindow = async (app: Electron.App, playerObjMap: Map<number, PlayerObj>) => {
+export const createMainWindow = async (app: Electron.App, playerObjMap: ContextMap<number, PlayerObj>) => {
   // Create the browser window.
   const win = new BrowserWindow({
     width: 1250,
@@ -41,16 +42,11 @@ export const createMainWindow = async (app: Electron.App, playerObjMap: Map<numb
     win.setMenu(menu);
   }
 
+  playerObjMap.attachContext(win)
+
   // close event
   win.on('close', () => {
-    // clean up playerObjMap
-    playerObjMap.forEach((playerObj: PlayerObj) => {
-      if (playerObj.playerWindow) playerObj.playerWindow.close()
-    })
-    playerObjMap.clear()
 
-    // exit app
-    app.quit()
   })
 
   return win

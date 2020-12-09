@@ -4,6 +4,7 @@ import { join } from 'path'
 import { PlayerObj, VtbInfo } from '@/interfaces'
 
 import request from 'request'
+import ContextMap from "@/electron/utils/ContextMap";
 
 const downloadAndSetWindowIcon = (vtbInfo: VtbInfo, tempPath: string, win: Electron.BrowserWindow) => {
   request('' + vtbInfo.face)
@@ -13,7 +14,7 @@ const downloadAndSetWindowIcon = (vtbInfo: VtbInfo, tempPath: string, win: Elect
   })
 }
 
-export const createPlayerWindow = (app: Electron.App, vtbInfo: VtbInfo, playerObjMap: Map<number, PlayerObj>): PlayerObj => {
+export const createPlayerWindow = (app: Electron.App, vtbInfo: VtbInfo, playerObjMap: ContextMap<number, PlayerObj>): PlayerObj => {
   const tempPath = app.getPath('temp')
   // C:\Users\{your-name}\AppData\Local\Temp in windows 10
 

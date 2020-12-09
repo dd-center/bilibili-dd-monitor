@@ -32,7 +32,6 @@ export class VtbInfoService {
       infoEventCount++
       const averageInternalInMilliSeconds = Math.round(totalTimeInterval / infoEventCount)
       console.log(`average internal statistics: ${averageInternalInMilliSeconds}`)
-      console.log(`infos.length=${infos.length}`)
 
       // insert or update info
       infos.forEach((info: VtbInfo, index, array) => {
@@ -86,7 +85,6 @@ export class VtbInfoService {
     vtbInfosMock.forEach((info: VtbInfo) => {
       this.vtbInfosMap.set(info.mid, info)
     })
-    console.log(`this._vtbInfosMapMock.size: ${this.vtbInfosMap.size}`)
   }
 
   stopUpdate () {

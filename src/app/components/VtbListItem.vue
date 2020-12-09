@@ -1,7 +1,7 @@
 <template>
   <div :key="source.mid" class="virtual-list-item">
     <div class="virtual-list-item-media">
-      <img class="virtual-list-item-media-avatar" :src="source.face" alt=""/>
+      <img loading="lazy" class="virtual-list-item-media-avatar" :src="source.face" alt=""/>
       <div class="virtual-list-item-media-body">
         <h3 class="virtual-list-item-media-title">{{ source.uname }}</h3>
         <p class="virtual-list-item-media-content">{{ source.sign }}</p>

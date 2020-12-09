@@ -1,0 +1,50 @@
+<html class="pass">
+<head><title>loading=lazy demo</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+        img {
+            display: block;
+            margin: 1em 0;
+        }
+
+        .fail img {
+            display: none;
+        }
+
+        pre {
+            border: 2px solid red;
+        }
+
+        .fail pre {
+            border-color: red;
+            background: pink;
+        }
+
+        .pass pre {
+            border-color: darkgreen;
+            background: lightgreen;
+        }
+    </style>
+</head>
+<body style="">
+<pre><code>'loading' in HTMLImageElement.prototype === <span>true</span></code></pre>
+<script>
+    const hasSupport = 'loading' in HTMLImageElement.prototype
+    document.documentElement.className = hasSupport ? 'pass' : 'fail'
+    document.querySelector('span').textContent = hasSupport
+</script>
+<!--https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#Browser_compatibility-->
+<!--
+Quick and dirty HTML generated using Bash:
+$ for i in {400..499}; do echo "<img loading='lazy' src='https://placekitten.com/${i}/${i}' width='${i}' height='${i}' alt=''>"; done
+-->
+<img loading="lazy" src="http://i2.hdslb.com/bfs/face/dc27d788164e8b3edadd6b26f2f9062af02f51bd.jpg" width="512" height="512" alt="">
+<img loading="lazy" src="http://i0.hdslb.com/bfs/face/e7f7b310c02b4a63c107856bcbf068d4895d7b01.jpg" width="512" height="512" alt="">
+<img loading="lazy" src="http://i0.hdslb.com/bfs/face/ab598d88458b29fa817489a30ca1a6673adb36c4.jpg" width="512" height="512" alt="">
+<img loading="lazy" src="http://i1.hdslb.com/bfs/face/64a8cee1924bd885bd13c1d10693d1005743f36e.jpg" width="512" height="512" alt="">
+<img loading="lazy" src="http://i0.hdslb.com/bfs/face/8272a7e5b1284741b3f59156db81cfe87d627441.jpg" width="512" height="512" alt="">
+<img loading="lazy" src="http://i1.hdslb.com/bfs/face/299c13c365df67233c2f5f91833e761bc30c579c.jpg" width="512" height="512" alt="">
+<img loading="lazy" src="http://i2.hdslb.com/bfs/face/ec3c3762b1c11f9fca47c3b84c2cbf7282e7d1d1.jpg" width="512" height="512" alt="">
+<img loading="lazy" src="http://i0.hdslb.com/bfs/face/3298332fd3036b11bdbd89c59e3af7c8e78cf231.jpg" width="512" height="512" alt="">
+</body>
+</html>

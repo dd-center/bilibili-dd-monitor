@@ -15,7 +15,7 @@
       <tbody class="living-list-body">
       <tr v-for="vtbInfo in followedVtbInfos" :key="vtbInfo.mid" class="living-list-body-row">
         <td class="living-list-body-cell">
-          <img class="living-list-body-cell-media-avatar" :src="vtbInfo.face"/>
+          <img loading="lazy" class="living-list-body-cell-media-avatar" :src="vtbInfo.face"/>
         </td>
         <td class="living-list-body-cell">{{ vtbInfo.uname }}</td>
         <td class="living-list-body-cell">{{ vtbInfo.mid }}</td>

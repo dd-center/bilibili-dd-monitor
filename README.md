@@ -36,7 +36,8 @@ work in progress.
 - [x] change vtbInfo update logic to ipcMain/ipcRenderer model(server push mode) to
 reduce subsequent request network traffic significantly 
 - [x] in vtbList page, when user searches by input, use debounce/throttle to decrease DOM event trigger rate to reduce memory usage.
-- [ ] icons lazy load
+- [x] icon images lazy load by browser-level lazy-loading
+- [ ] icon images zip size: different size (10kb-500kb),dimension(A x A)
 - [ ] highlight search result text
 - [ ] make follow menu layout fixed 
 

@@ -72,3 +72,9 @@ vtbInfos(vuex) => show long list
 followedVtbMids => show follow/unfollow
 ```
 
+##  image icons lazy loading
+- https://web.dev/browser-level-image-lazy-loading/
+- https://web.dev/lazy-loading-images/#images-inline-native
+
+use browser-level image lazy loading ability
+

@@ -20,9 +20,9 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
 ])
 
-async function createWindow () {
+async function createWindow (playerObjMap: Map<number, PlayerObj>) {
   // Create the browser window.
-  mainWindow = new BrowserWindow({
+  const win = new BrowserWindow({
     width: 1250,
     height: 850,
     maximizable: false,
@@ -42,17 +42,17 @@ async function createWindow () {
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
-    await mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL as string)
+    await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL as string)
     // await win.loadURL('https://www.bilibili.com/blackboard/live/live-activity-player.html?enterTheRoom=0&cid=21396545')
 
-    if (!process.env.IS_TEST) mainWindow.webContents.openDevTools()
+    if (!process.env.IS_TEST) win.webContents.openDevTools()
   } else {
     createProtocol('app')
     // Load the index.html when not in development
-    await mainWindow.loadURL('app://./index.html')
+    await win.loadURL('app://./index.html')
   }
 
-  mainWindow.on('close', () => {
+  win.on('close', () => {
     // clean up vtbInfo service
     if (vtbInfosService) vtbInfosService.stopUpdate()
 
@@ -66,7 +66,7 @@ async function createWindow () {
     app.quit()
   })
 
-  return mainWindow
+  return win
 }
 
 const initUpdate = () => {
@@ -229,7 +229,7 @@ app.on('activate', async () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) {
-    mainWindow = await createWindow()
+    mainWindow = await createWindow(playerObjMap)
   }
 })
 
@@ -249,7 +249,7 @@ app.on('ready', async () => {
   initUpdate()
   initSettingsConfiguration()
   initIpcMainListeners()
-  mainWindow = await createWindow()
+  mainWindow = await createWindow(playerObjMap)
   initServices()
 })
 

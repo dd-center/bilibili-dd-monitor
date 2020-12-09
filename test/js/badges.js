@@ -1,4 +1,4 @@
-import { renderBadges } from 'test/badges'
+import { renderBadges } from 'test/js/badges'
 
 // Listing of badges to output
 const list = [

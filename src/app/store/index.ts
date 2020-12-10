@@ -11,9 +11,13 @@ export default new Vuex.Store({
     followLists: [] as Array<FollowList>,
     updateVtbCount: 0 as number,
     playerWindowCount: 0 as number,
-    averageUpdateInterval: 0 as number
+    averageUpdateInterval: 0 as number,
+    currentCDN: '' as string
   },
   getters: {
+    currentCDN: (state) => {
+      return state.currentCDN
+    },
     vtbInfos: (state) => {
       return state.vtbInfos
     },
@@ -79,6 +83,9 @@ export default new Vuex.Store({
     },
     updatePlayerWindowCount (state, count: number) {
       state.playerWindowCount = count
+    },
+    updateCurrentCDN (state, currentCDN: string) {
+      state.currentCDN = currentCDN
     }
   },
   actions: {
@@ -90,6 +97,9 @@ export default new Vuex.Store({
     },
     updatePlayerWindowCount ({ commit, state }, count: number) {
       commit('updatePlayerWindowCount', count)
+    },
+    updateCurrentCDN ({ commit, state }, currentCDN: string) {
+      commit('updateCurrentCDN', currentCDN)
     }
   },
   modules: {}

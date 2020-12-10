@@ -11,7 +11,6 @@ async function test () {
     const res = await ping.promise.probe(host)
     if (res.alive) {
       console.log(res.avg)
-      // choose(this)
     }
   }
 }

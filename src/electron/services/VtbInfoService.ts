@@ -4,9 +4,7 @@ import { FollowListService } from '@/electron/services/index'
 import vtbInfosMock from '../../../test/sample/VtbInfos.json'
 import log from "pretty-log";
 
-
 export class VtbInfoService {
-  // vtbInfosMap means  all the vtb infos
   private vtbInfosMap: Map<number, VtbInfo> = new Map<number, VtbInfo>()
   private update: Function | null = null
   private _onceUpdate: Function | null = null
@@ -18,7 +16,7 @@ export class VtbInfoService {
     // init socket.IO
     this.initSocketIO()
 
-    // init mock data
+    // mock data only for testing
     // this._initMockData()
   }
 
@@ -53,29 +51,33 @@ export class VtbInfoService {
         this._onceUpdate = null
       }
     })
+  }
 
+  listenSocketEvent (socket: any) {
     // region socket listeners
-    socket.on('connect', () => {
-      log.debug('socket.io connect.')
-    })
-    socket.on('disconnect', () => {
-      log.debug('socket.io disconnect.')
-    })
-    socket.on('reconnecting', () => {
-      log.debug('reconnecting')
-    })
-    socket.on('reconnect_error', (error: any) => {
-      log.debug('reconnect_error')
-    })
-    socket.on('connect_error', (error: any) => {
-      log.debug('connect_error')
-    })
-    socket.on('connect_timeout', (timeout: any) => {
-      log.debug('connect_timeout')
-    })
-    socket.on('error', (error: any) => {
-      log.debug('error')
-    })
+    if (socket) {
+      socket.on('connect', () => {
+        log.debug('socket.io connect.')
+      })
+      socket.on('disconnect', () => {
+        log.debug('socket.io disconnect.')
+      })
+      socket.on('reconnecting', () => {
+        log.debug('reconnecting')
+      })
+      socket.on('reconnect_error', (error: any) => {
+        log.debug('reconnect_error')
+      })
+      socket.on('connect_error', (error: any) => {
+        log.debug('connect_error')
+      })
+      socket.on('connect_timeout', (timeout: any) => {
+        log.debug('connect_timeout')
+      })
+      socket.on('error', (error: any) => {
+        log.debug('error')
+      })
+    }
     // endregion
   }
 

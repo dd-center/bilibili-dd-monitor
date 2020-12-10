@@ -58,13 +58,6 @@ export default class FollowListService {
           })
           break
         }
-        case 'getFollowedVtbMids': {
-          this.ipcRenderer.once('getFollowedVtbMidsReply', (e: Electron.IpcRendererEvent, vtbInfos: VtbInfo[]) => {
-            observer.next(vtbInfos)
-            observer.complete()
-          })
-          break
-        }
       }
     }
   }
@@ -122,10 +115,5 @@ export default class FollowListService {
   addMidsToFollowList (mids: number[], id: number): Observable<FollowList[]> {
     this.ipcRenderer.send('setFollowList', mids, id)
     return new Observable<FollowList[]>(this.sequenceSubscriber('setFollowListReply'))
-  }
-
-  getFollowedVtbMids (): Observable<number[]> {
-    this.ipcRenderer.send('getFollowedVtbMids')
-    return new Observable(this.sequenceSubscriber('getFollowedVtbMids'))
   }
 }

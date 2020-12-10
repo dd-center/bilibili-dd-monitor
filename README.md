@@ -25,14 +25,15 @@ work in progress.
   - [x] updating count
   - [x] average update internal(ms)
   - [x] current window count
-  - [ ] socket.io event
-  - [ ] current cdn API url
+  - [x] current cdn API url
+  - [ ] 内存和GPU占用率
+  - [ ] ~~socket.io event~~(没必要)
 - [x] 菜单栏：窗口处理
     - [x] 置顶所有播放器窗口
     - [x] 取消置顶所有播放器窗口
-    - [x] 自动布局所有播放器窗口：等分网格法
-    - [ ] 最大化所有播放器窗口
-    - [ ] 最小化所有播放器窗口
+    - [x] 自动布局所有播放器窗口：等分迭代网格法
+    - [x] 显示所有播放器窗口
+    - [x] 最小化所有播放器窗口
     - [x] 关闭所有播放器窗口
 - [ ] 菜单栏：其他
     - 关闭所有播放器窗口

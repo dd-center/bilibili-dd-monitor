@@ -40,6 +40,9 @@ const initSettingsConfiguration = () => {
 const initServices = () => {
   log.debug('INIT Services')
 
+  if (bestCDN && mainWindow) {
+    mainWindow.webContents.send('updateCurrentCDN', bestCDN)
+  }
   // init socket.io
   vtbInfosService = new VtbInfoService(bestCDN)
   // region VtbInfo

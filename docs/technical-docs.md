@@ -126,3 +126,6 @@ use browser-level image lazy loading ability
  12/10 15:05:33   fatal   Hello, world!
 ```
 
+## measure electron app performance
+> https://www.geeksforgeeks.org/gpu-information-in-electronjs/
+

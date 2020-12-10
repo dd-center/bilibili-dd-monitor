@@ -2,7 +2,13 @@ import Vue from 'vue'
 import App from './app/App.vue'
 import router from './app/router'
 import store from './app/store'
-import { FollowListService, NoticeService, VtbInfoUpdateListener } from '@/app/services'
+import {
+  FollowListService,
+  NoticeListener,
+  VtbInfoUpdateListener,
+  PlayerWindowCountListener,
+  CDNListener
+} from '@/app/services'
 
 // import font awesome icon
 // https://github.com/FortAwesome/vue-fontawesome#installation
@@ -28,7 +34,6 @@ import 'vue-select/dist/vue-select.css'
 // https://github.com/euvl/vue-notification/
 import Notifications from 'vue-notification'
 import { FollowList, VtbInfo } from '@/interfaces'
-import PlayerWindowCountListener from '@/app/services/PlayerWindowCountListener'
 
 library.add(
   faSignal,
@@ -79,7 +84,7 @@ new Vue({
   store,
   render: h => h(App),
   created () {
-    const noticeService = new NoticeService()
+    const noticeService = new NoticeListener()
     slog('INIT', 'NoticeService')
     const followListService = new FollowListService()
     followListService.getFollowLists().subscribe((followLists: FollowList[]) => {
@@ -90,5 +95,7 @@ new Vue({
     slog('INIT', 'VtbInfoUpdateListenerService')
     const playerWindowCountListener = new PlayerWindowCountListener()
     slog('INIT', 'playerWindowCountListener')
+    const cdnListener = new CDNListener()
+    slog('INIT', 'CDNListener')
   }
 }).$mount('#app')

@@ -31,6 +31,7 @@
         </ul>
       </nav>
       <div class="shield-container">
+        <vue-shield class="shield-item" :title="'CDN'" :content="currentCDN"/>
         <vue-shield class="shield-item" :title="'已获取 vtubers'" :content="vtbCount"/>
         <vue-shield class="shield-item" :title="'正在直播'" :content="livingVtbCount"/>
         <vue-shield class="shield-item" :title="'正在更新'" :content="updateVtbCount"/>
@@ -62,7 +63,8 @@ export default {
       'livingVtbCount',
       'updateVtbCount',
       'playerWindowCount',
-      'averageUpdateInterval'
+      'averageUpdateInterval',
+      'currentCDN'
     ])
   },
   methods: {

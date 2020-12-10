@@ -70,7 +70,7 @@ export const createMainWindowMenu = (app: Electron.App, players: Map<number, Pla
       label: '播放器',
       submenu: [
         {
-          label: '置顶显示当前所有播放器',
+          label: '置顶当前所有播放器',
           click: () => {
             players.forEach((player: PlayerObj) => {
               player.playerWindow.setAlwaysOnTop(true);
@@ -78,7 +78,7 @@ export const createMainWindowMenu = (app: Electron.App, players: Map<number, Pla
           }
         },
         {
-          label: '取消置顶显示当前所有播放器',
+          label: '取消置顶当前所有播放器',
           click: () => {
             players.forEach((player: PlayerObj) => {
               player.playerWindow.setAlwaysOnTop(false);
@@ -93,6 +93,22 @@ export const createMainWindowMenu = (app: Electron.App, players: Map<number, Pla
               return autoSetPlayerBounds(display);
             })
           }))
+        },
+        {
+          label: '显示所有播放器',
+          click: () => {
+            players.forEach((player: PlayerObj) => {
+              player.playerWindow.show();
+            })
+          }
+        },
+        {
+          label: '最小化所有播放器',
+          click: () => {
+            players.forEach((player: PlayerObj) => {
+              player.playerWindow.minimize();
+            })
+          }
         },
         {
           label: '关闭所有播放器',

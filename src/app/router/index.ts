@@ -41,7 +41,7 @@ const router = new VueRouter({
   mode: process.env.IS_ELECTRON ? 'hash' : 'history',
   base: process.env.BASE_URL,
   routes,
-  linkActiveClass: ''
+  linkActiveClass: '' //to fix home page class bug
 })
 
 export default router

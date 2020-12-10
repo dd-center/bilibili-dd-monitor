@@ -10,9 +10,11 @@ import { createPlayerWindow } from '@/electron/playerWindow'
 import { createMainWindow } from '@/electron/mainWindow'
 import ContextMap from "@/electron/utils/ContextMap";
 import log from "pretty-log";
+import CDN from '@/electron/utils/CDN';
 
 let vtbInfosService: VtbInfoService
 let mainWindow: BrowserWindow
+let bestCDN: string
 const playerObjMap = new ContextMap<number, PlayerObj>()
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -39,7 +41,7 @@ const initServices = () => {
   log.debug('INIT Services')
 
   // init socket.io
-  vtbInfosService = new VtbInfoService()
+  vtbInfosService = new VtbInfoService(bestCDN)
   // region VtbInfo
   ipcMain.on('getVtbInfos', (event: Electron.IpcMainEvent) => {
     event.reply('getVtbInfosReply', vtbInfosService.getVtbInfos())
@@ -214,8 +216,16 @@ app.on('ready', async () => {
   // pre setup
   initUpdate()
   initSettingsConfiguration()
-  initIpcMainListeners()
 
+  // check if have alive cdn
+  bestCDN = await CDN.getBestCDN();
+  if (bestCDN) {
+    log.debug(`Best CDN: ${bestCDN}`)
+  } else {
+    log.debug('No alive CDN')
+  }
+
+  initIpcMainListeners()
   mainWindow = await createMainWindow(app, playerObjMap)
   onMainWindowClose()
 

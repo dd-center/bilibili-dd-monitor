@@ -3,14 +3,16 @@ const ping = require('ping')
 
 const apiCDNList = [
   'api.vtbs.moe',
-  'api.tokyo.vtbs.moe',
-  'vtbs.musedash.moe'
+  'api.tokyo.vtbs.moe'
 ]
 
 async function test () {
   for (const host of apiCDNList) {
     const res = await ping.promise.probe(host)
-    console.log(res.alive ? res.avg : '')
+    if (res.alive) {
+      console.log(res.avg)
+      // choose(this)
+    }
   }
 }
 

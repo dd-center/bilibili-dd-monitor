@@ -4,15 +4,17 @@ import { FollowListService } from '@/electron/services/index'
 import vtbInfosMock from '../../../test/sample/VtbInfos.json'
 import log from "pretty-log";
 
-const socket = io('https://api.vtbs.moe')
 
 export class VtbInfoService {
   // vtbInfosMap means  all the vtb infos
   private vtbInfosMap: Map<number, VtbInfo> = new Map<number, VtbInfo>()
   private update: Function | null = null
   private _onceUpdate: Function | null = null
+  private readonly socketIOUrl: string = ''
 
-  constructor () {
+  constructor (bestCDN: string) {
+    this.socketIOUrl = bestCDN
+
     // init socket.IO
     this.initSocketIO()
 
@@ -21,6 +23,8 @@ export class VtbInfoService {
   }
 
   initSocketIO () {
+    const socket = io(this.socketIOUrl)
+
     let totalTimeInterval = 0
     let infoEventCount = 0
     let lastInfoTime = Date.now()
@@ -32,7 +36,6 @@ export class VtbInfoService {
       totalTimeInterval += timeInterval
       infoEventCount++
       const averageUpdateInterval = Math.round(totalTimeInterval / infoEventCount)
-      log.debug(`average socket.io interval: ${averageUpdateInterval}`)
 
       // insert or update info
       infos.forEach((info: VtbInfo, index, array) => {

@@ -26,6 +26,7 @@ work in progress.
   - [x] average update internal(ms)
   - [x] current window count
   - [ ] socket.io event
+  - [ ] current cdn API url
 - [x] 菜单栏：窗口处理
     - [x] 置顶所有播放器窗口
     - [x] 取消置顶所有播放器窗口

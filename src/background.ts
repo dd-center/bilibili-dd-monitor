@@ -43,16 +43,7 @@ const initServices = () => {
   if (bestCDN && mainWindow) {
     mainWindow.webContents.send('updateCurrentCDN', bestCDN)
   }
-  // init socket.io
   vtbInfosService = new VtbInfoService(bestCDN)
-  // region VtbInfo
-  ipcMain.on('getVtbInfos', (event: Electron.IpcMainEvent) => {
-    event.reply('getVtbInfosReply', vtbInfosService.getVtbInfos())
-  })
-  ipcMain.on('getFollowedVtbInfos', (event: Electron.IpcMainEvent) => {
-    event.reply('getFollowedVtbInfosReply', vtbInfosService.getFollowedVtbInfos())
-  })
-  // endregion
 
   // register live change notifications
   // 上次记录的vtbs（已经处理上播和下播提醒）
@@ -67,7 +58,8 @@ const initServices = () => {
         allVtbInfos
         .filter((vtbInfo: VtbInfo) => (followVtbs.includes(vtbInfo.mid) && vtbInfo.liveStatus === 1))
         .map((vtbInfo: VtbInfo) => vtbInfo.mid)
-      // log.debug(`nowLiveFollowedVtbs: ${nowLiveFollowedVtbs.length}`)
+      log.debug(`nowLiveFollowedVtbs: ${nowLiveFollowedVtbs.length}`)
+      log.debug(`lastLiveVtbs: ${lastLiveVtbs.length}`)
 
       // 上播vtbs
       const upLiveFollowedVtbs: number[] = []
@@ -82,23 +74,26 @@ const initServices = () => {
       })
 
       // 对于lastLiveVtbs，使用【现在正在直播的vtbs】更新【下播vtbs】
-      lastLiveVtbs.forEach(lastLiveVtb => {
-        if (!nowLiveFollowedVtbs.includes(lastLiveVtb)) {
+      lastLiveVtbs.forEach((lastLiveVtb) => {
+        // 边缘情况：如果A正在直播，用户点击关注A，那么 lastLiveVtbs含有A，触发上播提醒。
+        // 接着用户马上取消关注A，此时lastLiveVtbs含有A。而nowLiveFollowedVtbs不再含有A，会进入if判断，触发BUG：A下播提醒。事实上，A没有下播。
+        // BUG fix: 增加判断该vtbInfo是否真正下播，如果是，那么可以将A加入下播提醒
+        if (!nowLiveFollowedVtbs.includes(lastLiveVtb) && vtbInfosService.getVtbLiveStatusByMid(lastLiveVtb) === 0) {
           downLiveFollowedVtbs.push(lastLiveVtb)
         }
       })
 
-      // log.debug(`upLiveFollowedVtbs: ${upLiveFollowedVtbs.length}`)
-      // log.debug(`downLiveFollowedVtbs: ${downLiveFollowedVtbs.length}`)
+      log.debug(`upLiveFollowedVtbs: ${upLiveFollowedVtbs.length}`)
+      log.debug(`downLiveFollowedVtbs: ${downLiveFollowedVtbs.length}`)
 
       // 当前记录的vtbs数量不为0，或者设置启动时接受通知为true。派发上播和下播提醒。
       // optimize：使用debounce避免某个时刻通知过多而导致疯狂弹窗。
       if ((lastLiveVtbs.length !== 0) || SettingService.getIsNotifiedOnStartSync()) {
         upLiveFollowedVtbs.forEach((mid: number) => {
-          mainWindow.webContents.send('liveNotice', allVtbInfos.find((vtbInfo: VtbInfo) => vtbInfo.mid === mid), '上播提醒')
+          mainWindow.webContents.send('liveNotice', allVtbInfos.find((vtbInfo: VtbInfo) => vtbInfo.mid === mid), '↑上播提醒↑')
         })
         downLiveFollowedVtbs.forEach((mid: number) => {
-          mainWindow.webContents.send('liveNotice', allVtbInfos.find((vtbInfo: VtbInfo) => vtbInfo.mid === mid), '下播提醒')
+          mainWindow.webContents.send('liveNotice', allVtbInfos.find((vtbInfo: VtbInfo) => vtbInfo.mid === mid), '↓下播提醒↓')
         })
       }
 

@@ -57,6 +57,7 @@ reduce subsequent request network traffic significantly
 
 ## bug fix
 - [x] /follow router doesn't highlight when navigate to its sub route
+- [x] 对当前在线某个vtb进行关注，马上取关，会触发奇怪的下播提醒。
 - [ ] ~~多开window 之后，如果删除其中一些窗口，再次重排窗口无效。该bug不稳定重现~~
 
 

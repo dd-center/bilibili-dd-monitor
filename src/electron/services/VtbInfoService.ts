@@ -103,6 +103,12 @@ export class VtbInfoService {
     return [...this.vtbInfosMap.values()].sort(this._compareByOnlineDesc)
   }
 
+  getVtbLiveStatusByMid (vtbMid: number): number {
+    const vtbInfo = this.getVtbInfos().find((vtbInfo: VtbInfo) => vtbInfo.mid === vtbMid);
+    if (vtbInfo) return vtbInfo.liveStatus as number;
+    return 0;
+  }
+
   /**
    * get followed vtb infos
    */

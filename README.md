@@ -26,7 +26,7 @@ work in progress.
   - [x] average update internal(ms)
   - [x] current window count
   - [x] current cdn API url
-  - [ ] 内存和GPU占用率
+  - [ ] ~~内存和GPU占用率~~
   - [ ] ~~socket.io event~~(没必要)
 - [x] 菜单栏：窗口处理
     - [x] 置顶所有播放器窗口
@@ -35,12 +35,12 @@ work in progress.
     - [x] 显示所有播放器窗口
     - [x] 最小化所有播放器窗口
     - [x] 关闭所有播放器窗口
-- [ ] 菜单栏：帮助
-    - 帮助文档：=> github docs
-    - 问题反馈：=> github issues
-    - 检测更新：=> 主动检测 github release，对比版本号
-    - 关于
-    - 打开主窗口调试控制台
+- [x] 菜单栏：帮助
+    - [x] 帮助文档：=> github docs
+    - [x] 问题反馈：=> github issues
+    - [ ] 检测更新：=> 主动检测 github release，对比版本号
+    - [x] 关于
+    - [x] 打开主窗口调试控制台
 - [ ] Tray mode
 - [ ] loading indicator UI
 

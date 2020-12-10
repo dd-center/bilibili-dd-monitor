@@ -58,8 +58,6 @@ const initServices = () => {
         allVtbInfos
         .filter((vtbInfo: VtbInfo) => (followVtbs.includes(vtbInfo.mid) && vtbInfo.liveStatus === 1))
         .map((vtbInfo: VtbInfo) => vtbInfo.mid)
-      log.debug(`nowLiveFollowedVtbs: ${nowLiveFollowedVtbs.length}`)
-      log.debug(`lastLiveVtbs: ${lastLiveVtbs.length}`)
 
       // 上播vtbs
       const upLiveFollowedVtbs: number[] = []
@@ -82,9 +80,6 @@ const initServices = () => {
           downLiveFollowedVtbs.push(lastLiveVtb)
         }
       })
-
-      log.debug(`upLiveFollowedVtbs: ${upLiveFollowedVtbs.length}`)
-      log.debug(`downLiveFollowedVtbs: ${downLiveFollowedVtbs.length}`)
 
       // 当前记录的vtbs数量不为0，或者设置启动时接受通知为true。派发上播和下播提醒。
       // optimize：使用debounce避免某个时刻通知过多而导致疯狂弹窗。

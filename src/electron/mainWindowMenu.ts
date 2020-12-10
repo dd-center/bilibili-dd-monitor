@@ -1,4 +1,4 @@
-import { Menu, screen, shell } from 'electron';
+import { dialog, Menu, screen, shell } from 'electron';
 import { PlayerObj } from '@/interfaces';
 
 export const createMainWindowMenu = (app: Electron.App, players: Map<number, PlayerObj>) => {
@@ -137,14 +137,24 @@ export const createMainWindowMenu = (app: Electron.App, players: Map<number, Pla
           },
           {
             label: '检测更新',
-            click: () => {
-              // alert('在写了，在写了，指新建文件夹。(｡･ω･｡)')
+            click: (item: any, focusedWindow: Electron.BrowserWindow) => {
+              const options = {
+                type: 'info',
+                title: '检测更新',
+                message: '在写了，在写了，指_____________'
+              };
+              dialog.showMessageBox(focusedWindow, options)
             }
           },
           {
             label: '关于',
-            click: () => {
-              // alert('你好，我是关于。')
+            click: (item: any, focusedWindow: Electron.BrowserWindow) => {
+              const options = {
+                type: 'info',
+                title: '关于',
+                message: 'bilibili-dd-center Powered By DD'
+              };
+              dialog.showMessageBox(focusedWindow, options)
             }
           },
           {

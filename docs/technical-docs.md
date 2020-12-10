@@ -100,3 +100,27 @@ use browser-level image lazy loading ability
 
 其中abs(r-√playerNum)值最小时的row就是最理想的row值。可以使得多屏效果和实际物理屏幕尺寸比例相契合。
 
+## beautiful logging
+> web browser
+- shields-log
+
+类似于shields.io 图标
+
+> electron(NodeJS)
+- pretty 
+```
+[ERROR] => MESSAGE
+[WARN] => MESSAGE
+[SUCCESS] => MESSAGE
+[DEBUG] => MESSAGE
+```
+- cat-loggr 
+```
+ 12/10 15:05:33  verbose  Hello, world!
+ 12/10 15:05:33   info    Hello, world!
+ 12/10 15:05:33   init    Hello, world!
+ 12/10 15:05:33   warn    Hello, world!
+ 12/10 15:05:33   error   Hello, world!
+ 12/10 15:05:33   fatal   Hello, world!
+```
+

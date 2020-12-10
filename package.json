@@ -34,12 +34,12 @@
     "vuex": "^3.4.0"
   },
   "devDependencies": {
-    "@types/vue-select": "^2.5.1",
     "@types/electron-devtools-installer": "^2.2.0",
     "@types/electron-settings": "^3.1.2",
     "@types/ping": "^0.2.0",
     "@types/request": "^2.48.5",
     "@types/socket.io-client": "^1.4.34",
+    "@types/vue-select": "^2.5.1",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -60,6 +60,8 @@
     "eslint-plugin-vue": "^6.2.2",
     "node-sass": "^4.12.0",
     "ping": "^0.3.0",
+    "pretty-log": "^0.1.0",
+    "pretty-logs": "^0.5.1",
     "sass-loader": "^8.0.2",
     "typescript": "~3.9.3",
     "vue-cli-plugin-electron-builder": "~2.0.0-rc.5",

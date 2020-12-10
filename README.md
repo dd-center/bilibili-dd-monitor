@@ -36,6 +36,7 @@ work in progress.
 - [ ] 菜单栏：其他
     - 关闭所有播放器窗口
     - 其他/后期支持/关于/检查更新
+    - 调试控制台
 - [ ] Tray mode
 - [ ] loading indicator UI
 
@@ -50,10 +51,9 @@ reduce subsequent request network traffic significantly
 - [x] change Logic for getting vtb infos data from client pull to server push mode
 - [ ] ~~icon images zip size: different size (10kb-500kb),dimension(A x A)~~
 - [ ] highlight search result text
-- [ ] 监听playerObjMap的变化情况，将窗口数反馈到前端ui
 
 ## bug fix
 - [x] /follow router doesn't highlight when navigate to its sub route
-- [ ] 多开window 之后，如果删除其中一些，再次重排窗口无效。是否可以稳定率重现该bug（否）
+- [ ] ~~多开window 之后，如果删除其中一些窗口，再次重排窗口无效。该bug不稳定重现~~
 
 

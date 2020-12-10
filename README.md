@@ -40,7 +40,7 @@ work in progress.
 - [ ] Tray mode
 - [ ] loading indicator UI
 
-## performance improvement & feature enhances
+## performance improvement & feature enhancement
 - [x] custom action message feedback UI by vue-notification
 - [x] migrate NgZone API to vuex store
 - [x] change vtbInfo update logic to ipcMain/ipcRenderer model(server push mode) to
@@ -51,6 +51,7 @@ reduce subsequent request network traffic significantly
 - [x] change Logic for getting vtb infos data from client pull to server push mode
 - [ ] ~~icon images zip size: different size (10kb-500kb),dimension(A x A)~~
 - [ ] highlight search result text
+- [ ] use VtbInfoLite version NOT VtbInfo to reduce data size
 
 ## bug fix
 - [x] /follow router doesn't highlight when navigate to its sub route

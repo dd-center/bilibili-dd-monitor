@@ -1,0 +1,133 @@
+[
+  {
+    cpu: { percentCPUUsage: 0, idleWakeupsPerSecond: 0 },
+    pid: 22260,
+    type: 'GPU',
+    creationTime: 1607594827700.135,
+    memory: {
+      workingSetSize: 96984,
+      peakWorkingSetSize: 106832,
+      privateBytes: 51576
+    },
+    integrityLevel: 'medium',
+    sandboxed: false
+  },
+  {
+    cpu: { percentCPUUsage: 0, idleWakeupsPerSecond: 0 },
+    pid: 16332,
+    type: 'Tab',
+    creationTime: 1607594748664.987,
+    memory: {
+      workingSetSize: 112140,
+      peakWorkingSetSize: 127984,
+      privateBytes: 62868
+    },
+    integrityLevel: 'medium',
+    sandboxed: false
+  },
+  {
+    cpu: { percentCPUUsage: 0, idleWakeupsPerSecond: 0 },
+    pid: 32300,
+    type: 'Utility',
+    creationTime: 1607594719494.418,
+    memory: {
+      workingSetSize: 71004,
+      peakWorkingSetSize: 71056,
+      privateBytes: 12924
+    },
+    integrityLevel: 'medium',
+    sandboxed: false
+  },
+  {
+    cpu: { percentCPUUsage: 0, idleWakeupsPerSecond: 0 },
+    pid: 30248,
+    type: 'Tab',
+    creationTime: 1607594747929.416,
+    memory: {
+      workingSetSize: 135144,
+      peakWorkingSetSize: 135148,
+      privateBytes: 87684
+    },
+    integrityLevel: 'medium',
+    sandboxed: false
+  },
+  {
+    cpu: { percentCPUUsage: 0, idleWakeupsPerSecond: 0 },
+    pid: 38168,
+    type: 'Tab',
+    creationTime: 1607594718495.001,
+    memory: {
+      workingSetSize: 124024,
+      peakWorkingSetSize: 197952,
+      privateBytes: 75508
+    },
+    integrityLevel: 'medium',
+    sandboxed: false
+  },
+  {
+    cpu: { percentCPUUsage: 0, idleWakeupsPerSecond: 0 },
+    pid: 12384,
+    type: 'Utility',
+    creationTime: 1607594707884.002,
+    memory: {
+      workingSetSize: 42076,
+      peakWorkingSetSize: 44424,
+      privateBytes: 15904
+    },
+    integrityLevel: 'untrusted',
+    sandboxed: true
+  },
+  {
+    cpu: { percentCPUUsage: 0, idleWakeupsPerSecond: 0 },
+    pid: 42944,
+    type: 'Tab',
+    creationTime: 1607594707859.585,
+    memory: {
+      workingSetSize: 131472,
+      peakWorkingSetSize: 147684,
+      privateBytes: 86148
+    },
+    integrityLevel: 'medium',
+    sandboxed: false
+  },
+  {
+    cpu: { percentCPUUsage: 0, idleWakeupsPerSecond: 0 },
+    pid: 31604,
+    type: 'Utility',
+    creationTime: 1607594707703.14,
+    memory: {
+      workingSetSize: 43632,
+      peakWorkingSetSize: 47620,
+      privateBytes: 19672
+    },
+    integrityLevel: 'medium',
+    sandboxed: false
+  },
+  {
+    cpu: { percentCPUUsage: 0, idleWakeupsPerSecond: 0 },
+    pid: 17680,
+    type: 'GPU',
+    creationTime: 1607594707685.606,
+    memory: {
+      workingSetSize: 221836,
+      peakWorkingSetSize: 312720,
+      privateBytes: 403072
+    },
+    integrityLevel: 'low',
+    sandboxed: true
+  },
+  {
+    cpu: { percentCPUUsage: 0, idleWakeupsPerSecond: 0 },
+    pid: 11740,
+    type: 'Browser',
+    creationTime: 1607594707284.852,
+    memory: {
+      workingSetSize: 108692,
+      peakWorkingSetSize: 138276,
+      privateBytes: 55656
+    },
+    integrityLevel: 'medium',
+    sandboxed: false
+  }
+]
+

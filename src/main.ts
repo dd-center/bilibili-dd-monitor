@@ -92,9 +92,9 @@ new Vue({
       store.dispatch('updateFollowLists', followLists)
     })
     const vtbInfoUpdateListenerService = new VtbInfoUpdateListener()
-    slog('INIT', 'VtbInfoUpdateListenerService')
+    slog('INIT', 'VtbInfoUpdateListener')
     const playerWindowCountListener = new PlayerWindowCountListener()
-    slog('INIT', 'playerWindowCountListener')
+    slog('INIT', 'PlayerWindowCountListener')
     const cdnListener = new CDNListener()
     slog('INIT', 'CDNListener')
   }

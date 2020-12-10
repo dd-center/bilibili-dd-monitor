@@ -129,3 +129,18 @@ use browser-level image lazy loading ability
 ## measure electron app performance
 > https://www.geeksforgeeks.org/gpu-information-in-electronjs/
 
+性能衡量指标：CPU 网络 内存 磁盘 GPU
+
+仅启动，不开任何播放器：40MB
+1 player playing 336MB +300
+2 player playing 474MB +140
+3                575MB +100
+4                650MB +80
+5                800MB +150
+6                900MB +100
+
+---
+CPU network GPU 是主要瓶颈
+
+> 一旦启动，关闭所有播放器窗口，内存会回到250MB左右
+

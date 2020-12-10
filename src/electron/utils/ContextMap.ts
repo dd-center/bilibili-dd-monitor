@@ -28,7 +28,6 @@ export default class ContextMap<K, V> extends Map {
   attachContext (context: BrowserWindow) {
     if (context) {
       this.context = context
-      console.log('ContextMap attach BrowserWindow')
     }
   }
 
@@ -40,9 +39,5 @@ export default class ContextMap<K, V> extends Map {
 
   detachContext () {
     this.context = null
-  }
-
-  printContext () {
-    console.log('ContextMap context: ', this.context)
   }
 }

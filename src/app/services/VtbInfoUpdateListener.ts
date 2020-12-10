@@ -5,7 +5,7 @@ import { Store } from 'vuex'
 
 declare const window: any
 
-export default class VtbInfoUpdateListenerService {
+export default class VtbInfoUpdateListener {
   private ipcRenderer: IpcRenderer
   private store: Store<{}>;
 
@@ -16,8 +16,8 @@ export default class VtbInfoUpdateListenerService {
   }
 
   initVtbInfosUpdateListener () {
-    this.ipcRenderer.on('updateVtbInfos', (event: Electron.Event, vtbInfos: VtbInfo[]) => {
-      this.store.dispatch('updateVtbInfos', vtbInfos)
+    this.ipcRenderer.on('updateVtbInfos', (event: Electron.Event, updatedVtbInfos: VtbInfo[], averageUpdateInterval: number) => {
+      this.store.dispatch('updateVtbInfos', { updatedVtbInfos, averageUpdateInterval })
     })
   }
 }

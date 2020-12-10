@@ -12,6 +12,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const CatLoggr = require('cat-loggr')
 const loggr = new CatLoggr()
+loggr.setLevel('info')
 loggr.verbose('Hello, world!')
 loggr.info('Hello, world!')
 loggr.init('init level ', 'Hello, world!')

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { FollowList, VtbInfo } from '@/interfaces'
-import { slog, _compareByOnlineDesc } from '@/main'
+import { _compareByOnlineDesc, slog } from '@/main'
 
 Vue.use(Vuex)
 
@@ -10,7 +10,8 @@ export default new Vuex.Store({
     vtbInfos: [] as Array<VtbInfo>,
     followLists: [] as Array<FollowList>,
     updateVtbCount: 0 as number,
-    playerWindowCount: 0 as number
+    playerWindowCount: 0 as number,
+    averageUpdateInterval: 0 as number
   },
   getters: {
     vtbInfos: (state) => {
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     },
     updateVtbCount: (state) => {
       return state.updateVtbCount
+    },
+    averageUpdateInterval: (state) => {
+      return state.averageUpdateInterval
     },
     followLists: (state) => {
       return state.followLists
@@ -49,17 +53,17 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    updateVtbInfos (state, newVtbInfos: VtbInfo[]) {
+    updateVtbInfos (state, { updatedVtbInfos, averageUpdateInterval }) {
       // is first update. init vtbInfos
       if (state.vtbInfos.length === 0) {
-        state.vtbInfos.push(...newVtbInfos)
+        state.vtbInfos.push(...updatedVtbInfos)
       } else {
         // next update
-        newVtbInfos.forEach((newVtbInfo: VtbInfo) => {
+        updatedVtbInfos.forEach((newVtbInfo: VtbInfo) => {
           const index = state.vtbInfos.findIndex(vtbInfo => vtbInfo.mid === newVtbInfo.mid)
           // found => update existed object
           if (index !== -1) {
-            // todo sort and show diff parts
+            // do better: sort and show diff parts
             Vue.set(state.vtbInfos, index, newVtbInfo)
           } else {
             // not found, add this newVtbInfo to state.vtbInfos
@@ -67,7 +71,8 @@ export default new Vuex.Store({
           }
         })
       }
-      state.updateVtbCount = newVtbInfos.length
+      state.updateVtbCount = updatedVtbInfos.length
+      state.averageUpdateInterval = averageUpdateInterval
     },
     updateFollowLists (state, followLists: FollowList[]) {
       state.followLists = followLists
@@ -77,8 +82,8 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    updateVtbInfos ({ commit, state }, vtbInfos: VtbInfo[]) {
-      commit('updateVtbInfos', vtbInfos)
+    updateVtbInfos ({ commit, state }, payload) {
+      commit('updateVtbInfos', payload)
     },
     updateFollowLists ({ commit, state }, followLists: FollowList[]) {
       commit('updateFollowLists', followLists)

@@ -9,6 +9,7 @@ import { PlayerObj, VtbInfo } from '@/interfaces'
 import { createPlayerWindow } from '@/electron/playerWindow'
 import { createMainWindow } from '@/electron/mainWindow'
 import ContextMap from "@/electron/utils/ContextMap";
+import log from "pretty-log";
 
 let vtbInfosService: VtbInfoService
 let mainWindow: BrowserWindow
@@ -20,13 +21,12 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
 ])
 
-
 const initUpdate = () => {
-  console.log('initUpdate')
+  log.debug('INIT Updater')
 }
 
 const initSettingsConfiguration = () => {
-  console.log('initSettingsConfiguration')
+  log.debug('INIT SettingsConfiguration')
   settings.configure({
     numSpaces: 2,
     prettify: true
@@ -36,7 +36,7 @@ const initSettingsConfiguration = () => {
 }
 
 const initServices = () => {
-  console.log('initServices')
+  log.debug('INIT Services')
 
   // init socket.io
   vtbInfosService = new VtbInfoService()
@@ -52,10 +52,9 @@ const initServices = () => {
   // register live change notifications
   // 上次记录的vtbs（已经处理上播和下播提醒）
   let lastLiveVtbs: number[] = []
-  vtbInfosService.onUpdate((allVtbInfos, updatedVtbInfos: VtbInfo[]) => {
+  vtbInfosService.onUpdate((allVtbInfos, updatedVtbInfos: VtbInfo[], averageUpdateInterval: number) => {
     if (mainWindow) {
-      // mainWindow.webContents.send('updateVtbInfos', vtbInfosService.getFollowedVtbInfos())
-      mainWindow.webContents.send('updateVtbInfos', updatedVtbInfos)
+      mainWindow.webContents.send('updateVtbInfos', updatedVtbInfos, averageUpdateInterval)
 
       const followVtbs = FollowListService.getFollowedVtbMidsSync()
       // 现在正在直播的vtbs
@@ -63,7 +62,7 @@ const initServices = () => {
         allVtbInfos
         .filter((vtbInfo: VtbInfo) => (followVtbs.includes(vtbInfo.mid) && vtbInfo.liveStatus === 1))
         .map((vtbInfo: VtbInfo) => vtbInfo.mid)
-      console.log(`nowLiveFollowedVtbs: ${nowLiveFollowedVtbs.length}`)
+      // log.debug(`nowLiveFollowedVtbs: ${nowLiveFollowedVtbs.length}`)
 
       // 上播vtbs
       const upLiveFollowedVtbs: number[] = []
@@ -84,8 +83,8 @@ const initServices = () => {
         }
       })
 
-      console.log(`upLiveFollowedVtbs: ${upLiveFollowedVtbs.length}`)
-      console.log(`downLiveFollowedVtbs: ${downLiveFollowedVtbs.length}`)
+      // log.debug(`upLiveFollowedVtbs: ${upLiveFollowedVtbs.length}`)
+      // log.debug(`downLiveFollowedVtbs: ${downLiveFollowedVtbs.length}`)
 
       // 当前记录的vtbs数量不为0，或者设置启动时接受通知为true。派发上播和下播提醒。
       // optimize：使用debounce避免某个时刻通知过多而导致疯狂弹窗。

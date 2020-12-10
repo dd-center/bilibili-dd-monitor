@@ -104,17 +104,19 @@ use browser-level image lazy loading ability
 > web browser
 - shields-log
 
-类似于shields.io 图标
+该log适用于浏览器环境，不适用于NodeJS console。类似于shields.io 图标。
 
 > electron(NodeJS)
 - pretty 
+
+当前使用pretty
 ```
 [ERROR] => MESSAGE
 [WARN] => MESSAGE
 [SUCCESS] => MESSAGE
 [DEBUG] => MESSAGE
 ```
-- cat-loggr 
+- cat-loggr
 ```
  12/10 15:05:33  verbose  Hello, world!
  12/10 15:05:33   info    Hello, world!

@@ -33,7 +33,8 @@
       <div class="shield-container">
         <vue-shield class="shield-item" :title="'已获取 vtubers'" :content="vtbCount"/>
         <vue-shield class="shield-item" :title="'正在直播'" :content="livingVtbCount"/>
-        <vue-shield class="shield-item" :title="'正在更新...'" :content="updateVtbCount"/>
+        <vue-shield class="shield-item" :title="'正在更新'" :content="updateVtbCount"/>
+        <vue-shield class="shield-item" :title="'平均更新间隔(MS)'" :content="averageUpdateInterval"/>
         <vue-shield class="shield-item" :title="'当前播放器窗口'" :content="playerWindowCount"/>
       </div>
     </div>
@@ -60,7 +61,8 @@ export default {
       'vtbCount',
       'livingVtbCount',
       'updateVtbCount',
-      'playerWindowCount'
+      'playerWindowCount',
+      'averageUpdateInterval'
     ])
   },
   methods: {

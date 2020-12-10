@@ -13,6 +13,6 @@
   },
   "dependencies": {
     "cat-loggr": "^1.1.0",
-    "pretty-logs": "^0.5.1"
+    "pretty-log": "^0.1.0"
   }
 }

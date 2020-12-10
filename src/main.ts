@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './app/App.vue'
 import router from './app/router'
 import store from './app/store'
-import { FollowListService, NoticeService, VtbInfoUpdateListenerService } from '@/app/services'
+import { FollowListService, NoticeService, VtbInfoUpdateListener } from '@/app/services'
 
 // import font awesome icon
 // https://github.com/FortAwesome/vue-fontawesome#installation
@@ -86,7 +86,7 @@ new Vue({
       slog('INIT', 'followlists')
       store.dispatch('updateFollowLists', followLists)
     })
-    const vtbInfoUpdateListenerService = new VtbInfoUpdateListenerService()
+    const vtbInfoUpdateListenerService = new VtbInfoUpdateListener()
     slog('INIT', 'VtbInfoUpdateListenerService')
     const playerWindowCountListener = new PlayerWindowCountListener()
     slog('INIT', 'playerWindowCountListener')

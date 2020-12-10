@@ -17,6 +17,7 @@ export default class VtbInfoService {
   }
 
   /**
+   * @deprecated
    * 监听后端vtb数据更新
    */
   updateVtbInfos (): Observable<VtbInfo[]> {

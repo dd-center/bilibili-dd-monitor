@@ -3,7 +3,7 @@ import VtbInfoService from '@/app/services/VtbInfoService'
 import FollowListService from '@/app/services/FollowListService'
 import LivePlayService from '@/app/services/LivePlayService'
 import NoticeService from '@/app/services/NoticeService'
-import VtbInfoUpdateListenerService from '@/app/services/VtbInfoUpdateListenerService'
+import VtbInfoUpdateListener from '@/app/services/VtbInfoUpdateListener'
 
 export {
   SettingService,
@@ -11,5 +11,5 @@ export {
   FollowListService,
   LivePlayService,
   NoticeService,
-  VtbInfoUpdateListenerService
+  VtbInfoUpdateListener
 }

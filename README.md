@@ -23,7 +23,7 @@ work in progress.
   - [x] vtubers count
   - [x] living count
   - [x] updating count
-  - [ ] average update internal(ms)
+  - [x] average update internal(ms)
   - [x] current window count
   - [ ] socket.io event
 - [x] 菜单栏：窗口处理

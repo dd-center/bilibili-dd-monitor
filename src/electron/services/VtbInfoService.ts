@@ -2,6 +2,7 @@ import io from 'socket.io-client'
 import { FollowList, VtbInfo } from '@/interfaces'
 import { FollowListService } from '@/electron/services/index'
 import vtbInfosMock from '../../../test/sample/VtbInfos.json'
+import log from "pretty-log";
 
 const socket = io('https://api.vtbs.moe')
 
@@ -30,8 +31,8 @@ export class VtbInfoService {
 
       totalTimeInterval += timeInterval
       infoEventCount++
-      const averageInternalInMilliSeconds = Math.round(totalTimeInterval / infoEventCount)
-      console.log(`average internal statistics: ${averageInternalInMilliSeconds}`)
+      const averageUpdateInterval = Math.round(totalTimeInterval / infoEventCount)
+      log.debug(`average socket.io interval: ${averageUpdateInterval}`)
 
       // insert or update info
       infos.forEach((info: VtbInfo, index, array) => {
@@ -40,7 +41,7 @@ export class VtbInfoService {
 
       // if have update function, call it
       if (this.update) {
-        this.update([...this.vtbInfosMap.values()], infos)
+        this.update([...this.vtbInfosMap.values()], infos, averageUpdateInterval)
       }
 
       // if has once update function, call it and reset to null
@@ -52,31 +53,25 @@ export class VtbInfoService {
 
     // region socket listeners
     socket.on('connect', () => {
-      console.log('connect.')
+      log.debug('socket.io connect.')
     })
     socket.on('disconnect', () => {
-      console.log('disconnect.')
-    })
-    socket.on('reconnect', () => {
-      console.log('reconnect')
+      log.debug('socket.io disconnect.')
     })
     socket.on('reconnecting', () => {
-      console.log('reconnecting')
+      log.debug('reconnecting')
     })
     socket.on('reconnect_error', (error: any) => {
-      console.log('reconnect_error')
-    })
-    socket.on('reconnect_failed', () => {
-      console.log('reconnect_failed')
+      log.debug('reconnect_error')
     })
     socket.on('connect_error', (error: any) => {
-      console.log('connect_error')
+      log.debug('connect_error')
     })
     socket.on('connect_timeout', (timeout: any) => {
-      console.log('connect_timeout')
+      log.debug('connect_timeout')
     })
     socket.on('error', (error: any) => {
-      console.log('error')
+      log.debug('error')
     })
     // endregion
   }
@@ -95,7 +90,7 @@ export class VtbInfoService {
     this._onceUpdate = callback
   }
 
-  onUpdate (callback: (allVtbInfos: VtbInfo[], updatedVtbInfos: VtbInfo[]) => void) {
+  onUpdate (callback: (allVtbInfos: VtbInfo[], updatedVtbInfos: VtbInfo[], averageUpdateInterval: number) => void) {
     this.update = callback
   }
 

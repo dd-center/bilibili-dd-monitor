@@ -1,4 +1,4 @@
-import { Menu, screen } from 'electron';
+import { Menu, screen, shell } from 'electron';
 import { PlayerObj } from '@/interfaces';
 
 export const createMainWindowMenu = (app: Electron.App, players: Map<number, PlayerObj>) => {
@@ -53,75 +53,111 @@ export const createMainWindowMenu = (app: Electron.App, players: Map<number, Pla
     }
   }
   const template = [
-    ...(process.platform === 'darwin' ? [{
-      label: app.getName(),
-      submenu: [
-        { role: 'about' },
-        { type: 'separator' },
-        { role: 'services' },
-        { type: 'separator' },
-        { role: 'hide' },
-        { role: 'hideothers' },
-        { role: 'unhide' },
-        { type: 'separator' },
-        { role: 'quit' }
-      ]
-    }] : []), {
-      label: '播放器',
-      submenu: [
-        {
-          label: '置顶当前所有播放器',
-          click: () => {
-            players.forEach((player: PlayerObj) => {
-              player.playerWindow.setAlwaysOnTop(true);
-            })
+      ...(process.platform === 'darwin' ? [{
+        label: app.getName(),
+        submenu: [
+          { role: 'about' },
+          { type: 'separator' },
+          { role: 'services' },
+          { type: 'separator' },
+          { role: 'hide' },
+          { role: 'hideothers' },
+          { role: 'unhide' },
+          { type: 'separator' },
+          { role: 'quit' }
+        ]
+      }] : []), {
+        label: '播放器',
+        submenu: [
+          {
+            label: '置顶当前所有播放器',
+            click: () => {
+              players.forEach((player: PlayerObj) => {
+                player.playerWindow.setAlwaysOnTop(true);
+              })
+            }
+          },
+          {
+            label: '取消置顶当前所有播放器',
+            click: () => {
+              players.forEach((player: PlayerObj) => {
+                player.playerWindow.setAlwaysOnTop(false);
+              })
+            }
+          },
+          {
+            label: '自动重排窗口',
+            submenu: primaryDisplays.map((display: Electron.Display, index: number): Electron.MenuItem => (<Electron.MenuItem>{
+              label: `显示器${index.toString()} ${display.size.width} X ${display.size.height}`,
+              click: <Function>(() => {
+                return autoSetPlayerBounds(display);
+              })
+            }))
+          },
+          {
+            label: '显示所有播放器',
+            click: () => {
+              players.forEach((player: PlayerObj) => {
+                player.playerWindow.show();
+              })
+            }
+          },
+          {
+            label: '最小化所有播放器',
+            click: () => {
+              players.forEach((player: PlayerObj) => {
+                player.playerWindow.minimize();
+              })
+            }
+          },
+          {
+            label: '关闭所有播放器',
+            click: () => {
+              players.forEach((player: PlayerObj) => {
+                player.playerWindow.close();
+              })
+              players.clear()
+            }
+          },
+        ]
+      }, {
+        label: '帮助',
+        submenu: [
+          {
+            label: '帮助文档',
+            click: () => {
+              shell.openExternal('https://github.com/wdpm/bilibili-dd-monitor')
+            }
+          },
+          {
+            label: '问题反馈',
+            click: () => {
+              shell.openExternal('https://github.com/wdpm/bilibili-dd-monitor/issues')
+            }
+          },
+          {
+            label: '检测更新',
+            click: () => {
+              // alert('在写了，在写了，指新建文件夹。(｡･ω･｡)')
+            }
+          },
+          {
+            label: '关于',
+            click: () => {
+              // alert('你好，我是关于。')
+            }
+          },
+          {
+            label: '打开主窗口调试控制台',
+            click: (item: any, focusedWindow: { toggleDevTools: () => void; }) => {
+              if (focusedWindow) {
+                focusedWindow.toggleDevTools()
+              }
+            }
           }
-        },
-        {
-          label: '取消置顶当前所有播放器',
-          click: () => {
-            players.forEach((player: PlayerObj) => {
-              player.playerWindow.setAlwaysOnTop(false);
-            })
-          }
-        },
-        {
-          label: '自动重排窗口',
-          submenu: primaryDisplays.map((display: Electron.Display, index: number): Electron.MenuItem => (<Electron.MenuItem>{
-            label: `显示器${index.toString()} ${display.size.width} X ${display.size.height}`,
-            click: <Function>(() => {
-              return autoSetPlayerBounds(display);
-            })
-          }))
-        },
-        {
-          label: '显示所有播放器',
-          click: () => {
-            players.forEach((player: PlayerObj) => {
-              player.playerWindow.show();
-            })
-          }
-        },
-        {
-          label: '最小化所有播放器',
-          click: () => {
-            players.forEach((player: PlayerObj) => {
-              player.playerWindow.minimize();
-            })
-          }
-        },
-        {
-          label: '关闭所有播放器',
-          click: () => {
-            players.forEach((player: PlayerObj) => {
-              player.playerWindow.close();
-            })
-            players.clear()
-          }
-        },
-      ]
-    }
-
-  ];
+        ]
+      }
+    ]
+  ;
   return Menu.buildFromTemplate(<any>template);
 }

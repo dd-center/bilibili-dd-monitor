@@ -35,10 +35,12 @@ work in progress.
     - [x] 显示所有播放器窗口
     - [x] 最小化所有播放器窗口
     - [x] 关闭所有播放器窗口
-- [ ] 菜单栏：其他
-    - 关闭所有播放器窗口
-    - 其他/后期支持/关于/检查更新
-    - 调试控制台
+- [ ] 菜单栏：帮助
+    - 帮助文档：=> github docs
+    - 问题反馈：=> github issues
+    - 检测更新：=> 主动检测 github release，对比版本号
+    - 关于
+    - 打开主窗口调试控制台
 - [ ] Tray mode
 - [ ] loading indicator UI
 
@@ -51,7 +53,7 @@ reduce subsequent request network traffic significantly
 - [x] icon images lazy load by browser-level lazy-loading
 - [x] vtb list sort by `online` field
 - [x] change Logic for getting vtb infos data from client pull to server push mode
-- [ ] ~~icon images zip size: different size (10kb-500kb),dimension(A x A)~~
+- [ ] ~~icon images zip size: different size (10kb-500kb),dimension(A x A)~~ fixed by specifying img size
 - [ ] highlight search result text
 - [ ] use VtbInfoLite version NOT VtbInfo to reduce data size
 

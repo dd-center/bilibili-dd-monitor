@@ -1,5 +1,6 @@
-import { dialog, Menu, screen, shell } from 'electron';
+import { dialog, Menu, MenuItem, screen, shell } from 'electron';
 import { PlayerObj } from '@/interfaces';
+import { checkForUpdates } from "@/electron/updater";
 
 export const createMainWindowMenu = (app: Electron.App, players: Map<number, PlayerObj>) => {
   const primaryDisplays: Electron.Display[] = screen.getAllDisplays();
@@ -137,13 +138,8 @@ export const createMainWindowMenu = (app: Electron.App, players: Map<number, Pla
           },
           {
             label: '检测更新',
-            click: (item: any, focusedWindow: Electron.BrowserWindow) => {
-              const options = {
-                type: 'info',
-                title: '检测更新',
-                message: '在写了，在写了，指_____________'
-              };
-              dialog.showMessageBox(focusedWindow, options)
+            click: (menuItem: MenuItem, focusedWindow: Electron.BrowserWindow) => {
+              checkForUpdates(menuItem,focusedWindow)
             }
           },
           {

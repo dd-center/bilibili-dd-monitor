@@ -38,7 +38,7 @@ work in progress.
 - [x] 菜单栏：帮助
     - [x] 帮助文档：=> github docs
     - [x] 问题反馈：=> github issues
-    - [ ] 检测更新：=> 主动检测 github release，对比版本号
+    - [ ] 检测更新：=> (仅当主动点击该项时检测)
     - [x] 关于
     - [x] 打开主窗口调试控制台
 - [ ] Tray mode

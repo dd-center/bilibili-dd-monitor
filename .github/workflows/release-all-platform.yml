@@ -1,0 +1,49 @@
+name: Release all platform
+
+on:
+  push:
+    tags:
+      - v*.*.*
+
+jobs:
+  release:
+    name: build and release electron app
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ macos-latest, ubuntu-latest, windows-latest ]
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2.3.4
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.3
+        with:
+          node-version: 14
+
+      - name: npm install
+        run: |
+          npm install
+      - name: build/publish windows app
+        if: matrix.os == 'windows-latest'
+        run: |
+          npm run electron:publish-win
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: build/publish mac app
+        if: matrix.os == 'macos-latest'
+        run: |
+          npm run electron:publish-mac
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: build/publish linux app
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          npm run electron:publish-linux
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

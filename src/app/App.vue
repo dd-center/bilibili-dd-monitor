@@ -100,11 +100,11 @@ export default {
       })
     },
     handleClickOK () {
+      this.$store.dispatch('toggleShowUpdateAvailableModal')
       ipcRenderer.send('user-confirm-download')
-      this.showUpdateAvailableModal = false
     },
     handleClickCancel () {
-      this.showUpdateAvailableModal = false
+      this.$store.dispatch('toggleShowUpdateAvailableModal')
     }
   }
 }

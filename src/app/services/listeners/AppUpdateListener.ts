@@ -21,7 +21,7 @@ export default class AppUpdateListener {
   private initUpdateAvailableListener () {
     this.ipcRenderer.on('update-available', (event: Electron.Event, updateInfo: UpdateInfo) => {
       slog('update-available', updateInfo)
-      this.store.dispatch('showUpdateAvailableModal', updateInfo)
+      this.store.dispatch('toggleShowUpdateAvailableModal', updateInfo)
     })
   }
 

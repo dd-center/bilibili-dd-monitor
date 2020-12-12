@@ -14,7 +14,7 @@ export default new Vuex.Store({
     playerWindowCount: 0 as number,
     averageUpdateInterval: 0 as number,
     currentCDN: '' as string,
-    showUpdateAvailableModal: false as boolean,
+    updateAvailableModalVisible: false as boolean,
     updateInfo: {} as UpdateInfo
   },
   getters: {
@@ -58,8 +58,8 @@ export default new Vuex.Store({
       ]
       return followedVtbInfos.sort(_compareByOnlineDesc)
     },
-    showUpdateAvailableModal: (state) => {
-      return state.showUpdateAvailableModal
+    updateAvailableModalVisible: (state) => {
+      return state.updateAvailableModalVisible
     },
     updateInfo: (state) => {
       return state.updateInfo
@@ -96,8 +96,8 @@ export default new Vuex.Store({
     updateCurrentCDN (state, currentCDN: string) {
       state.currentCDN = currentCDN
     },
-    showUpdateAvailableModal (state, updateInfo: UpdateInfo) {
-      state.showUpdateAvailableModal = true
+    toggleShowUpdateAvailableModal (state, updateInfo: UpdateInfo) {
+      state.updateAvailableModalVisible = !state.updateAvailableModalVisible
       state.updateInfo = updateInfo
     }
   },
@@ -114,8 +114,8 @@ export default new Vuex.Store({
     updateCurrentCDN ({ commit, state }, currentCDN: string) {
       commit('updateCurrentCDN', currentCDN)
     },
-    showUpdateAvailableModal ({ commit, state }, updateInfo: UpdateInfo) {
-      commit('showUpdateAvailableModal', updateInfo)
+    toggleShowUpdateAvailableModal ({ commit, state }, updateInfo: UpdateInfo) {
+      commit('toggleShowUpdateAvailableModal', updateInfo)
     }
   },
   modules: {}

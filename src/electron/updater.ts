@@ -24,7 +24,8 @@ autoUpdater.fullChangelog = false
 autoUpdater.autoInstallOnAppQuit = false
 
 autoUpdater.on('error', (error: any) => {
-  dialog.showErrorBox('更新错误: ', error == null ? 'unknown' : (error.stack && error).toString() || 'unknown')
+  // error.stack or error is ugly text
+  dialog.showErrorBox('更新错误: ', error == null ? 'unknown' : '暂无可用更新')
   updater.enabled = true
 })
 

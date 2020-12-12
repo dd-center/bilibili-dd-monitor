@@ -4,14 +4,14 @@ import { join } from 'path'
 import { PlayerObj, VtbInfo } from '@/interfaces'
 
 import request from 'request'
-import ContextMap from "@/electron/utils/ContextMap";
+import ContextMap from '@/electron/utils/ContextMap'
 
 const downloadAndSetWindowIcon = (vtbInfo: VtbInfo, tempPath: string, win: Electron.BrowserWindow) => {
   request('' + vtbInfo.face)
-  .pipe(fs.createWriteStream(join(tempPath, `./faces/${vtbInfo.roomid}.jpg`)))
-  .on('close', () => {
-    win.setIcon(nativeImage.createFromPath(join(tempPath, `./faces/${vtbInfo.roomid}.jpg`)))
-  })
+    .pipe(fs.createWriteStream(join(tempPath, `./faces/${vtbInfo.roomid}.jpg`)))
+    .on('close', () => {
+      win.setIcon(nativeImage.createFromPath(join(tempPath, `./faces/${vtbInfo.roomid}.jpg`)))
+    })
 }
 
 export const createPlayerWindow = (app: Electron.App, vtbInfo: VtbInfo, playerObjMap: ContextMap<number, PlayerObj>): PlayerObj => {
@@ -53,10 +53,10 @@ export const createPlayerWindow = (app: Electron.App, vtbInfo: VtbInfo, playerOb
   // region load live stream url
   // example https://www.bilibili.com/blackboard/live/live-activity-player.html?enterTheRoom=0&cid=8725120
   win.loadURL(`https://www.bilibili.com/blackboard/live/live-activity-player.html?enterTheRoom=0&cid=${vtbInfo.roomid}`)
-  .then(() => {
+    .then(() => {
     // inject custom CSS rules
-    win.webContents.insertCSS('.bilibili-live-player-video-logo{display:none}')
-  })
+      win.webContents.insertCSS('.bilibili-live-player-video-logo{display:none}')
+    })
   // endregion
 
   win.setMenu(null)

@@ -1,4 +1,4 @@
-import ping from "ping";
+import ping from 'ping'
 
 export default class CDN {
   private static readonly apiCDNList: string[] = [

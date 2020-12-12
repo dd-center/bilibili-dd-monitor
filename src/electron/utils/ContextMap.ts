@@ -1,5 +1,5 @@
-import { PlayerObj } from "@/interfaces";
-import { BrowserWindow } from "electron";
+import { PlayerObj } from '@/interfaces'
+import { BrowserWindow } from 'electron'
 
 export default class ContextMap<K, V> extends Map {
   private context: BrowserWindow | undefined | null;
@@ -9,13 +9,13 @@ export default class ContextMap<K, V> extends Map {
   }
 
   delete (key: number): boolean {
-    const result = super.delete(key);
+    const result = super.delete(key)
     this.handlePlayerWindowCountChange(this.size)
-    return result;
+    return result
   }
 
   set (key: number, value: PlayerObj): this {
-    const map = super.set(key, value);
+    const map = super.set(key, value)
     this.handlePlayerWindowCountChange(this.size)
     return map
   }

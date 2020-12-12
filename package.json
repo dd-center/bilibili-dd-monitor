@@ -15,6 +15,7 @@
     "electron:publish-win": "vue-cli-service electron:build -w -p always",
     "electron:publish-mac": "vue-cli-service electron:build -m -p always",
     "electron:publish-linux": "vue-cli-service electron:build -l -p always",
+    "electron:generate-icons": "electron-icon-builder --input=./public/icon.png --output=public --flatten",
     "release": "vue-cli-service electron:build -mwl -p always",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
@@ -61,6 +62,7 @@
     "@vue/eslint-config-typescript": "^5.0.2",
     "electron": "^9.0.0",
     "electron-devtools-installer": "^3.1.0",
+    "electron-icon-builder": "^1.0.2",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",

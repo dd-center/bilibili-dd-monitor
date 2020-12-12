@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { FollowList, VtbInfo } from '@/interfaces'
-import { _compareByOnlineDesc, slog } from '@/main'
+import { _compareByOnlineDesc } from '@/main'
+import { UpdateInfo } from 'electron-updater'
 
 Vue.use(Vuex)
 
@@ -12,7 +13,9 @@ export default new Vuex.Store({
     updateVtbCount: 0 as number,
     playerWindowCount: 0 as number,
     averageUpdateInterval: 0 as number,
-    currentCDN: '' as string
+    currentCDN: '' as string,
+    showUpdateAvailableModal: false as boolean,
+    updateInfo: {} as UpdateInfo
   },
   getters: {
     currentCDN: (state) => {
@@ -54,6 +57,12 @@ export default new Vuex.Store({
         })
       ]
       return followedVtbInfos.sort(_compareByOnlineDesc)
+    },
+    showUpdateAvailableModal: (state) => {
+      return state.showUpdateAvailableModal
+    },
+    updateInfo: (state) => {
+      return state.updateInfo
     }
   },
   mutations: {
@@ -86,6 +95,10 @@ export default new Vuex.Store({
     },
     updateCurrentCDN (state, currentCDN: string) {
       state.currentCDN = currentCDN
+    },
+    showUpdateAvailableModal (state, updateInfo: UpdateInfo) {
+      state.showUpdateAvailableModal = true
+      state.updateInfo = updateInfo
     }
   },
   actions: {
@@ -100,6 +113,9 @@ export default new Vuex.Store({
     },
     updateCurrentCDN ({ commit, state }, currentCDN: string) {
       commit('updateCurrentCDN', currentCDN)
+    },
+    showUpdateAvailableModal ({ commit, state }, updateInfo: UpdateInfo) {
+      commit('showUpdateAvailableModal', updateInfo)
     }
   },
   modules: {}

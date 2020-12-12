@@ -1,16 +1,17 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, ipcMain } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain, IpcMainEvent } from 'electron'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 import settings from 'electron-settings'
+import { autoUpdater } from 'electron-updater'
 
 import { FollowListService, SettingService, VtbInfoService } from '@/electron/services'
 import { PlayerObj, VtbInfo } from '@/interfaces'
 import { createPlayerWindow } from '@/electron/playerWindow'
 import { createMainWindow } from '@/electron/mainWindow'
-import ContextMap from "@/electron/utils/ContextMap";
-import log from "pretty-log";
-import CDN from '@/electron/utils/CDN';
+import ContextMap from '@/electron/utils/ContextMap'
+import log from 'pretty-log'
+import CDN from '@/electron/utils/CDN'
 
 let vtbInfosService: VtbInfoService
 let mainWindow: BrowserWindow
@@ -56,8 +57,8 @@ const initServices = () => {
       // 现在正在直播的vtbs
       const nowLiveFollowedVtbs =
         allVtbInfos
-        .filter((vtbInfo: VtbInfo) => (followVtbs.includes(vtbInfo.mid) && vtbInfo.liveStatus === 1))
-        .map((vtbInfo: VtbInfo) => vtbInfo.mid)
+          .filter((vtbInfo: VtbInfo) => (followVtbs.includes(vtbInfo.mid) && vtbInfo.liveStatus === 1))
+          .map((vtbInfo: VtbInfo) => vtbInfo.mid)
 
       // 上播vtbs
       const upLiveFollowedVtbs: number[] = []
@@ -102,6 +103,13 @@ const initServices = () => {
  * depend on vtbInfosService, must init after new VtbInfosService()
  */
 const initIpcMainListeners = () => {
+  // region app update
+  ipcMain.on('user-confirm-download', (event: IpcMainEvent, ...args: any[]) => {
+    log.debug('IPC MAIN: user-confirm-download')
+    autoUpdater.downloadUpdate()
+  })
+  // endregion
+
   // region notification
   ipcMain.on('setIsNotifiedOnStart', (event: Electron.IpcMainEvent, isNotifiedOnStart: boolean) => {
     event.reply('setIsNotifiedOnStartReply', SettingService.setIsNotifiedOnStartSync(isNotifiedOnStart))
@@ -157,7 +165,7 @@ const initIpcMainListeners = () => {
 }
 
 const onMainWindowClose = () => {
-  //BUG: this method will call twice on dev environment
+  // BUG: this method will call twice on dev environment
   if (mainWindow) {
     mainWindow.on('close', () => {
       // stop vtbInfo service
@@ -211,7 +219,7 @@ app.on('ready', async () => {
   initSettingsConfiguration()
 
   // check if have alive cdn
-  bestCDN = await CDN.getBestCDN();
+  bestCDN = await CDN.getBestCDN()
   if (bestCDN) {
     log.debug(`Best CDN: ${bestCDN}`)
   } else {

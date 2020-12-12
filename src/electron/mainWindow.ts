@@ -1,9 +1,11 @@
-import { app, BrowserWindow, Menu } from "electron";
-import path from "path";
-import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
-import { PlayerObj } from "@/interfaces";
-import { createMainWindowMenu } from "@/electron/mainWindowMenu";
-import ContextMap from "@/electron/utils/ContextMap";
+import { app, BrowserWindow, Menu } from 'electron'
+import path from 'path'
+import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
+import { PlayerObj } from '@/interfaces'
+import { createMainWindowMenu } from '@/electron/mainWindowMenu'
+import ContextMap from '@/electron/utils/ContextMap'
+
+const mainWindowIconPath = 'public/icons/icon.ico'
 
 export const createMainWindow = async (app: Electron.App, playerObjMap: ContextMap<number, PlayerObj>) => {
   // Create the browser window.
@@ -14,7 +16,7 @@ export const createMainWindow = async (app: Electron.App, playerObjMap: ContextM
     fullscreen: false,
     fullscreenable: false,
     resizable: false,
-    icon: 'public/favicon.ico',
+    icon: mainWindowIconPath,
     title: 'bilibili-dd-monitor',
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
@@ -35,19 +37,14 @@ export const createMainWindow = async (app: Electron.App, playerObjMap: ContextM
   }
 
   // menu
-  const menu = createMainWindowMenu(app, playerObjMap);
+  const menu = createMainWindowMenu(app, playerObjMap)
   if (process.platform === 'darwin') {
-    Menu.setApplicationMenu(menu);
+    Menu.setApplicationMenu(menu)
   } else {
-    win.setMenu(menu);
+    win.setMenu(menu)
   }
 
   playerObjMap.attachContext(win)
-
-  // close event
-  win.on('close', () => {
-
-  })
 
   return win
 }

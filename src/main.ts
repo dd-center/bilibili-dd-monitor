@@ -7,7 +7,8 @@ import {
   NoticeListener,
   VtbInfoUpdateListener,
   PlayerWindowCountListener,
-  CDNListener
+  CDNListener,
+  AppUpdateListener
 } from '@/app/services'
 
 // import font awesome icon
@@ -97,5 +98,7 @@ new Vue({
     slog('INIT', 'PlayerWindowCountListener')
     const cdnListener = new CDNListener()
     slog('INIT', 'CDNListener')
+    const appUpdateListener = new AppUpdateListener()
+    slog('INIT', 'appUpdateListener')
   }
 }).$mount('#app')

@@ -46,6 +46,24 @@
 
     <!-- for custom style: https://github.com/euvl/vue-notification#style-->
     <notifications group="action-feedback" position="top center"/>
+
+    <div v-show="showUpdateAvailableModal" id="modal-update-available" class="modal modal-update-available">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">发现更新</h3>
+        </div>
+        <div class="modal-body">
+          <h4>新版本: {{ updateInfo.version }}. 是否立即下载？</h4>
+          <p>更新内容</p>
+          <p v-html="updateInfo.releaseNotes"></p>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-button modal-button-ok" @click="handleClickOK">是</button>
+          <button class="modal-button modal-button-cancel" @click="handleClickCancel">否</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -53,7 +71,12 @@
 import { mapGetters } from 'vuex'
 import VueShield from '@/app/components/VueShield'
 
+const ipcRenderer = window.ipcRenderer
+
 export default {
+  data () {
+    return {}
+  },
   components: {
     VueShield
   },
@@ -64,7 +87,9 @@ export default {
       'updateVtbCount',
       'playerWindowCount',
       'averageUpdateInterval',
-      'currentCDN'
+      'currentCDN',
+      'showUpdateAvailableModal',
+      'updateInfo'
     ])
   },
   methods: {
@@ -73,6 +98,13 @@ export default {
       return paths.some((path) => {
         return this.$router.currentRoute.path.indexOf(path) !== -1
       })
+    },
+    handleClickOK () {
+      ipcRenderer.send('user-confirm-download')
+      this.showUpdateAvailableModal = false
+    },
+    handleClickCancel () {
+      this.showUpdateAvailableModal = false
     }
   }
 }
@@ -176,4 +208,86 @@ export default {
 .vue-notification-group {
   top: 30% !important;
 }
+
+.modal {
+  position: fixed;
+  z-index: 3000;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .2);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &-content {
+    border: #e2e2e2 solid 1px;
+    border-radius: 5px;
+    background-color: white;
+    width: 40%;
+
+    display: flex;
+    flex-direction: column;
+
+    font-size: 1rem;
+    color: #666262;
+  }
+
+  &-header {
+    border-bottom: #e2e2e2 solid 1px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 6px 12px;
+  }
+
+  &-title {
+    flex: 1;
+    font-weight: 400;
+    font-size: 1em;
+  }
+
+  &-body {
+    padding: 16px;
+    flex: 1;
+    border-bottom: #e2e2e2 solid 1px;
+  }
+
+  &-footer {
+    display: flex;
+    flex-direction: row-reverse;
+    font-weight: 400;
+    padding: 8px 12px;
+  }
+
+  &-button {
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    justify-self: end;
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: #e2e2e2 solid 1px;
+    cursor: pointer;
+    margin-left: 10px;
+
+    &-ok {
+      order: -1;
+      background-color: #3da2ff;
+      color: white;
+    }
+
+    &-cancel {
+      order: 1;
+      color: #666262;
+    }
+  }
+
+}
+
 </style>

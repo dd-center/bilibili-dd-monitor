@@ -2,7 +2,7 @@ import io from 'socket.io-client'
 import { FollowList, VtbInfo } from '@/interfaces'
 import { FollowListService } from '@/electron/services/index'
 import vtbInfosMock from '../../../test/sample/VtbInfos.json'
-import log from "pretty-log";
+import log from 'pretty-log'
 
 export class VtbInfoService {
   private vtbInfosMap: Map<number, VtbInfo> = new Map<number, VtbInfo>()
@@ -66,16 +66,16 @@ export class VtbInfoService {
         log.debug('reconnecting')
       })
       socket.on('reconnect_error', (error: any) => {
-        log.debug('reconnect_error')
+        log.debug('reconnect_error', error)
       })
       socket.on('connect_error', (error: any) => {
-        log.debug('connect_error')
+        log.debug('connect_error', error)
       })
       socket.on('connect_timeout', (timeout: any) => {
-        log.debug('connect_timeout')
+        log.debug('connect_timeout', timeout)
       })
       socket.on('error', (error: any) => {
-        log.debug('error')
+        log.debug('error', error)
       })
     }
     // endregion
@@ -104,9 +104,9 @@ export class VtbInfoService {
   }
 
   getVtbLiveStatusByMid (vtbMid: number): number {
-    const vtbInfo = this.getVtbInfos().find((vtbInfo: VtbInfo) => vtbInfo.mid === vtbMid);
-    if (vtbInfo) return vtbInfo.liveStatus as number;
-    return 0;
+    const vtbInfo = this.getVtbInfos().find((vtbInfo: VtbInfo) => vtbInfo.mid === vtbMid)
+    if (vtbInfo) return vtbInfo.liveStatus as number
+    return 0
   }
 
   /**

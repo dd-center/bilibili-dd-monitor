@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - [ ] 多开window 之后，如果删除其中一些窗口，再次重排窗口无效。该bug不稳定重现。
 
+## [0.7.4] - 2020-12-13
+### Fixed
+- 修复更新App对话框的显示关闭逻辑
+
 ## [0.7.2] - 2020-12-13
 ### Added
 - 已关注的直播列表
@@ -66,5 +70,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - follow router doesn't highlight when navigate to its sub route.
 - 对当前在线某个vtb进行关注，马上取关，触发奇怪的下播提醒。
 
-[Unreleased]: https://github.com/wdpm/bilibili-dd-monitor/compare/v0.7.2...HEAD
+[Unreleased]: https://github.com/wdpm/bilibili-dd-monitor/compare/v0.7.4...HEAD
+[0.7.4]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.7.4
 [0.7.2]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.7.2

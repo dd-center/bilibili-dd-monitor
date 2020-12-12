@@ -17,6 +17,8 @@ let parentWindow: BrowserWindow
 autoUpdater.autoDownload = false
 // set to false. List if `updater.fullChangelog` is set to `true`, `string` otherwise.(include html format)
 autoUpdater.fullChangelog = false
+// disable download pre-release version
+// autoUpdater.allowPrerelease = false
 // fix bug: electron-updater will update even I don't call quitAndInstall after app quit
 // https://github.com/electron-userland/electron-builder/issues/2493
 autoUpdater.autoInstallOnAppQuit = false

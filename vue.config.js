@@ -2,6 +2,7 @@
 
 const packageVersion = require('./package.json').version
 const packageName = require('./package.json').name
+const shortcutName = packageName
 const artifactNameInAppId = packageName.replace(/-/g, '_')
 const winIconPath = './public/icons/icon.ico'
 const macIconPath = './public/icons/icon.icns'
@@ -17,7 +18,7 @@ module.exports = {
       builderOptions: {
         publish: ['github'],
         productName: `${packageName}`,
-        appId: `com.github.${artifactNameInAppId}`,
+        appId: `com.dd_center.${artifactNameInAppId}`,
         copyright: 'Copyright © 2020 open source',
         releaseInfo: {
           releaseName: `${packageVersion} version update`
@@ -66,7 +67,7 @@ module.exports = {
           installerHeaderIcon: winIconPath,
           createDesktopShortcut: true,
           createStartMenuShortcut: true,
-          shortcutName: 'vue-electron-app-starter'
+          shortcutName: shortcutName
         }
       }
     }

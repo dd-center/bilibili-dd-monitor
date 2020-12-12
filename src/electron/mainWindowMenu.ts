@@ -148,7 +148,7 @@ export const createMainWindowMenu = (app: Electron.App, players: Map<number, Pla
             const options = {
               type: 'info',
               title: '关于',
-              message: 'bilibili-dd-center Powered By DD'
+              message: `bilibili-dd-center Powered By DD. 当前版本:${app.getVersion()}`
             }
             dialog.showMessageBox(focusedWindow, options)
           }

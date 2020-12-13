@@ -49,6 +49,19 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+- [Introduction](#introduction)
+- [Motivation](#motivation)
+- [Key Features](#key-features)
+- [How to use](#how-to-use)
+- [Technologies Used](#technologies-used)
+- [Versioning](#versioning)
+- [Development](#development)
+  - [Setup](#setup)
+  - [Installation](#installation)
+- [How to contribute](#how-to-contribute)
+  - [pull request](#pull-request)
+  - [submit bug feedback](#submit-bug-feedback)
+- [Acknowledgments](#acknowledgments)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->

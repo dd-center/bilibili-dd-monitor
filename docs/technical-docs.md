@@ -131,16 +131,26 @@ use browser-level image lazy loading ability
 
 性能衡量指标：CPU 网络 内存 磁盘 GPU
 
-仅启动，不开任何播放器：40MB
-1 player playing 336MB +300
-2 player playing 474MB +140
-3                575MB +100
-4                650MB +80
-5                800MB +150
-6                900MB +100
+测试环境
+```
+CPU: Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz
+内存：16.0 GB 速度: 2400 MHz
+磁盘 0 (D:) Samsung SSD 970 EVO Plus 500GB
+磁盘 1 (C:) SAMSUNG MZVLB256HAHQ-00000
+GPU 0 Intel(R) UHD Graphics 620 | 共享 GPU 内存	7.9 GB
+GPU 1 NVIDIA GeForce MX250 | 专用 GPU 内存 2.0 GB | 共享 GPU 内存 7.9 GB
+```
+### 内存
+|描述|内存|delta|
+|---|---|---|
+|仅启动，不开任何播放器|40MB|-|
+|1 player playing |336MB |+300|
+|2 player playing |474MB |+140|
+|3 player playing |575MB |+100|
+|4 player playing |650MB| +80|
+|5 player playing |800MB| +150|
+|6 player playing |900MB| +100|
+|关闭所有播放器窗口 |250MB| -650|
 
----
-CPU network GPU 是主要瓶颈
-
-> 一旦启动，关闭所有播放器窗口，内存会回到250MB左右
+CPU/网络/GPU 是主要瓶颈。
 

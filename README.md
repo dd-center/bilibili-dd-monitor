@@ -1,6 +1,6 @@
 <h1 align="center">
   <a href="https://github.com/wdpm/bilibili-dd-monitor/">
-    <img src="./images/banner.png" alt="bilibili-dd-monitor" width="640">
+    <img src="./images/banner.png" alt="bilibili-dd-monitor" width="480">
   </a>
 </h1>
 

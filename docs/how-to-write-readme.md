@@ -1,6 +1,6 @@
 # Write Beautiful and Meaningful README
 A beautiful README should have
-- [x] Top big center image logo
+- [x] Top big center image logo (1600x600)
 - [x] One-line top center title
 - [x] Build status by shields.io(The Badge of Honour), include Project status
 - [ ] Table of contents(auto generated)

@@ -1,9 +1,7 @@
 <h1 align="center">
-  <br>
   <a href="https://github.com/wdpm/bilibili-dd-monitor/">
-    <img src="./images/banner.png" alt="bilibili-dd-monitor" width="1280">
+    <img src="./images/banner.png" alt="bilibili-dd-monitor" width="640">
   </a>
-  <br>
 </h1>
 
 <h4 align="center">专为DD设计的多屏直播观看工具</h4>

@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [ ] 多开window 之后，如果删除其中一些窗口，再次重排窗口无效。该bug不稳定重现。
 - [ ] 播放器画质切换无效的严重BUG
 
+## [0.8.1] - 2020-12-17
+### Fixed
+- 继续修复更新App对话框的显示关闭逻辑.
+
 ## [0.8.0] - 2020-12-17
 ### Added
 - Home page loading spinner
@@ -79,6 +83,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - follow router doesn't highlight when navigate to its sub route.
 - 对当前在线某个vtb进行关注，马上取关，触发奇怪的下播提醒。
 
-[Unreleased]: https://github.com/wdpm/bilibili-dd-monitor/compare/v0.7.4...HEAD
+[Unreleased]: https://github.com/wdpm/bilibili-dd-monitor/compare/v0.8.1...HEAD
+[0.8.1]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.8.1
+[0.8.0]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.8.0
+[0.7.5]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.7.5
 [0.7.4]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.7.4
 [0.7.2]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.7.2

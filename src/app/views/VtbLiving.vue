@@ -35,6 +35,13 @@
       </tr>
       </tbody>
     </table>
+    <div class="orbit-spinner-container">
+      <orbit-spinner
+        v-show="followedVtbInfos.length<=0"
+        :animation-duration="1000"
+        :size="200"
+      />
+    </div>
   </div>
 </template>
 
@@ -45,9 +52,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'VtbLiving',
   data () {
-    return {
-      //
-    }
+    return {}
   },
   created () {
     this.initServices()
@@ -119,5 +124,12 @@ export default {
       cursor: pointer;
     }
   }
+}
+
+.orbit-spinner-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

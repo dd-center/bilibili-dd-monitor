@@ -36,6 +36,8 @@ import 'vue-select/dist/vue-select.css'
 import Notifications from 'vue-notification'
 import { FollowList, VtbInfo } from '@/interfaces'
 
+import OrbitSpinner from '@/app/components/OrbitSpinner.vue'
+
 library.add(
   faSignal,
   faHeart,
@@ -51,6 +53,8 @@ library.add(
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.component('v-select', vSelect)
+
+Vue.component('orbit-spinner', OrbitSpinner)
 
 Vue.config.productionTip = false
 

@@ -16,8 +16,8 @@ export default new Vuex.Store({
     currentCDN: '' as string,
     updateAvailableModalVisible: false as boolean,
     updateInfo: {
-      version: "" as string,
-      releaseNotes: "" as string
+      version: '' as string,
+      releaseNotes: '' as string
     } as UpdateInfo
   },
   getters: {

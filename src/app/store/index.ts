@@ -15,7 +15,10 @@ export default new Vuex.Store({
     averageUpdateInterval: 0 as number,
     currentCDN: '' as string,
     updateAvailableModalVisible: false as boolean,
-    updateInfo: {} as UpdateInfo
+    updateInfo: {
+      version: "" as string,
+      releaseNotes: "" as string
+    } as UpdateInfo
   },
   getters: {
     currentCDN: (state) => {

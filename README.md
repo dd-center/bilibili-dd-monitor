@@ -1,3 +1,5 @@
+> 致歉: 0.7.4 版本具有无法更新的bug，请下载0.7.5+以上的版本
+
 <h1 align="center">
   <a href="https://github.com/wdpm/bilibili-dd-monitor/">
     <img src="./images/banner.png" alt="bilibili-dd-monitor" width="1600">

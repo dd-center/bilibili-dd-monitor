@@ -47,6 +47,7 @@
     <!-- for custom style: https://github.com/euvl/vue-notification#style-->
     <notifications group="action-feedback" position="top center"/>
 
+    <!-- use v-if to make lazy compile-->
     <div v-show="updateAvailableModalVisible" id="modal-update-available" class="modal modal-update-available">
       <div class="modal-content">
         <div class="modal-header">

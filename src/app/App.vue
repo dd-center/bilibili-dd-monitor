@@ -47,7 +47,7 @@
     <!-- for custom style: https://github.com/euvl/vue-notification#style-->
     <notifications group="action-feedback" position="top center"/>
 
-    <div v-show="showUpdateAvailableModal" id="modal-update-available" class="modal modal-update-available">
+    <div v-show="updateAvailableModalVisible" id="modal-update-available" class="modal modal-update-available">
       <div class="modal-content">
         <div class="modal-header">
           <h3 class="modal-title">发现更新</h3>
@@ -88,7 +88,7 @@ export default {
       'playerWindowCount',
       'averageUpdateInterval',
       'currentCDN',
-      'showUpdateAvailableModal',
+      'updateAvailableModalVisible',
       'updateInfo'
     ])
   },

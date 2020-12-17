@@ -15,6 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - [ ] 多开window 之后，如果删除其中一些窗口，再次重排窗口无效。该bug不稳定重现。
+- [ ] 播放器画质切换无效的严重BUG
+
+## [0.7.5] - 2020-12-17
+### Fixed
+- 再次修复更新App对话框的显示关闭逻辑
 
 ## [0.7.4] - 2020-12-13
 ### Fixed

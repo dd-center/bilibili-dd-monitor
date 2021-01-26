@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - [ ] Tray mode
 - [ ] loading indicator UI
+- [ ] 添加非socket.io获取数据信息的模式
 
 ### Changed
 - [ ] highlight search result text

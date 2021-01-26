@@ -154,3 +154,26 @@ GPU 1 NVIDIA GeForce MX250 | 专用 GPU 内存 2.0 GB | 共享 GPU 内存 7.9 GB
 
 CPU/网络/GPU 是主要瓶颈。
 
+## 非socket.io获取数据信息的模式[TODO]
+> https://github.com/dd-center/vtbs.moe/blob/master/api.md
+
+当socket.io API不可用时，使用以下策略：
+
+1.初始化所有vtubers数据，这个数据量通过该接口获取：info 
+```
+https://api.vtbs.moe/v1/info
+```
+2.定时轮询直播状态接口，获取当前正在直播的vtubers的房间id: List of living rooms 
+```
+https://api.vtbs.moe/v1/living
+```
+> 轮询时间间隔如何设计？
+- 固定时间间隔。例如每10s轮询一次，那么滑动时间窗口也就是10s的长度。
+- 智能化更新轮询时间间隔。
+  例如当前正在直播的有100，第二次获取时，变成了120，第三次更新时变成了121，也就是说明第二次~第三次的时间span内，变化很微弱，得出一种假设：当前变化率不大，下一次的变化率也会不大。于是，可以加大时间窗口长度来提升性能，于是将10
+  s x 2=20s。这就是大致的思路。
+
+
+
+## 调研b站官方vtuber直播状态的API[TODO]
+这个是最终fallback的策略。

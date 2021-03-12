@@ -7,25 +7,31 @@
           <li class="nav-list-item">
             <router-link to="/" class="nav-list-item-link">
               <font-awesome-icon :icon="['fas', 'signal']" class="nav-list-item-icon"/>
-              Home
+              正在直播
             </router-link>
           </li>
           <li class="nav-list-item">
             <router-link to="/follow" class="nav-list-item-link" :class="{'router-link-active':subIsActive('/list')}">
               <font-awesome-icon :icon="['fas', 'heart']" class="nav-list-item-icon"/>
-              Follow
+              关注
             </router-link>
           </li>
           <li class="nav-list-item">
             <router-link to="/vtbList" class="nav-list-item-link">
               <font-awesome-icon :icon="['fas', 'list-ul']" class="nav-list-item-icon"/>
-              VtbList
+              Vtb列表
             </router-link>
           </li>
           <li class="nav-list-item">
             <router-link to="/setting" class="nav-list-item-link">
               <font-awesome-icon :icon="['fas', 'cog']" class="nav-list-item-icon"/>
-              Setting
+              设置
+            </router-link>
+          </li>
+          <li class="nav-list-item">
+            <router-link to="/liveRoomEntry" class="nav-list-item-link">
+              <font-awesome-icon :icon="['fas', 'cog']" class="nav-list-item-icon"/>
+              直播间临时入口
             </router-link>
           </li>
         </ul>

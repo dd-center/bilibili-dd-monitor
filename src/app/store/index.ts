@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { FollowList, VtbInfo } from '@/interfaces'
-import { _compareByOnlineDesc } from '@/main'
 import { UpdateInfo } from 'electron-updater'
+import { _compareByOnlineDesc } from '@/app/utils/helpers'
 
 Vue.use(Vuex)
 

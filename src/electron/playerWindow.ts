@@ -7,11 +7,13 @@ import request from 'request'
 import ContextMap from '@/electron/utils/ContextMap'
 
 const downloadAndSetWindowIcon = (vtbInfo: VtbInfo, tempPath: string, win: Electron.BrowserWindow) => {
-  request('' + vtbInfo.face)
-    .pipe(fs.createWriteStream(join(tempPath, `./faces/${vtbInfo.roomid}.jpg`)))
-    .on('close', () => {
-      win.setIcon(nativeImage.createFromPath(join(tempPath, `./faces/${vtbInfo.roomid}.jpg`)))
-    })
+  if (vtbInfo.face) {
+    request('' + vtbInfo.face)
+      .pipe(fs.createWriteStream(join(tempPath, `./faces/${vtbInfo.roomid}.jpg`)))
+      .on('close', () => {
+        win.setIcon(nativeImage.createFromPath(join(tempPath, `./faces/${vtbInfo.roomid}.jpg`)))
+      })
+  }
 }
 
 export const createPlayerWindow = (app: Electron.App, vtbInfo: VtbInfo, playerObjMap: ContextMap<number, PlayerObj>): PlayerObj => {

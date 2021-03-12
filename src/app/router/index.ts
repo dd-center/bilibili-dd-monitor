@@ -33,6 +33,11 @@ const routes: Array<RouteConfig> = [
     path: '/setting',
     name: 'Setting',
     component: () => import('../views/Setting.vue')
+  },
+  {
+    path: '/liveRoomEntry',
+    name: 'LiveRoomEntry',
+    component: () => import('../views/LiveRoomEntry.vue')
   }
 ]
 

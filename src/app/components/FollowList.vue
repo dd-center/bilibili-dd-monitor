@@ -125,8 +125,8 @@ export default {
         this.$store.dispatch('updateFollowLists', followLists)
       })
     },
-    enterRoom (roomid) {
-      this.livePlayService.enterRoom(roomid)
+    enterRoom (roomId) {
+      this.livePlayService.enterRoom(roomId)
     }
   }
 }

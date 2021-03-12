@@ -3,29 +3,18 @@ import App from './app/App.vue'
 import router from './app/router'
 import store from './app/store'
 import {
+  AppUpdateListener,
+  CDNListener,
   FollowListService,
   NoticeListener,
-  VtbInfoUpdateListener,
   PlayerWindowCountListener,
-  CDNListener,
-  AppUpdateListener
+  VtbInfoUpdateListener
 } from '@/app/services'
 
 // import font awesome icon
 // https://github.com/FortAwesome/vue-fontawesome#installation
 import { library } from '@fortawesome/fontawesome-svg-core'
-import {
-  faSignal,
-  faHeart,
-  faListUl,
-  faCog,
-  faPlusCircle,
-  faGlobe,
-  faUserFriends,
-  faBan,
-  faSearch,
-  faEllipsisV
-} from '@fortawesome/free-solid-svg-icons'
+import { faBan, faCog, faEllipsisV, faGlobe, faHeart, faListUl, faPlusCircle, faSearch, faSignal, faUserFriends } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 // https://vue-select.org/guide/
@@ -34,9 +23,10 @@ import 'vue-select/dist/vue-select.css'
 
 // https://github.com/euvl/vue-notification/
 import Notifications from 'vue-notification'
-import { FollowList, VtbInfo } from '@/interfaces'
+import { FollowList } from '@/interfaces'
 
 import OrbitSpinner from '@/app/components/OrbitSpinner.vue'
+import { slog } from '@/app/utils/helpers'
 
 library.add(
   faSignal,
@@ -59,15 +49,6 @@ Vue.component('orbit-spinner', OrbitSpinner)
 Vue.config.productionTip = false
 
 Vue.use(Notifications)
-
-declare const window: any
-export const slog = (title: any, content: any): void => {
-  window.slog({ title: title, content: content })
-}
-
-export const _compareByOnlineDesc = (vtbInfoA: VtbInfo, vtbInfoB: VtbInfo): number => {
-  return vtbInfoB.online - vtbInfoA.online
-}
 
 Vue.mixin({
   methods: {

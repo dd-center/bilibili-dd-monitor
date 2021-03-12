@@ -150,6 +150,7 @@ const initIpcMainListeners = () => {
 
   // region player
   ipcMain.on('showPlayer', (event: Electron.IpcMainEvent, roomid: number) => {
+    // validate roomid if is valid
     if (playerObjMap.has(roomid)) {
       playerObjMap.get(roomid)!.playerWindow.focus()
     } else {
@@ -157,7 +158,15 @@ const initIpcMainListeners = () => {
         const vtbInfo: VtbInfo = vtbInfosService.getVtbInfos().find((vtbInfo: VtbInfo) => {
           return vtbInfo.roomid === roomid
         })!
-        playerObjMap.set(roomid, createPlayerWindow(app, vtbInfo, playerObjMap))
+
+        // player need `face`, `roomid`, `title`(optional) field
+        const vtbInfoNeed = {
+          roomid: roomid,
+          title: (vtbInfo && vtbInfo.title) || '',
+          face: (vtbInfo && vtbInfo.face) || ''
+        }
+
+        playerObjMap.set(roomid, createPlayerWindow(app, vtbInfoNeed as VtbInfo, playerObjMap))
       }
     }
   })

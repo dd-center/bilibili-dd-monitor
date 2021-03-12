@@ -23,7 +23,7 @@ import VirtualList from 'vue-virtual-scroll-list'
 import { FollowListService, LivePlayService } from '@/app/services/index'
 import { mapGetters } from 'vuex'
 import _ from 'lodash'
-import { _compareByOnlineDesc } from '@/main'
+import { _compareByOnlineDesc } from '@/app/utils/helpers'
 
 export default {
   name: 'VtbList',

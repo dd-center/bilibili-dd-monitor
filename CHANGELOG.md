@@ -7,18 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - [ ] Tray mode
-- [ ] loading indicator UI
-- [ ] 添加非socket.io获取数据信息的模式
+- [ ] ~~添加非socket.io获取数据信息的模式~~
 
 ### Changed
 - [ ] highlight search result text
-- [ ] use VtbInfoLite version NOT VtbInfo to reduce data size
+- [ ] ~~use VtbInfoLite version NOT VtbInfo to reduce data size~~
 
 ### Fixed
 - [ ] 多开window 之后，如果删除其中一些窗口，再次重排窗口无效。该bug不稳定重现。
-- [ ] 播放器画质切换无效的严重BUG
+- [ ] 播放器画质切换无效的严重BUG(HELP WANTED)
+
+## [0.9.0] - 2021-3-13
+### Added
+- Living room entry for some vtubers that has not been collected.
 
 ## [0.8.1] - 2020-12-17
+### Added 
+- Home page loading indicator UI
+
 ### Fixed
 - 继续修复更新App对话框的显示关闭逻辑.
 
@@ -84,7 +90,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - follow router doesn't highlight when navigate to its sub route.
 - 对当前在线某个vtb进行关注，马上取关，触发奇怪的下播提醒。
 
-[Unreleased]: https://github.com/wdpm/bilibili-dd-monitor/compare/v0.8.1...HEAD
+[Unreleased]: https://github.com/wdpm/bilibili-dd-monitor/compare/v0.9.0...HEAD
+[0.9.0]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.9.0
 [0.8.1]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.8.1
 [0.8.0]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.8.0
 [0.7.5]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.7.5

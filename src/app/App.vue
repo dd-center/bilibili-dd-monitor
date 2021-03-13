@@ -7,7 +7,7 @@
           <li class="nav-list-item">
             <router-link to="/" class="nav-list-item-link">
               <font-awesome-icon :icon="['fas', 'signal']" class="nav-list-item-icon"/>
-              正在直播
+              主页
             </router-link>
           </li>
           <li class="nav-list-item">
@@ -30,7 +30,7 @@
           </li>
           <li class="nav-list-item">
             <router-link to="/liveRoomEntry" class="nav-list-item-link">
-              <font-awesome-icon :icon="['fas', 'cog']" class="nav-list-item-icon"/>
+              <font-awesome-icon :icon="['fas', 'paper-plane']" class="nav-list-item-icon"/>
               直播间临时入口
             </router-link>
           </li>

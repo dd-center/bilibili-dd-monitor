@@ -14,7 +14,19 @@ import {
 // import font awesome icon
 // https://github.com/FortAwesome/vue-fontawesome#installation
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faBan, faCog, faEllipsisV, faGlobe, faHeart, faListUl, faPlusCircle, faSearch, faSignal, faUserFriends } from '@fortawesome/free-solid-svg-icons'
+import {
+  faBan,
+  faCog,
+  faEllipsisV,
+  faGlobe,
+  faHeart,
+  faListUl,
+  faPlusCircle,
+  faSearch,
+  faSignal,
+  faUserFriends,
+  faPaperPlane
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 // https://vue-select.org/guide/
@@ -38,7 +50,8 @@ library.add(
   faUserFriends,
   faBan,
   faSearch,
-  faEllipsisV
+  faEllipsisV,
+  faPaperPlane
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

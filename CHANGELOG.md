@@ -26,9 +26,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Living room entry for some vtubers that has not been collected.
 
 ## [0.8.1] - 2020-12-17
-### Added 
-- Home page loading indicator UI
-
 ### Fixed
 - 继续修复更新App对话框的显示关闭逻辑.
 

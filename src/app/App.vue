@@ -54,15 +54,16 @@
     <notifications group="action-feedback" position="top center"/>
 
     <!-- use v-if to make lazy compile-->
-    <div v-show="updateAvailableModalVisible" id="modal-update-available" class="modal modal-update-available">
+    <div v-if="updateAvailableModalVisible" id="modal-update-available" class="modal modal-update-available">
       <div class="modal-content">
         <div class="modal-header">
           <h3 class="modal-title">发现更新</h3>
         </div>
         <div class="modal-body">
-          <h4>新版本: {{ updateInfo.version }}. 是否立即下载？</h4>
+          <!-- .version undefined BUG-->
+          <h4>新版本: {{ updateInfo?.version }}. 是否立即下载？</h4>
           <p>更新内容</p>
-          <p v-html="updateInfo.releaseNotes"></p>
+          <p v-html="updateInfo?.releaseNotes"></p>
         </div>
         <div class="modal-footer">
           <button class="modal-button modal-button-ok" @click="handleClickOK">是</button>
@@ -107,11 +108,14 @@ export default {
       })
     },
     handleClickOK () {
-      this.$store.dispatch('toggleShowUpdateAvailableModal')
+      // here should lock UI
+      this.$store.dispatch('toggleShowUpdateAvailableModal', this.updateInfo)
       ipcRenderer.send('user-confirm-download')
+      // here should unlock UI
+      // (doge 狂点复读机
     },
     handleClickCancel () {
-      this.$store.dispatch('toggleShowUpdateAvailableModal')
+      this.$store.dispatch('toggleShowUpdateAvailableModal', this.updateInfo)
     }
   }
 }

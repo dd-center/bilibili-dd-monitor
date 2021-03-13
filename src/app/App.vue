@@ -61,9 +61,9 @@
         </div>
         <div class="modal-body">
           <!-- .version undefined BUG-->
-          <h4>新版本: {{ updateInfo?.version }}. 是否立即下载？</h4>
+          <h4>新版本: {{ updateInfo && updateInfo.version }}. 是否立即下载？</h4>
           <p>更新内容</p>
-          <p v-html="updateInfo?.releaseNotes"></p>
+          <p v-html="(updateInfo && updateInfo.releaseNotes)"></p>
         </div>
         <div class="modal-footer">
           <button class="modal-button modal-button-ok" @click="handleClickOK">是</button>

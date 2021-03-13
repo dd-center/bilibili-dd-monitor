@@ -17,7 +17,6 @@ class SearchHistoryService {
       const searchHistoryList = this.get()
       const newItem: SearchHistoryItem = {
         value: key,
-        isHistory: 1,
         timestamp: Date.now()
       }
       searchHistoryList.push(newItem)

@@ -14,10 +14,10 @@ export class VtbInfoService {
     this.socketIOUrl = bestCDN
 
     // init socket.IO
-    // this.initSocketIO()
+    this.initSocketIO()
 
     // mock data only for testing
-    this._initMockData()
+    // this._initMockData()
   }
 
   initSocketIO () {

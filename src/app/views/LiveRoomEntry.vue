@@ -15,7 +15,7 @@
       <ul class="search-history-list">
         <li class="search-history-list-item"
             v-for="(item,index) in searchHistory" :key="index">
-          <span class="room-id">{{ item.value }}</span>
+          <span class="room-id" @click="enterRoom(item.value)">{{ item.value }}</span>
           <span class="delete" @click="handleSearchHistoryItemRemove(item.value)">x</span>
         </li>
       </ul>
@@ -138,9 +138,14 @@ export default {
         border-radius: 4px;
         align-items: center;
 
+        &:hover {
+          background-color: rgba(66, 185, 131, 0.3);
+        }
+
         .room-id {
           display: inline-block;
           padding: 0 5px;
+          cursor: pointer;
         }
 
         .delete {
@@ -154,11 +159,6 @@ export default {
           cursor: pointer;
           color: rgba(255, 0, 0, .6);
         }
-
-        &:hover {
-          background-color: rgba(66, 185, 131, 0.3);
-        }
-
       }
     }
   }

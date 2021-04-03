@@ -31,7 +31,7 @@ Vue切换路由时，
 假设你鼠标来回移动的频率是:每10次/s
 - original => 每10次/s
 - debounce 限制为最多3次/s，那么callback fn不会触发
-- debounce 限制为最高频率为5次/s，那么callback fn触发最多也就5次/s
+- throttle 限制为最高频率为5次/s，那么callback fn触发最多也就5次/s
 
 ## vue Reactivity in Depth
 - https://vuejs.org/v2/guide/reactivity.html

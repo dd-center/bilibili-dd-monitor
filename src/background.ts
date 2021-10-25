@@ -24,10 +24,6 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
 ])
 
-const initUpdate = () => {
-  log.debug('INIT Updater')
-}
-
 const initSettingsConfiguration = () => {
   log.debug('INIT SettingsConfiguration')
   settings.configure({
@@ -224,7 +220,6 @@ app.on('ready', async () => {
   }
 
   // pre setup
-  initUpdate()
   initSettingsConfiguration()
 
   // check if have alive cdn

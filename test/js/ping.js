@@ -16,3 +16,5 @@ async function test () {
 }
 
 test()
+
+console.log('test')

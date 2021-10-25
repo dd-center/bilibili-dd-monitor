@@ -22,6 +22,7 @@ export const createMainWindow = async (app: Electron.App, playerObjMap: ContextM
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: (process.env.ELECTRON_NODE_INTEGRATION as unknown) as boolean,
+      webSecurity: false, // fix connect_error Error: websocket error
       preload: path.join(__dirname, 'preload.js')
     }
   })

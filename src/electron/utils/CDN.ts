@@ -7,13 +7,18 @@ export default class CDN {
   ]
 
   static async getBestCDN (): Promise<string> {
-    for (const host of this.apiCDNList) {
-      const res = await ping.promise.probe(host)
-      if (res.alive) {
-        // do better: choose the smallest AVG delay cdn
-        return 'https://' + host
+    try {
+      for (const host of this.apiCDNList) {
+        const res = await ping.promise.probe(host)
+        if (res.alive) {
+          // do better: choose the smallest AVG delay cdn
+          return 'https://' + host
+        }
       }
+    } catch (e) {
+      console.error('PING CDN error: ', e.toString())
     }
-    return ''
+    // fallback cdn
+    return 'https://api.vtbs.moe'
   }
 }

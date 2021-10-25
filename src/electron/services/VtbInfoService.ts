@@ -2,13 +2,15 @@ import io from 'socket.io-client'
 import { FollowList, VtbInfo } from '@/interfaces'
 import { FollowListService } from '@/electron/services/index'
 import vtbInfosMock from '../../../test/sample/VtbInfos.json'
-import log from 'pretty-log'
 
 export class VtbInfoService {
   private vtbInfosMap: Map<number, VtbInfo> = new Map<number, VtbInfo>()
   private update: Function | null = null
   private _onceUpdate: Function | null = null
   private readonly socketIOUrl: string = ''
+  // check this: https://github.com/socketio/socket.io-client/issues/1097 , can fix 503 error
+  // if backend server uses a self signed certificate, need to config `rejectUnauthorized: false`.
+  private defaultSocketOptions = { transports: ['websocket'], rejectUnauthorized: false }
 
   constructor (bestCDN: string) {
     this.socketIOUrl = bestCDN
@@ -21,7 +23,8 @@ export class VtbInfoService {
   }
 
   initSocketIO () {
-    const socket = io(this.socketIOUrl)
+    console.log('Socket.io url: ', this.socketIOUrl)
+    const socket = io(this.socketIOUrl, this.defaultSocketOptions)
 
     let totalTimeInterval = 0
     let infoEventCount = 0
@@ -51,31 +54,33 @@ export class VtbInfoService {
         this._onceUpdate = null
       }
     })
+
+    // this.listenSocketEvent(socket)
   }
 
   listenSocketEvent (socket: any) {
     // region socket listeners
     if (socket) {
       socket.on('connect', () => {
-        log.debug('socket.io connect.')
+        console.log('socket.io connect.')
       })
       socket.on('disconnect', () => {
-        log.debug('socket.io disconnect.')
+        console.log('socket.io disconnect.')
       })
       socket.on('reconnecting', () => {
-        log.debug('reconnecting')
+        console.log('reconnecting')
       })
       socket.on('reconnect_error', (error: any) => {
-        log.debug('reconnect_error', error)
+        console.log('reconnect_error', error)
       })
       socket.on('connect_error', (error: any) => {
-        log.debug('connect_error', error)
+        console.log('connect_error', error)
       })
       socket.on('connect_timeout', (timeout: any) => {
-        log.debug('connect_timeout', timeout)
+        console.log('connect_timeout', timeout)
       })
       socket.on('error', (error: any) => {
-        log.debug('error', error)
+        console.log('error', error)
       })
     }
     // endregion

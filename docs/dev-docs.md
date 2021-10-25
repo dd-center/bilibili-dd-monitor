@@ -9,4 +9,24 @@ npm config set ELECTRON_MIRROR "https://npm.taobao.org/mirrors/electron/"
 > 原文：https://github.com/electron/electron-packager/issues/699
 
 ## node-sass build error
-re-install node-sass
+解决方法：re-install node-sass
+
+## connect_error Error: xhr poll error
+现象：socket.io 连接错误。
+解决方案：
+1. 在webPreferences中加入webSecurity: false
+```js
+webPreferences: {
+  //...
+  webSecurity: false,
+}
+```
+2. 在使用socket.io-client 时设置参数
+```js
+private defaultSocketOptions = { transports: ['websocket'], rejectUnauthorized: false }
+const socket = io(this.socketIOUrl, this.defaultSocketOptions)
+```
+
+参考链接：
+- https://stackoverflow.com/questions/47696304/node-js-app-fails-to-connect-using-socket-io-client/47697179
+- https://github.com/socketio/socket.io-client/issues/1097

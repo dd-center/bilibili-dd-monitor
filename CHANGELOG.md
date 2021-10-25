@@ -17,6 +17,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [ ] 多开window 之后，如果删除其中一些窗口，再次重排窗口无效。该bug不稳定重现。
 - [ ] 播放器画质切换无效的严重BUG(HELP WANTED)
 
+## [0.9.4] - 2021-10-25
+### Fixed
+- 修复socket.io无法连接的错误
+- 修复因CDN链接探测异常导致的URL丢失问题
+
 ## [0.9.3] - 2021-3-13
 ### Fixed
 - 修复遗留的无法更新BUG
@@ -92,6 +97,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 对当前在线某个vtb进行关注，马上取关，触发奇怪的下播提醒。
 
 [Unreleased]: https://github.com/wdpm/bilibili-dd-monitor/compare/v0.9.3...HEAD
+[0.9.4]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.9.4
 [0.9.3]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.9.3
 [0.9.0]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.9.0
 [0.8.1]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.8.1

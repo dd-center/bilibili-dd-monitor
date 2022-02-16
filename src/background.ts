@@ -5,7 +5,7 @@ import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 import settings from 'electron-settings'
 import { autoUpdater } from 'electron-updater'
 
-import { FollowListService, SettingService, VtbInfoService } from '@/electron/services'
+import { FollowListService, SettingService, VtbInfoService, RoomService } from '@/electron/services'
 import { PlayerObj, VtbInfo } from '@/interfaces'
 import { createPlayerWindow } from '@/electron/playerWindow'
 import { createMainWindow } from '@/electron/mainWindow'
@@ -167,6 +167,12 @@ const initIpcMainListeners = () => {
     }
   })
   // endregion
+
+  // room
+  ipcMain.on('getInfoByRoom', async (event: Electron.IpcMainEvent, roomid: number) => {
+    const res = await RoomService.getInfoByRoom(roomid);
+    event.reply('getInfoByRoomReply', res)
+  })
 }
 
 const onMainWindowClose = () => {

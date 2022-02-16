@@ -14,7 +14,7 @@ interface followListItem {
   sign?: string, // 空间描述，可能缺失。
   mid: number,  // 用户UID
   roomid: number, // 直播间id
-  _provider: string // 内部字段，表示该followListItem获取的方式，vtb.moe 或者 直播间id搜索。需要细化。
+  info_source: string // 内部字段，表示该followListItem获取的方式，DD_CENTER 或者 BILIBILI，等等。
 }
 
 export interface FollowListPlus {

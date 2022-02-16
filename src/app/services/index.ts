@@ -2,6 +2,7 @@ import SettingService from '@/app/services/SettingService'
 import FollowListService from '@/app/services/FollowListService'
 import LivePlayService from '@/app/services/LivePlayService'
 import SearchHistoryService from '@/app/services/SearchHistoryService'
+import RoomService from '@/app/services/RoomService'
 
 import CDNListener from '@/app/services/listeners/CDNListener'
 import NoticeListener from '@/app/services/listeners/NoticeListener'
@@ -14,6 +15,7 @@ export {
   FollowListService,
   LivePlayService,
   SearchHistoryService,
+  RoomService,
   CDNListener,
   NoticeListener,
   VtbInfoUpdateListener,

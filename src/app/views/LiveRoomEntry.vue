@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { LivePlayService, SearchHistoryService } from '@/app/services'
+import { LivePlayService, SearchHistoryService, RoomService } from '@/app/services'
 
 export default {
   name: 'LiveRoomEntry',
@@ -42,6 +42,7 @@ export default {
     initServices () {
       this.livePlayService = new LivePlayService()
       this.searchHistoryService = new SearchHistoryService()
+      this.roomService = new RoomService()
     },
     initData () {
       this.searchHistory = this.searchHistoryService.get()
@@ -52,16 +53,23 @@ export default {
         this.actionNotify('warn', '直播房间号不能为空')
         return
       }
-      this.enterRoom(this.searchRoomId)
-      // add
-      const addFeedback = this.searchHistoryService.add(this.searchRoomId)
-      if (addFeedback) {
-        this.searchHistory = this.searchHistoryService.get()
-        // finally, reset input
-        this.searchRoomId = null
-      } else {
-        this.actionNotify('warn', '添加历史记录失败，请重试')
-      }
+
+      // check whether this roomid is valid
+      this.roomService.getInfoByRoom(this.searchRoomId).subscribe((result) => {
+        console.log(result)
+      })
+
+      // add search history
+      // const addFeedback = this.searchHistoryService.add(this.searchRoomId)
+      // if (addFeedback) {
+      //   this.searchHistory = this.searchHistoryService.get()
+      //   // finally, reset input
+      //   this.searchRoomId = null
+      // } else {
+      //   this.actionNotify('warn', '添加历史记录失败，请重试')
+      // }
+      //
+      // this.enterRoom(this.searchRoomId)
     },
     handleSearchHistoryItemRemove (roomId) {
       const removeSearchHistoryItemFeedback = this.searchHistoryService.remove(roomId)

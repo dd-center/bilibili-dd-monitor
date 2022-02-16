@@ -25,9 +25,11 @@ request(url, function (error, response, body) {
       console.log(mid, roomId, uname, face)
     } else {
       // maybe invalid roomid parameter
-      console.log("invalid response")
+      console.log('invalid response')
     }
 
   }
 
 })
+
+console.log('log')

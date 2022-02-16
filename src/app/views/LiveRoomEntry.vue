@@ -6,7 +6,7 @@
     </p>
     <div class="search">
       <input class="search-input" v-model="searchRoomId" type="number" placeholder="直播房间号"/>
-      <button class="search-button" @click="handleRoomSearch">
+      <button class="search-button" @click="searchRoom">
         Go!
       </button>
     </div>
@@ -14,9 +14,15 @@
       <p class="search-history-title">历史记录</p>
       <ul class="search-history-list">
         <li class="search-history-list-item"
-            v-for="(item,index) in searchHistory" :key="index">
-          <span class="room-id" @click="enterRoom(item.value)">{{ item.value }}</span>
-          <span class="delete" @click="handleSearchHistoryItemRemove(item.value)">x</span>
+            v-for="(info,index) in searchHistory" :key="index">
+          <img :src="info.face" class="face" alt=""/>
+          <span class="room-id" @click="enterRoom(info.roomId)">{{ info.roomId }}</span>
+          |
+          <span class="uname">{{ info.uname }}</span>
+          |
+          <button class="follow-action" @click="followUser(info)">关注</button>
+          |
+          <span class="delete" @click="removeSearchHistoryItem(info.roomId)">x</span>
         </li>
       </ul>
     </div>
@@ -24,7 +30,7 @@
 </template>
 
 <script>
-import { LivePlayService, SearchHistoryService, RoomService } from '@/app/services'
+import { LivePlayService, SearchHistoryService, RoomService, FollowListService } from '@/app/services'
 
 export default {
   name: 'LiveRoomEntry',
@@ -42,12 +48,13 @@ export default {
     initServices () {
       this.livePlayService = new LivePlayService()
       this.searchHistoryService = new SearchHistoryService()
+      this.followListService = new FollowListService()
       this.roomService = new RoomService()
     },
     initData () {
       this.searchHistory = this.searchHistoryService.get()
     },
-    handleRoomSearch () {
+    searchRoom () {
       // validate user input
       if (!this.searchRoomId) {
         this.actionNotify('warn', '直播房间号不能为空')
@@ -56,22 +63,30 @@ export default {
 
       // check whether this roomid is valid
       this.roomService.getInfoByRoom(this.searchRoomId).subscribe((result) => {
-        console.log(result)
-      })
+        // check validation
+        if (!result.isValid) {
+          this.actionNotify('error', `根据直播房间号${this.searchRoomId}查询信息失败`)
+          return
+        }
 
-      // add search history
-      // const addFeedback = this.searchHistoryService.add(this.searchRoomId)
-      // if (addFeedback) {
-      //   this.searchHistory = this.searchHistoryService.get()
-      //   // finally, reset input
-      //   this.searchRoomId = null
-      // } else {
-      //   this.actionNotify('warn', '添加历史记录失败，请重试')
-      // }
-      //
-      // this.enterRoom(this.searchRoomId)
+        // temporarily save this.searchRoomId(valid)
+        const roomIdCopy = this.searchRoomId
+
+        // add search history item
+        const addFeedback = this.searchHistoryService.add(result.info)
+        if (addFeedback) {
+          this.searchHistory = this.searchHistoryService.get()
+          // finally, reset input
+          this.searchRoomId = null
+        } else {
+          this.actionNotify('warn', '添加历史记录失败，请重试')
+        }
+
+        // open player
+        this.enterRoom(roomIdCopy)
+      })
     },
-    handleSearchHistoryItemRemove (roomId) {
+    removeSearchHistoryItem (roomId) {
       const removeSearchHistoryItemFeedback = this.searchHistoryService.remove(roomId)
       if (removeSearchHistoryItemFeedback) {
         this.searchHistory = this.searchHistoryService.get()
@@ -81,6 +96,13 @@ export default {
     },
     clearSearchHistory () {
       this.searchHistoryService.clear()
+    },
+    followUser (info) {
+      // after click this button, delete this button from UI
+
+      // this.followListService.toggleFollow(mid).subscribe((followLists) => {
+      //   this.$store.dispatch('updateFollowLists', followLists)
+      // })
     },
     enterRoom (roomId) {
       this.livePlayService.enterRoom(roomId)
@@ -114,6 +136,7 @@ export default {
   }
 
   &-button {
+    outline: none;
     width: 30px;
     border: none;
     border-radius: 0 4px 4px 0;
@@ -150,10 +173,28 @@ export default {
           background-color: rgba(66, 185, 131, 0.3);
         }
 
+        .face {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+        }
+
         .room-id {
           display: inline-block;
+          margin-left: 4px;
           padding: 0 5px;
           cursor: pointer;
+          border: 1px solid darkgrey;
+        }
+
+        .follow-action {
+          outline: none;
+          border: none;
+          width: 36px;
+          border-radius: 2px;
+          background-color: #4cd495;
+          cursor: pointer;
+          color: white;
         }
 
         .delete {

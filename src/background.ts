@@ -173,6 +173,12 @@ const initIpcMainListeners = () => {
     const res = await RoomService.getInfoByRoom(roomid);
     event.reply('getInfoByRoomReply', res)
   })
+
+  ipcMain.on('followByRoomInfo', async (event: Electron.IpcMainEvent, info: any) => {
+    const flag = FollowListService.followByRoomInfoSync(info);
+    event.reply('followByRoomInfoReply', flag)
+  })
+
 }
 
 const onMainWindowClose = () => {

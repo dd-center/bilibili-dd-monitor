@@ -12,11 +12,14 @@ class SearchHistoryService {
     return JSON.parse(this.localStorage.getItem(SearchHistoryService.ARRAY_KEY) || '[]')
   }
 
-  add (key: string): boolean {
+  add (info: any): boolean {
     try {
       const searchHistoryList = this.get()
       const newItem: SearchHistoryItem = {
-        value: key,
+        mid: info.mid,
+        roomId: info.roomId,
+        uname: info.uname,
+        face: info.face,
         timestamp: Date.now()
       }
       searchHistoryList.push(newItem)
@@ -27,11 +30,11 @@ class SearchHistoryService {
     }
   }
 
-  remove (key: string): boolean {
+  remove (roomId: number): boolean {
     try {
       let searchHistoryList = this.get()
       searchHistoryList = searchHistoryList.filter((item) => {
-        return item.value !== key
+        return item.roomId !== roomId
       })
       this.localStorage.setItem(SearchHistoryService.ARRAY_KEY, JSON.stringify(searchHistoryList))
       return true

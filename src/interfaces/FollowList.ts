@@ -8,7 +8,7 @@ export interface FollowList {
   mids: number[]; // 一个数组，数组元素为bili用户mid @deprecated use number set
 }
 
-interface followListItem {
+interface FollowListItem {
   face: string, //头像
   uname: string, // 昵称
   sign?: string, // 空间描述，可能缺失。
@@ -20,5 +20,5 @@ interface followListItem {
 export interface FollowListPlus {
   id: number; // 分组id
   name: string; // 分组名称
-  list: followListItem[] // 对象数组
+  list: FollowListItem[] // 对象数组
 }

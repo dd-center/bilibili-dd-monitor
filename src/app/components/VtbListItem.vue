@@ -7,12 +7,12 @@
         <p class="virtual-list-item-media-content">{{ source.sign }}</p>
       </div>
       <div class="virtual-list-item-media-info">
-        <div v-if="source.liveStatus === 1" class="virtual-list-item-media-online">
+        <div v-if="!!source.liveStatus" class="virtual-list-item-media-online">
           online
           <i class="fas fa-fire"></i>
           {{ source.online }}
         </div>
-        <div v-if="source.liveStatus !== 1" class="virtual-list-item-media-offline">offline</div>
+        <div v-if="!source.liveStatus" class="virtual-list-item-media-offline">offline</div>
       </div>
       <div class="virtual-list-item-media-action">
         <a v-if="followedVtbMids.includes(source.mid)" class="virtual-list-item-media-unfollow" @click="toggleFollow(source.mid)">取关</a>

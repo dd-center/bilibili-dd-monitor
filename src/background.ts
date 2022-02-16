@@ -53,8 +53,8 @@ const initServices = () => {
       // 现在正在直播的vtbs
       const nowLiveFollowedVtbs =
         allVtbInfos
-          .filter((vtbInfo: VtbInfo) => (followVtbs.includes(vtbInfo.mid) && vtbInfo.liveStatus === 1))
-          .map((vtbInfo: VtbInfo) => vtbInfo.mid)
+        .filter((vtbInfo: VtbInfo) => (followVtbs.includes(vtbInfo.mid) && !!vtbInfo.liveStatus))
+        .map((vtbInfo: VtbInfo) => vtbInfo.mid)
 
       // 上播vtbs
       const upLiveFollowedVtbs: number[] = []
@@ -73,7 +73,7 @@ const initServices = () => {
         // 边缘情况：如果A正在直播，用户点击关注A，那么 lastLiveVtbs含有A，触发上播提醒。
         // 接着用户马上取消关注A，此时lastLiveVtbs含有A。而nowLiveFollowedVtbs不再含有A，会进入if判断，触发BUG：A下播提醒。事实上，A没有下播。
         // BUG fix: 增加判断该vtbInfo是否真正下播，如果是，那么可以将A加入下播提醒
-        if (!nowLiveFollowedVtbs.includes(lastLiveVtb) && vtbInfosService.getVtbLiveStatusByMid(lastLiveVtb) === 0) {
+        if (!nowLiveFollowedVtbs.includes(lastLiveVtb) && !vtbInfosService.getVtbLiveStatusByMid(lastLiveVtb)) {
           downLiveFollowedVtbs.push(lastLiveVtb)
         }
       })

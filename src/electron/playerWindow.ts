@@ -53,7 +53,7 @@ export const createPlayerWindow = (app: Electron.App, vtbInfo: VtbInfo, playerOb
   })
 
   // region load live stream url
-  // example https://www.bilibili.com/blackboard/live/live-activity-player.html?enterTheRoom=0&cid=8725120
+  // example https://www.bilibili.com/blackboard/live/live-activity-player.html?enterTheRoom=0&cid=21320551
   win.loadURL(`https://www.bilibili.com/blackboard/live/live-activity-player.html?enterTheRoom=0&cid=${vtbInfo.roomid}`)
     .then(() => {
     // inject custom CSS rules

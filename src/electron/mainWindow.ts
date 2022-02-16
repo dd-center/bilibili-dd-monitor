@@ -10,12 +10,12 @@ const mainWindowIconPath = 'public/icons/icon.ico'
 export const createMainWindow = async (app: Electron.App, playerObjMap: ContextMap<number, PlayerObj>) => {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 1250,
-    height: 850,
-    maximizable: false,
+    width: 1280,
+    height: 820,
+    maximizable: true,
     fullscreen: false,
-    fullscreenable: false,
-    resizable: false,
+    fullscreenable: true,
+    resizable: true,
     icon: mainWindowIconPath,
     title: 'bilibili-dd-monitor',
     webPreferences: {

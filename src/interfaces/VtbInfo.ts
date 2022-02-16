@@ -14,7 +14,7 @@ export interface VtbInfo {
   topPhoto?: string; // 个人空间顶部头图url
   archiveView?: number; // 一般为0，意义不明
   follower?: number; // 粉丝数量
-  liveStatus?: number; // 直播状态，1为正在直播，0为离线
+  liveStatus?: number | boolean; // 直播状态，1为正在直播，0为离线; true 或者 false
   recordNum?: number; // 意义不明
   guardNum?: number; // 舰长总数量
   liveNum?: number; // 意义不明  @deprecated

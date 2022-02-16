@@ -27,6 +27,7 @@ socket.on('info', (infos) => {
   console.log(`average internal statistics: ${averageInternalInMilliSeconds}`)
 
   console.log(`infos.length=${infos.length}`)
+  console.log(infos[0])
 })
 
 socket.on('disconnect', () => {

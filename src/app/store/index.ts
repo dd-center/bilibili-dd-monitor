@@ -34,7 +34,7 @@ export default new Vuex.Store({
       return state.playerWindowCount
     },
     livingVtbCount: (state): number => {
-      return state.vtbInfos.filter((vtb: VtbInfo) => vtb.liveStatus === 1).length
+      return state.vtbInfos.filter((vtb: VtbInfo) => !!vtb.liveStatus).length
     },
     updateVtbCount: (state) => {
       return state.updateVtbCount

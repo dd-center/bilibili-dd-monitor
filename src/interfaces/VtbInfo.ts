@@ -35,5 +35,3 @@ interface LastLive {
   online?: number; // 意义不明
   time?: number; // 时间戳(毫秒) 例如1605880996178
 }
-
-// todo use VtbInfoLite version, only use needed fields

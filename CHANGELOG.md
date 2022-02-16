@@ -5,17 +5,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-### Added
+
 - [ ] Tray mode
-- [ ] ~~添加非socket.io获取数据信息的模式~~
-
-### Changed
 - [ ] highlight search result text
-- [ ] ~~use VtbInfoLite version NOT VtbInfo to reduce data size~~
-
-### Fixed
 - [ ] 多开window 之后，如果删除其中一些窗口，再次重排窗口无效。该bug不稳定重现。
-- [ ] 播放器画质切换无效的严重BUG(HELP WANTED)
+
+### won't fix
+- ~~use VtbInfoLite version NOT VtbInfo to reduce data size~~
+  > 过度设计，没这个必要。
+- ~~添加非socket.io获取数据信息的模式~~
+  > 非socket.io获取方式代码成本过大，决定只使用vtb的API。
+- ~~播放器画质切换无效的严重BUG(HELP WANTED)~~
+  > 由于b站服务器限制，游客身份不能观看高清以上清晰度的直播。
 
 ## [0.9.4] - 2021-10-25
 ### Fixed

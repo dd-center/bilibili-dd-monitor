@@ -21,14 +21,18 @@
     "postuninstall": "electron-builder install-app-deps"
   },
   "main": "background.js",
+  "engines": {
+    "node": ">=14.15.1 <16.0.0"
+  },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.1",
-    "@fortawesome/fontawesome-svg-core": "^1.2.32",
-    "@fortawesome/free-solid-svg-icons": "^5.15.1",
-    "@fortawesome/vue-fontawesome": "^2.0.0",
+    "@fortawesome/fontawesome-free": "~5.15.1",
+    "@fortawesome/fontawesome-svg-core": "~1.2.32",
+    "@fortawesome/free-solid-svg-icons": "~5.15.1",
+    "@fortawesome/vue-fontawesome": "~2.0.0",
     "core-js": "^3.6.5",
     "electron-settings": "^4.0.2",
-    "electron-updater": "^4.3.5",
+    "electron-updater": "4.3.9",
+    "electron-builder": "~22.10.0",
     "lodash": "^4.17.21",
     "ping": "^0.3.0",
     "pretty-log": "^0.1.0",

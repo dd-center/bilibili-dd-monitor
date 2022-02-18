@@ -42,7 +42,6 @@ import OrbitSpinner from '@/app/components/OrbitSpinner.vue'
 import { slog } from '@/app/utils/helpers'
 
 library.add(
-  faHome,
   faSignal,
   faHeart,
   faListUl,
@@ -53,7 +52,8 @@ library.add(
   faBan,
   faSearch,
   faEllipsisV,
-  faPaperPlane
+  faPaperPlane,
+  faHome
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

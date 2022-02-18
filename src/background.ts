@@ -137,7 +137,6 @@ const initIpcMainListeners = () => {
   ipcMain.on('toggleFollow', (event: Electron.IpcMainEvent, followListItem: FollowListItem) => {
     FollowListService.toggleFollowSync(followListItem)
     const followListsSync = FollowListService.getFollowListsSync();
-    console.log("followListsSync: ",followListsSync)
     event.reply('toggleFollowReply', followListsSync)
   })
   ipcMain.on('setFollowList', (event: Electron.IpcMainEvent, followListItems: FollowListItem[], listId: number) => {
@@ -176,10 +175,10 @@ const initIpcMainListeners = () => {
     event.reply('getInfoByRoomReply', res)
   })
 
-  ipcMain.on('followByRoomInfo', async (event: Electron.IpcMainEvent, info: any) => {
-    const flag = FollowListService.followByRoomInfoSync(info);
-    event.reply('followByRoomInfoReply', flag)
-  })
+  // ipcMain.on('followByRoomInfo', async (event: Electron.IpcMainEvent, info: any) => {
+  //   const flag = FollowListService.followByRoomInfoSync(info);
+  //   event.reply('followByRoomInfoReply', flag)
+  // })
 
 }
 

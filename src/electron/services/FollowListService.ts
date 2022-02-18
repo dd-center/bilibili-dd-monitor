@@ -88,7 +88,6 @@ export class FollowListService {
    * @param followListItem
    */
   static toggleFollowSync (followListItem: FollowListItem) {
-    console.log('followListItem:', followListItem)
     const followLists = this.getFollowListsSync()
     const defaultGroupIndex = followLists.findIndex((followList: FollowList) => followList.id === 0)
 
@@ -96,12 +95,10 @@ export class FollowListService {
     // waring: this method can optimize performance by eager break
     followLists.forEach((followList: FollowList) => {
       let mids = [...followList.list.map((item) => item.mid)]
-      console.log('mids', mids)
       const midIndex = mids.findIndex((listMid: number) => listMid === followListItem.mid)
       if (midIndex !== -1) {
         followList.list.splice(midIndex, 1)
         hasFollowedBefore = true
-        console.log('hasFollowedBefore:', midIndex)
       }
     })
 
@@ -113,14 +110,14 @@ export class FollowListService {
     this.setFollowListsSync(followLists)
   }
 
-  static followByRoomInfoSync (info: any): boolean {
-    const mid = info.mid;
-    // 遍历所有的关注列表，
-    // - 如果之前已经关注过，那么返回消息，告知已经关注，操作无效。
-    // - 如果之前没有关注过，那么将其添加过默认关注列表(group index 0),返回消息，告知关注成功。
-    // this.toggleFollowSync(mid)
-    return true
-  }
+  // static followByRoomInfoSync (info: any): boolean {
+  //   const mid = info.mid;
+  //   // 遍历所有的关注列表，
+  //   // - 如果之前已经关注过，那么返回消息，告知已经关注，操作无效。
+  //   // - 如果之前没有关注过，那么将其添加过默认关注列表(group index 0),返回消息，告知关注成功。
+  //   // this.toggleFollowSync(mid)
+  //   return true
+  // }
 
   /**
    * add mids to certain follow list with parameter id

@@ -16,13 +16,14 @@
         <li class="search-history-list-item"
             v-for="(info,index) in searchHistory" :key="index">
           <img :src="info.face" class="face" alt=""/>
-          <span class="room-id" @click="enterRoom(info.roomId)">{{ info.roomId }}</span>
+          <span class="room-id" @click="enterRoom(info.roomid)">{{ info.roomid }}</span>
           |
           <span class="uname">{{ info.uname }}</span>
           |
-          <button class="follow-action" @click="followUser(info)">关注</button>
+          <button v-if="!followedVtbMids.includes(info.mid)" class="action-follow" @click="followUser(info)">关注</button>
+          <button v-else class="action-unfollow" @click="followUser(info)">取关</button>
           |
-          <span class="delete" @click="removeSearchHistoryItem(info.roomId)">x</span>
+          <span class="delete" @click="removeSearchHistoryItem(info.roomid)">x</span>
         </li>
       </ul>
     </div>
@@ -31,6 +32,7 @@
 
 <script>
 import { LivePlayService, SearchHistoryService, RoomService, FollowListService } from '@/app/services'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'LiveRoomEntry',
@@ -43,6 +45,11 @@ export default {
   created () {
     this.initServices()
     this.initData()
+  },
+  computed: {
+    ...mapGetters([
+      'followedVtbMids'
+    ])
   },
   methods: {
     initServices () {
@@ -98,10 +105,18 @@ export default {
       this.searchHistoryService.clear()
     },
     followUser (info) {
-      // after click this button, delete this button from UI
-      // this.followListService.toggleFollow(mid).subscribe((followLists) => {
-      //   this.$store.dispatch('updateFollowLists', followLists)
-      // })
+      const followListItem = {
+        mid: info.mid,
+        infoSource: 'BILIBILI',
+        updateMethod: 'MANUAL',
+        face: info.face,
+        uname: info.uname,
+        roomid: info.roomid,
+        sign: '==【该关注用户通过手动模式添加：简介暂时无法获取】=='
+      }
+      this.followListService.toggleFollow(followListItem).subscribe((followLists) => {
+        this.$store.dispatch('updateFollowLists', followLists)
+      })
     },
     enterRoom (roomId) {
       this.livePlayService.enterRoom(roomId)
@@ -186,12 +201,22 @@ export default {
           border: 1px solid darkgrey;
         }
 
-        .follow-action {
+        .action-follow {
           outline: none;
           border: none;
           width: 36px;
           border-radius: 2px;
           background-color: #4cd495;
+          cursor: pointer;
+          color: white;
+        }
+
+        .action-unfollow {
+          outline: none;
+          border: none;
+          width: 36px;
+          border-radius: 2px;
+          background-color: #f61208;
           cursor: pointer;
           color: white;
         }

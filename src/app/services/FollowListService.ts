@@ -51,13 +51,13 @@ export default class FollowListService {
           })
           break
         }
-        case 'followByRoomInfoReply': {
-          this.ipcRenderer.once('followByRoomInfoReply', (e: Electron.IpcRendererEvent, flag: boolean) => {
-            observer.next(flag)
-            observer.complete()
-          })
-          break
-        }
+        // case 'followByRoomInfoReply': {
+        //   this.ipcRenderer.once('followByRoomInfoReply', (e: Electron.IpcRendererEvent, flag: boolean) => {
+        //     observer.next(flag)
+        //     observer.complete()
+        //   })
+        //   break
+        // }
         case 'setFollowListReply': {
           this.ipcRenderer.once('setFollowListReply', (e: Electron.IpcRendererEvent, followLists: FollowList[]) => {
             observer.next(followLists)
@@ -114,10 +114,10 @@ export default class FollowListService {
     return new Observable<FollowList[]>(this.sequenceSubscriber('toggleFollowReply'))
   }
 
-  followByRoomInfo (info: any) {
-    this.ipcRenderer.send('followByRoomInfo', info)
-    return new Observable<FollowList[]>(this.sequenceSubscriber('followByRoomInfoReply'))
-  }
+  // followByRoomInfo (info: any) {
+  //   this.ipcRenderer.send('followByRoomInfo', info)
+  //   return new Observable<FollowList[]>(this.sequenceSubscriber('followByRoomInfoReply'))
+  // }
 
   /**
    * add certain followListItems to certain list

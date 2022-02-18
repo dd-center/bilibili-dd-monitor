@@ -26,8 +26,8 @@ export default class RoomService {
     }
   }
 
-  getInfoByRoom (roomId: number): Observable<boolean> {
-    this.ipcRenderer.send('getInfoByRoom', roomId)
+  getInfoByRoom (roomid: number): Observable<boolean> {
+    this.ipcRenderer.send('getInfoByRoom', roomid)
     return new Observable<boolean>(this.sequenceSubscriber('getInfoByRoomReply'))
   }
 }

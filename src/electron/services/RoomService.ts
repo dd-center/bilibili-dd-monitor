@@ -37,16 +37,16 @@ export class RoomService {
         const anchorInfo = data.anchor_info
 
         const mid = roomInfo.uid
-        const roomId = roomInfo.room_id
+        const roomid = roomInfo.room_id
         const uname = anchorInfo.base_info.uname
         const face = anchorInfo.base_info.face
 
-        console.log(mid, roomId, uname, face)
+        // console.log(mid, roomId, uname, face)
 
         result.isValid = true;
         Object.assign(result.info, {
           mid: mid,
-          roomId: roomId,
+          roomid: roomid,
           uname: uname,
           face: face
         })

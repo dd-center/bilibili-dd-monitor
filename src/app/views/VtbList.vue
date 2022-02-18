@@ -32,7 +32,6 @@ import { FollowListService, LivePlayService } from '@/app/services/index'
 import { mapGetters } from 'vuex'
 import _ from 'lodash'
 import { _compareByOnlineDesc } from '@/app/utils/helpers'
-import { FollowListItem } from '../../interfaces/FollowList'
 
 export default {
   name: 'VtbList',
@@ -160,12 +159,13 @@ export default {
   }
 
   &-indicator {
-    margin-left: 20px;
+    margin: 0 20px;
     padding: 4px;
+    width: 300px;
   }
 
   &-filter {
-    margin-left: 200px;
+    margin-left: 48px;
   }
 
   &-icon {

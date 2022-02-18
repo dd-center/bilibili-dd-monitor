@@ -124,3 +124,12 @@ export interface FollowListItem {
 
 - infoSource：这个值表示当前FollowListItem的信息来源，可以是 DD_CENTER 或者 BILIBILI
 - updateMethod：AUTO 或者 MANUAL。表示自动更新或者手动更新。DD_CENTER 为自动， BILIBILI为手动
+
+示例：
+```json
+{"mid":1051654586,"infoSource":"DD_CENTER","updateMethod":"AUTO"}
+```
+```json
+{"mid":6639920,"infoSource":"BILIBILI","updateMethod":"MANUAL",
+  "face":"http://i1.hdslb.com/bfs/face/683c2f6bf242a16bf6aaf0cb0991c23909f20e7b.jpg","uname":"晕给你看吧"}
+```

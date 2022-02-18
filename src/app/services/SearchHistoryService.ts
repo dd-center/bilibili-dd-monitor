@@ -17,7 +17,7 @@ class SearchHistoryService {
       const searchHistoryList = this.get()
       const newItem: SearchHistoryItem = {
         mid: info.mid,
-        roomId: info.roomId,
+        roomid: info.roomid,
         uname: info.uname,
         face: info.face,
         timestamp: Date.now()
@@ -30,11 +30,11 @@ class SearchHistoryService {
     }
   }
 
-  remove (roomId: number): boolean {
+  remove (roomid: number): boolean {
     try {
       let searchHistoryList = this.get()
       searchHistoryList = searchHistoryList.filter((item) => {
-        return item.roomId !== roomId
+        return item.roomid !== roomid
       })
       this.localStorage.setItem(SearchHistoryService.ARRAY_KEY, JSON.stringify(searchHistoryList))
       return true

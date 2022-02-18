@@ -21,16 +21,22 @@
         <td class="living-list-body-cell">{{ vtbInfo.mid }}</td>
         <td class="living-list-body-cell">
           <div class="living-list-body-cell-media-info">
-            <div v-if="!!vtbInfo.liveStatus" class="living-list-body-cell-media-online">
+            <div v-if=" ({}.hasOwnProperty.call(vtbInfo,'liveStatus')) && (!!vtbInfo.liveStatus)"
+                 class="living-list-body-cell-media-online">
               <font-awesome-icon :icon="['fas', 'signal']" class="living-list-body-cell-media-online-icon"/>
             </div>
-            <div v-if="!vtbInfo.liveStatus" class="living-list-body-cell-media-offline">
+            <div v-if="({}.hasOwnProperty.call(vtbInfo,'liveStatus')) && (!vtbInfo.liveStatus)"
+                 class="living-list-body-cell-media-offline">
               <font-awesome-icon :icon="['fas', 'ban']" class="living-list-body-cell-media-offline-icon"/>
+            </div>
+            <div v-if="!{}.hasOwnProperty.call(vtbInfo,'liveStatus')"
+                 class="living-list-body-cell-media-offline">
+              <span>unknown</span>
             </div>
           </div>
         </td>
-        <td class="living-list-body-cell">{{ !!vtbInfo.online ? vtbInfo.online : 0 }}</td>
-        <td class="living-list-body-cell">{{ vtbInfo.title }}</td>
+        <td class="living-list-body-cell">{{ showOnline(vtbInfo) }}</td>
+        <td class="living-list-body-cell">{{ showTitle(vtbInfo) }}</td>
         <td class="living-list-body-cell"><a @click="enterRoom(vtbInfo.roomid)" class="living-list-body-cell-enter-room">进入直播间</a></td>
       </tr>
       </tbody>
@@ -68,6 +74,20 @@ export default {
     },
     enterRoom (roomid) {
       this.livePlayService.enterRoom(roomid)
+    },
+    showOnline (vtbInfo) {
+      if ({}.hasOwnProperty.call(vtbInfo, 'online')) {
+        return vtbInfo.online ? vtbInfo.online : 0
+      } else {
+        return 'unknown'
+      }
+    },
+    showTitle (vtbInfo) {
+      if ({}.hasOwnProperty.call(vtbInfo, 'title')) {
+        return vtbInfo.title
+      } else {
+        return 'unknown'
+      }
     }
   }
 }

@@ -2,9 +2,9 @@
  * copy implementation of bilibili home page search
  */
 export interface SearchHistoryItem {
-  timestamp: number;// timestamp
   mid: string;
-  roomId: number;
-  uname: string;
+  roomid: number;
   face: string
+  uname: string;
+  timestamp: number;// timestamp
 }

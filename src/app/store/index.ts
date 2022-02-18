@@ -59,6 +59,16 @@ export default new Vuex.Store({
           return getters.followedVtbMids.includes(vtbInfo.mid)
         })
       ]
+
+      // merge manual followed vtubers into followedVtbInfos
+      const manualFollowItems: any[] = []
+      getters.followLists.forEach((followList: FollowList) => {
+        const followListItems = followList.list
+        const followItems = followListItems.filter((item) => item.updateMethod === 'MANUAL')
+        manualFollowItems.push(...followItems)
+      })
+
+      followedVtbInfos.push(...manualFollowItems)
       return followedVtbInfos.sort(_compareByOnlineDesc)
     },
     updateAvailableModalVisible: (state) => {

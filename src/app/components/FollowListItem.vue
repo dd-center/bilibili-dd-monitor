@@ -4,7 +4,7 @@
       <img loading="lazy" class="virtual-list-item-media-avatar" width="40" height="40" :src="source.face" alt=""/>
       <div class="virtual-list-item-media-body">
         <h3 class="virtual-list-item-media-title">{{ source.uname }}</h3>
-        <p class="virtual-list-item-media-content">{{ source.sign }}</p>
+        <p class="virtual-list-item-media-content" :class="[getSignCSSClass(source)]">{{ source.sign }}</p>
       </div>
       <div class="virtual-list-item-media-action">
         <a class="virtual-list-item-media-unfollow" @click="toggleFollow(source.mid)">取关</a>
@@ -38,6 +38,12 @@ export default {
     },
     handleSetListModalShow: {
       type: Function
+    }
+  },
+  methods: {
+    getSignCSSClass (source) {
+      const isManualSignInfo = source.updateMethod === 'MANUAL'
+      return isManualSignInfo ? 'manual-sign-warn' : ''
     }
   }
 }
@@ -75,6 +81,10 @@ export default {
     &-content {
       font-size: 0.85em;
       line-height: 2em;
+
+      &.manual-sign-warn {
+        text-decoration: line-through;
+      }
     }
 
     &-info {

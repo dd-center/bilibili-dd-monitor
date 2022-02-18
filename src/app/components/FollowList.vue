@@ -63,9 +63,9 @@ export default {
         const allFollow = {
           id: -1,
           name: '全部关注',
-          mids: []
+          list: []
         }
-        this.followLists.forEach((followList) => allFollow.mids.push(...followList.mids))
+        this.followLists.forEach((followList) => allFollow.list.push(...followList.list))
         activeFollowList = allFollow
       } else {
         // handle listId >=0
@@ -78,7 +78,8 @@ export default {
       return activeFollowList
     },
     activeFollowedVtbInfos () {
-      return this.followedVtbInfos.filter((vtbInfo) => this.activeFollowList.mids.includes(vtbInfo.mid))
+      const mids = [...this.activeFollowList.list.map((item) => item.mid)]
+      return this.followedVtbInfos.filter((vtbInfo) => mids.includes(vtbInfo.mid))
     }
   },
   components: {
@@ -110,7 +111,12 @@ export default {
         return
       }
       this.isSetListModalSuccessLoading = true
-      this.followListService.addMidsToFollowList([this.selectedVtbInfo.mid], this.selectedListId).subscribe((followLists) => {
+      const followListItem = {
+        mid: this.selectedVtbInfo.mid,
+        infoSource: 'DD_CENTER',
+        updateMethod: 'AUTO'
+      }
+      this.followListService.addItemsToFollowList([followListItem], this.selectedListId).subscribe((followLists) => {
         this.isSetListModalSuccessLoading = false
         this.isSetListModalVisible = false
         this.actionNotify('success', '设置成功。')
@@ -120,8 +126,12 @@ export default {
     isValidListId (listId) {
       return listId !== null && listId !== undefined
     },
+    getActiveFollowListItem (mid) {
+      return this.activeFollowList.list.filter((item) => item.mid === mid)
+    },
     toggleFollow (mid) {
-      this.followListService.toggleFollow(mid).subscribe((followLists) => {
+      const activeFollowListItem = this.getActiveFollowListItem(mid)[0]
+      this.followListService.toggleFollow(activeFollowListItem).subscribe((followLists) => {
         this.$store.dispatch('updateFollowLists', followLists)
       })
     },

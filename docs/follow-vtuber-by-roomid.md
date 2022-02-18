@@ -6,7 +6,9 @@
 
 1. visit `https://api.live.bilibili.com/xlive/web-room/v1/index/getInfoByRoom?room_id=1603600`
 2. API 搜索
+
 > 正常的结果
+
 ```json
 {
   "code": 0,
@@ -14,8 +16,10 @@
   "ttl": 1,
   "data": {
     "room_info": {
-      "uid": 51030552, <=======
-      "room_id": 1603600, <=======
+      "uid": 51030552,
+      <=======
+      "room_id": 1603600,
+      <=======
       "short_id": 0,
       "title": "原神代抽·理性氪金·切勿冲动消费",
       "cover": "http://i0.hdslb.com/bfs/live/new_room_cover/52668ac82f91189e6a310c697a483d05226e2fd3.jpg",
@@ -54,8 +58,10 @@
     },
     "anchor_info": {
       "base_info": {
-        "uname": "星汐Seki", <=======
-        "face": "http://i0.hdslb.com/bfs/face/003653147b55ef5f85ff58196019398c1c8bdccb.jpg", <=======
+        "uname": "星汐Seki",
+        <=======
+        "face": "http://i0.hdslb.com/bfs/face/003653147b55ef5f85ff58196019398c1c8bdccb.jpg",
+        <=======
         "gender": "女",
         "official_info": {
           "role": 0,
@@ -64,26 +70,30 @@
         }
       }
 ```
+
 > 异常的结果
+
 ```json
 // 20220216173331
 // https://api.live.bilibili.com/xlive/web-room/v1/index/getInfoByRoom?room_id=3555
 {
-  "code": 19002000, <======
+  "code": 19002000,
+  <======
   "message": "获取初始化数据失败",
   "ttl": 1,
-  "data": null <======
+  "data": null
+  <======
 }
 ```
 
 ![](assets/search-by-roomid.png)
-
 
 3. 提取数据
 
 从response.data 中提取 room_info 以及 anchor_info 中需要的字段信息
 
 4. 迁移数据结构
+
 ```
 重构关注列表数据结构，将mids数组改为followVtbInfo数组，每个followVtbInfo包含vtuber名称，空间描述，vtuber头像url，直播间roomid。
 旧的数据结构如下：
@@ -94,3 +104,23 @@
 新数据结构（略）
 ```
 
+---
+
+重写关注FOLLOW 的逻辑。
+
+```typescript
+export interface FollowListItem {
+  mid: number,  // 用户UID
+  infoSource: string // 内部字段，表示该followListItem获取的方式，DD_CENTER 或者 BILIBILI，等等。
+  updateMethod: string //内部字段，表示是否可以自动更新，AUTO 或者 MANUAL
+  face?: string, //头像
+  uname?: string, // 昵称
+  sign?: string, // 空间描述，可能缺失。
+  roomid?: number, // 直播间id
+}
+```
+
+关注这些字段：
+
+- infoSource：这个值表示当前FollowListItem的信息来源，可以是 DD_CENTER 或者 BILIBILI
+- updateMethod：AUTO 或者 MANUAL。表示自动更新或者手动更新。DD_CENTER 为自动， BILIBILI为手动

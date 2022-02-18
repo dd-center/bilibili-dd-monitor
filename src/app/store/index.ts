@@ -48,7 +48,7 @@ export default new Vuex.Store({
     followedVtbMids: (state): number[] => {
       const followedVtbMids: number[] = []
       state.followLists.forEach((followList: FollowList) => {
-        followedVtbMids.push(...followList.mids)
+        followedVtbMids.push(...followList.list.map((item) => item.mid))
       })
       return followedVtbMids
     },

@@ -1,6 +1,6 @@
 import { IpcRenderer } from 'electron'
 import { Observable, Observer } from 'rxjs'
-import { FollowList, VtbInfo } from '@/interfaces'
+import { FollowList, FollowListItem } from '@/interfaces'
 
 declare const window: any
 /**
@@ -107,10 +107,10 @@ export default class FollowListService {
 
   /**
    * toggle follow
-   * @param mid
+   * @param followListItem
    */
-  toggleFollow (mid: number): Observable<FollowList[]> {
-    this.ipcRenderer.send('toggleFollow', mid)
+  toggleFollow (followListItem: FollowListItem): Observable<FollowList[]> {
+    this.ipcRenderer.send('toggleFollow', followListItem)
     return new Observable<FollowList[]>(this.sequenceSubscriber('toggleFollowReply'))
   }
 
@@ -120,12 +120,12 @@ export default class FollowListService {
   }
 
   /**
-   * add all mids to certain group
-   * @param mids
-   * @param id
+   * add certain followListItems to certain list
+   * @param followListItems
+   * @param listId
    */
-  addMidsToFollowList (mids: number[], id: number): Observable<FollowList[]> {
-    this.ipcRenderer.send('setFollowList', mids, id)
+  addItemsToFollowList (followListItems: FollowListItem[], listId: number): Observable<FollowList[]> {
+    this.ipcRenderer.send('setFollowList', followListItems, listId)
     return new Observable<FollowList[]>(this.sequenceSubscriber('setFollowListReply'))
   }
 }

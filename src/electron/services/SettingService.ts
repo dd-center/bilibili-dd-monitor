@@ -20,3 +20,5 @@ export class SettingService {
     return setting.file() as string
   }
 }
+
+// TODO 新增一个打开配置文件路径的功能，放于设置页面。

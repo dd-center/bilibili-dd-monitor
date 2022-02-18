@@ -1,5 +1,6 @@
 import { FollowList } from '@/interfaces'
 import * as setting from 'electron-settings'
+import { FollowListItem } from "@/interfaces/FollowList";
 
 export class FollowListService {
   private static readonly FOLLOW_LISTS: string = 'followLists'
@@ -13,7 +14,7 @@ export class FollowListService {
       const defaultFollowList: FollowList = {
         id: 0,
         name: '默认分组',
-        mids: []
+        list: []
       }
       setting.setSync(FollowListService.FOLLOW_LISTS, JSON.stringify([defaultFollowList]))
     }
@@ -29,7 +30,7 @@ export class FollowListService {
 
   /**
    *
-   * @param name group name
+   * @param name new group name
    */
   static addFollowListSync (name: string): void {
     const followLists: FollowList[] = this.getFollowListsSync()
@@ -38,7 +39,7 @@ export class FollowListService {
     const newFollowList = {
       id: followListsNextId,
       name: name,
-      mids: [] // @deprecated ,use set. Don't use list
+      list: [] // @deprecated ,use set. Don't use list
     }
     followLists.push(newFollowList)
 
@@ -54,8 +55,8 @@ export class FollowListService {
   static deleteFollowListSync (id: number) {
     const followLists = this.getFollowListsSync()
     // when delete one custom follow list, users in the original group will move to the default group (id=0)
-    const mids = followLists[followLists.findIndex((followList: FollowList) => followList.id === id)].mids
-    this.addMidsToFollowListSync(mids, 0)
+    const list = followLists[followLists.findIndex((followList: FollowList) => followList.id === id)].list
+    this.addItemsToFollowListSync(list, 0)
 
     // now group 0 and current group has duplicated mids, need to remove them from current group
     const newFollowLists = this.getFollowListsSync()
@@ -84,25 +85,29 @@ export class FollowListService {
   /**
    * if has been not followed, then follow him/her to default group (id 0).
    * If has already followed, cancel follow him/her to default group (id 0).
-   * @param mid
+   * @param followListItem
    */
-  static toggleFollowSync (mid: number) {
+  static toggleFollowSync (followListItem: FollowListItem) {
+    console.log('followListItem:', followListItem)
     const followLists = this.getFollowListsSync()
     const defaultGroupIndex = followLists.findIndex((followList: FollowList) => followList.id === 0)
 
     let hasFollowedBefore = false
     // waring: this method can optimize performance by eager break
     followLists.forEach((followList: FollowList) => {
-      const midIndex = followList.mids.findIndex((listMid: number) => listMid === mid)
+      let mids = [...followList.list.map((item) => item.mid)]
+      console.log('mids', mids)
+      const midIndex = mids.findIndex((listMid: number) => listMid === followListItem.mid)
       if (midIndex !== -1) {
-        followList.mids.splice(midIndex, 1)
+        followList.list.splice(midIndex, 1)
         hasFollowedBefore = true
+        console.log('hasFollowedBefore:', midIndex)
       }
     })
 
     // if has not followed before, then add him/her to default group
     if (!hasFollowedBefore) {
-      followLists[defaultGroupIndex].mids.push(mid)
+      followLists[defaultGroupIndex].list.push(followListItem)
     }
 
     this.setFollowListsSync(followLists)
@@ -120,31 +125,30 @@ export class FollowListService {
   /**
    * add mids to certain follow list with parameter id
    *
-   * @param mids
+   * @param followListItems
    * @param listId
    */
-
-  static addMidsToFollowListSync (mids: number[], listId: number) {
-    // make mids move to default group
-    mids.forEach((mid: number) => {
-      // here only for following mid, NOT cancel follow
-      this.toggleFollowSync(mid)
+  static addItemsToFollowListSync (followListItems: FollowListItem[], listId: number) {
+    // move followListItems move to default group
+    followListItems.forEach((followListItem) => {
+      // here only for following , NOT cancel follow
+      this.toggleFollowSync(followListItem)
     })
 
     const followLists: FollowList[] = this.getFollowListsSync()
-    const followListMids = followLists[followLists.findIndex((followList: FollowList) => followList.id === listId)].mids
-    followListMids.push(...mids)
+    const followListList = followLists[followLists.findIndex((followList: FollowList) => followList.id === listId)].list
+    followListList.push(...followListItems)
 
     this.setFollowListsSync(followLists)
   }
 
   /**
-   * get all mids of followed vtb infos
+   * get followed vtb infos list
    */
   static getFollowedVtbMidsSync (): number[] {
     const followedVtbMids: number[] = []
     FollowListService.getFollowListsSync().forEach((followList: FollowList) => {
-      followedVtbMids.push(...followList.mids)
+      followedVtbMids.push(...followList.list.map((item) => item.mid))
     })
     return followedVtbMids
   }

@@ -22,7 +22,7 @@
             <font-awesome-icon class="follow-list-item-link-icon" :icon="['fas', 'user-friends']"/>
             <span class="follow-list-item-link-name">{{ list.name }}</span>
 
-            <span class="follow-list-item-link-count">{{ list.mids.length }}</span>
+            <span class="follow-list-item-link-count">{{ list.list.length }}</span>
             <span v-if="list.id>=1" @mouseenter="mouseEnter(list.id)" @mouseleave="mouseLeave(list.id)" class="follow-list-item-link-more">
               <font-awesome-icon :icon="['fas', 'ellipsis-v']"/>
             </span>
@@ -195,7 +195,6 @@ export default {
     handleRenameListModalCancel () {
       this.isRenameListModalVisible = false
     },
-
     handleRenameListModalSuccess () {
       if (this.renameListName.length <= 10) {
         if (!this.followLists.map((followList) => followList.name).includes(this.renameListName)) {

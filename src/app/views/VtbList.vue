@@ -32,6 +32,7 @@ import { FollowListService, LivePlayService } from '@/app/services/index'
 import { mapGetters } from 'vuex'
 import _ from 'lodash'
 import { _compareByOnlineDesc } from '@/app/utils/helpers'
+import { FollowListItem } from '../../interfaces/FollowList'
 
 export default {
   name: 'VtbList',
@@ -111,7 +112,12 @@ export default {
       this.filteredVtbInfos = this.filteredByOnlineState.sort(_compareByOnlineDesc)
     },
     toggleFollow (mid) {
-      this.followListService.toggleFollow(mid).subscribe((followLists) => {
+      const followListItem = {
+        mid: mid,
+        infoSource: 'DD_CENTER',
+        updateMethod: 'AUTO'
+      }
+      this.followListService.toggleFollow(followListItem).subscribe((followLists) => {
         this.$store.dispatch('updateFollowLists', followLists)
       })
     },

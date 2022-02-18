@@ -124,7 +124,8 @@ export class VtbInfoService {
       followedVtbInfos = [
         ...followedVtbInfos,
         ...vtbInfos.filter((vtbInfo) => {
-          return followList.mids.includes(vtbInfo.mid)
+          const followMids = [...followList.list.map((item) => item.mid)]
+          return followMids.includes(vtbInfo.mid)
         })
       ]
     })

@@ -6,7 +6,7 @@ import settings from 'electron-settings'
 import { autoUpdater } from 'electron-updater'
 
 import { FollowListService, SettingService, VtbInfoService, RoomService } from '@/electron/services'
-import { PlayerObj, VtbInfo } from '@/interfaces'
+import { FollowListItem, PlayerObj, VtbInfo } from '@/interfaces'
 import { createPlayerWindow } from '@/electron/playerWindow'
 import { createMainWindow } from '@/electron/mainWindow'
 import ContextMap from '@/electron/utils/ContextMap'
@@ -134,12 +134,14 @@ const initIpcMainListeners = () => {
     FollowListService.renameFollowListSync(id, newName)
     event.reply('renameFollowListReply', FollowListService.getFollowListsSync())
   })
-  ipcMain.on('toggleFollow', (event: Electron.IpcMainEvent, mid: number) => {
-    FollowListService.toggleFollowSync(mid)
-    event.reply('toggleFollowReply', FollowListService.getFollowListsSync())
+  ipcMain.on('toggleFollow', (event: Electron.IpcMainEvent, followListItem: FollowListItem) => {
+    FollowListService.toggleFollowSync(followListItem)
+    const followListsSync = FollowListService.getFollowListsSync();
+    console.log("followListsSync: ",followListsSync)
+    event.reply('toggleFollowReply', followListsSync)
   })
-  ipcMain.on('setFollowList', (event: Electron.IpcMainEvent, mids: number[], listId: number) => {
-    FollowListService.addMidsToFollowListSync(mids, listId)
+  ipcMain.on('setFollowList', (event: Electron.IpcMainEvent, followListItems: FollowListItem[], listId: number) => {
+    FollowListService.addItemsToFollowListSync(followListItems, listId)
     event.reply('setFollowListReply', FollowListService.getFollowListsSync())
   })
   // endregion

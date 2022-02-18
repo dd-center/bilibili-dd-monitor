@@ -9,6 +9,12 @@
         class="setting-item-toggle-button"
       />
     </div>
+    <div class="setting-item">
+      <p class="setting-item-description">
+        配置文件路径: <span class="setting-item-settings-path">{{ settingsPath }}</span>
+      </p>
+      <button class="setting-item-open-settings-path">打开</button>
+    </div>
   </div>
 </template>
 
@@ -19,13 +25,17 @@ export default {
   name: 'Setting',
   data () {
     return {
-      isNotifiedOnStart: false
+      isNotifiedOnStart: false,
+      settingsPath: ''
     }
   },
   created () {
     this.settingService = new SettingService()
     this.settingService.getIsNotifiedOnstart().subscribe((isNotifiedOnStart) => {
       this.isNotifiedOnStart = isNotifiedOnStart
+    })
+    this.settingService.getPathOfSettings().subscribe((path) => {
+      this.settingsPath = path
     })
   },
   methods: {
@@ -44,6 +54,11 @@ export default {
 }
 
 .setting-item {
+
+  &:nth-child(n+2) {
+    border-top: 1px solid rgba(0, 0, 0, .5);
+  }
+
   &-description {
     margin: 16px 0;
     font-size: 0.85em;
@@ -82,6 +97,26 @@ export default {
         left: 25px;
       }
     }
+  }
+
+  &-open-settings-path {
+    padding: 2px 6px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    border: 2px solid #f44336;
+    border-radius: 2px;
+
+    &:hover {
+      background-color: #f44336;
+      color: white;
+    }
+
   }
 }
 </style>

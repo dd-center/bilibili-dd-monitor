@@ -69,7 +69,6 @@ export default {
       this.computeSearch()
     },
     showOnlineOnly: function () {
-      console.log('showOnlineOnly changed to:', this.showOnlineOnly)
       this.searchInputIsDirty = true
       this.computeSearch()
     },

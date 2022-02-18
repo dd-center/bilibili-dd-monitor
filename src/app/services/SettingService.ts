@@ -26,6 +26,13 @@ export default class SettingService {
           })
           break
         }
+        case 'getPathOfSettingsReply': {
+          this.ipcRenderer.once('getPathOfSettingsReply', (e: Electron.IpcRendererEvent, path: string) => {
+            observer.next(path)
+            observer.complete()
+          })
+          break
+        }
       }
     }
   }
@@ -38,5 +45,10 @@ export default class SettingService {
   getIsNotifiedOnstart (): Observable<boolean> {
     this.ipcRenderer.send('getIsNotifiedOnStart')
     return new Observable<boolean>(this.sequenceSubscriber('getIsNotifiedOnStartReply'))
+  }
+
+  getPathOfSettings (): Observable<boolean> {
+    this.ipcRenderer.send('getPathOfSettings')
+    return new Observable<boolean>(this.sequenceSubscriber('getPathOfSettingsReply'))
   }
 }

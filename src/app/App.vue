@@ -6,7 +6,7 @@
         <ul class="nav-list">
           <li class="nav-list-item">
             <router-link to="/" class="nav-list-item-link">
-              <font-awesome-icon :icon="['fas', 'signal']" class="nav-list-item-icon"/>
+              <font-awesome-icon :icon="['fas', 'home']" class="nav-list-item-icon"/>
               主页
             </router-link>
           </li>
@@ -19,7 +19,7 @@
           <li class="nav-list-item">
             <router-link to="/vtbList" class="nav-list-item-link">
               <font-awesome-icon :icon="['fas', 'list-ul']" class="nav-list-item-icon"/>
-              Vtb列表
+              DD_CENTER
             </router-link>
           </li>
           <li class="nav-list-item">
@@ -31,7 +31,7 @@
           <li class="nav-list-item">
             <router-link to="/liveRoomEntry" class="nav-list-item-link">
               <font-awesome-icon :icon="['fas', 'paper-plane']" class="nav-list-item-icon"/>
-              直播间临时入口
+              直播间入口
             </router-link>
           </li>
         </ul>
@@ -183,6 +183,7 @@ export default {
   }
 
   &-list-item-link {
+    outline: none;
     padding: 10px 0 10px 20px;
     display: block;
     color: #2c3e50;

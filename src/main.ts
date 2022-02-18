@@ -25,7 +25,8 @@ import {
   faSearch,
   faSignal,
   faUserFriends,
-  faPaperPlane
+  faPaperPlane,
+  faHome
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -41,6 +42,7 @@ import OrbitSpinner from '@/app/components/OrbitSpinner.vue'
 import { slog } from '@/app/utils/helpers'
 
 library.add(
+  faHome,
   faSignal,
   faHeart,
   faListUl,

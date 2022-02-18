@@ -1,8 +1,8 @@
 <template>
   <div class="live-room-entry">
-    <h4 class="search-title">直播间临时入口</h4>
+    <h4 class="search-title">直播间入口</h4>
     <p class="search-description">
-      说明：该功能作为API临时不可用时，或者API尚未收录某些vtuber时的一种补充策略。
+      说明：该功能作为API不可用时，或者API尚未收录某些vtuber时的一种补充策略。
     </p>
     <div class="search">
       <input class="search-input" v-model="searchRoomId" type="number" placeholder="直播房间号"/>
@@ -99,7 +99,6 @@ export default {
     },
     followUser (info) {
       // after click this button, delete this button from UI
-
       // this.followListService.toggleFollow(mid).subscribe((followLists) => {
       //   this.$store.dispatch('updateFollowLists', followLists)
       // })

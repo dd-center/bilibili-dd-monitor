@@ -1,7 +1,7 @@
 <template>
   <div :key="source.mid" class="virtual-list-item" :class="[`rank-${rank}`]">
     <div class="virtual-list-item-media">
-      <span class="virtual-list-item-rank" v-if="rank <=3">NO. {{ rank }}</span>
+      <span class="virtual-list-item-rank" v-if="rank <=10">NO.{{ rank }}</span>
       <img loading="lazy" class="virtual-list-item-media-avatar" width="40" height="40" :src="source.face" alt=""/>
       <div class="virtual-list-item-media-body">
         <h3 class="virtual-list-item-media-title">{{ source.uname }}</h3>
@@ -52,8 +52,12 @@ export default {
     }
   },
   data () {
-    return {
-      rank: this.index + 1
+    return {}
+  },
+  computed: {
+    rank () {
+      const rank = this.index + 1
+      return rank < 10 ? '0' + rank : rank
     }
   }
 }
@@ -74,7 +78,7 @@ export default {
   }
 
   // top 1-3 avatar border highlight
-  &.rank-1 {
+  &.rank-01 {
     .virtual-list-item-media-avatar {
       border: 2px solid #f6d10a;
     }
@@ -89,7 +93,7 @@ export default {
     }
   }
 
-  &.rank-2 {
+  &.rank-02 {
     .virtual-list-item-media-avatar {
       border: 2px solid #c5c6d5;
     }
@@ -104,7 +108,7 @@ export default {
     }
   }
 
-  &.rank-3 {
+  &.rank-03 {
     .virtual-list-item-media-avatar {
       border: 2px solid rgb(198, 145, 69);
     }

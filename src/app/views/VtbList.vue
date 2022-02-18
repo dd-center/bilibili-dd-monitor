@@ -6,7 +6,15 @@
         <font-awesome-icon class="search-icon" :icon="['fas', 'search']"/>
       </button>
     </div>
-    <p class="search-indicator">{{ searchIndicator }}</p>
+    <div class="search-help">
+      <p class="search-indicator">{{ searchIndicator }}</p>
+      <div class="search-filter">
+        <p class="online-only">
+          <input type="checkbox" id="online-only" :checked="showOnlineOnly" @click="toggleOnlineOnly()">
+          <label for="online-only"> 仅显示在线</label>
+        </p>
+      </div>
+    </div>
     <!--https://github.com/tangbc/vue-virtual-scroll-list/issues/237#issuecomment-641935872-->
     <virtual-list style="height: 700px; overflow-y: auto;"
                   :data-key="'mid'"
@@ -36,17 +44,18 @@ export default {
       searchInput: '',
       searchInputIsDirty: false,
       isSearchCalculating: false,
-      filteredVtbInfos: []
+      filteredVtbInfos: [],
+      showOnlineOnly: false
     }
   },
   computed: {
     searchIndicator: function () {
       if (this.isSearchCalculating) {
-        return '⟳ 正在执行搜索...'
+        return '⟳ 正在处理...'
       } else if (this.searchInputIsDirty) {
         return '⟳ 正在输入...'
       } else {
-        return '✓ 搜索完成。结果数：' + this.filteredVtbInfos.length
+        return '✓ 处理完成。结果数：' + this.filteredVtbInfos.length
       }
     },
     ...mapGetters([
@@ -56,6 +65,11 @@ export default {
   },
   watch: {
     searchInput: function () {
+      this.searchInputIsDirty = true
+      this.computeSearch()
+    },
+    showOnlineOnly: function () {
+      console.log('showOnlineOnly changed to:', this.showOnlineOnly)
       this.searchInputIsDirty = true
       this.computeSearch()
     },
@@ -85,7 +99,16 @@ export default {
       }, 200)
     }, 500),
     searchVtbInfosByName (name) {
-      this.filteredVtbInfos = this.vtbInfos.filter((vtbInfo) => vtbInfo.uname?.includes(name)).sort(_compareByOnlineDesc)
+      const filteredByName = this.vtbInfos.filter((vtbInfo) => vtbInfo.uname?.includes(name))
+
+      if (this.showOnlineOnly) {
+        this.filteredByOnlineState = filteredByName.filter((vtbInfo) => !!vtbInfo.liveStatus)
+      } else {
+        // noop for filteredByName
+        this.filteredByOnlineState = filteredByName
+      }
+
+      this.filteredVtbInfos = this.filteredByOnlineState.sort(_compareByOnlineDesc)
     },
     toggleFollow (mid) {
       this.followListService.toggleFollow(mid).subscribe((followLists) => {
@@ -94,6 +117,9 @@ export default {
     },
     enterRoom (roomid) {
       this.livePlayService.enterRoom(roomid)
+    },
+    toggleOnlineOnly () {
+      this.showOnlineOnly = !this.showOnlineOnly
     }
   }
 }
@@ -120,10 +146,20 @@ export default {
     cursor: pointer;
   }
 
+  &-help {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: #e2e2e2 solid 1px;
+  }
+
   &-indicator {
     margin-left: 20px;
     padding: 4px;
-    border-bottom: #e2e2e2 solid 1px;
+  }
+
+  &-filter {
+    margin-left: 200px;
   }
 
   &-icon {

@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, ipcMain, IpcMainEvent } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain, IpcMainEvent, nativeImage, Tray, Menu } from 'electron'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 import { configureSettings } from "@/electron/utils/OldGlobalSettings";
 import { autoUpdater } from 'electron-updater'
@@ -12,6 +12,7 @@ import { createMainWindow } from '@/electron/mainWindow'
 import ContextMap from '@/electron/utils/ContextMap'
 import log from 'pretty-log'
 import CDN from '@/electron/utils/CDN'
+import path from 'path'
 
 let vtbInfosService: VtbInfoService
 let mainWindow: BrowserWindow
@@ -205,8 +206,15 @@ const onMainWindowClose = () => {
   }
 }
 
+let tray: Electron.Tray
+
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
+  // GC tray
+  if (tray) {
+    tray.destroy()
+  }
+
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
@@ -244,13 +252,46 @@ app.on('ready', async () => {
     log.debug('No alive CDN')
   }
 
-
   initIpcMainListeners()
   mainWindow = await createMainWindow(app, playerObjMap)
   onMainWindowClose()
 
   // post setup
   initServices()
+
+  // tray mode
+  // notice build path: D:\Code\WebStormProjects\bilibili-dd-monitor\dist_electron\
+  const iconPath = path.join(__dirname, '/bundled/icon.png')
+  tray = new Tray(iconPath)
+
+  function showMainWindow () {
+    if (!mainWindow.isVisible()) {
+      mainWindow.setSkipTaskbar(false)
+    }
+    // 更好的做法：类似clash。当窗口已经置顶并可见时，取消调用win.show()方法
+    mainWindow.show()
+  }
+
+  const trayMenu = Menu.buildFromTemplate([
+    {
+      label: '显示主界面',
+      click: () => {
+        showMainWindow();
+      }
+    },
+    {
+      label: '退出应用',
+      click: () => {
+        mainWindow.destroy()
+        // app.quit()
+      }
+    }
+  ]);
+  tray.setToolTip('bilibili-dd-monitor')
+  tray.setContextMenu(trayMenu)
+  tray.on('click', () => {
+    showMainWindow();
+  })
 })
 
 // Exit cleanly on request from parent process in development mode.

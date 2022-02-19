@@ -9,7 +9,7 @@ const mainWindowIconPath = 'public/icons/icon.ico'
 
 export const createMainWindow = async (app: Electron.App, playerObjMap: ContextMap<number, PlayerObj>) => {
   // Create the browser window.
-  const win = new BrowserWindow({
+  let win = new BrowserWindow({
     width: 1280,
     height: 820,
     maximizable: true,
@@ -44,6 +44,16 @@ export const createMainWindow = async (app: Electron.App, playerObjMap: ContextM
   } else {
     win.setMenu(menu)
   }
+
+  win.on('closed', (event: any) => {
+    win.destroy();
+  });
+
+  win.on('close', (event) => {
+    win.hide();
+    win.setSkipTaskbar(true);
+    event.preventDefault();
+  });
 
   playerObjMap.attachContext(win)
 

@@ -230,3 +230,8 @@ https://api.vtbs.moe/v1/living
 - [ ] electron-store (需求不契合，不需要链式点访问语法)
 - [ ] electron-json-storage 
     - no setSync() method ??? (同步方法缺失)
+  
+## 最小化到托盘
+参考：
+- https://www.cnblogs.com/Yogile/p/15022277.html
+- https://gitee.com/xiaofengfeng01/electron-tray

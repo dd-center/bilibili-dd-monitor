@@ -1,6 +1,10 @@
 // @ts-ignore
 import storage from 'electron-json-storage'
 
+interface settingItem {
+  [key: string]: any
+}
+
 function _printDefaultDataPath () {
   const defaultDataPath = storage.getDefaultDataPath()
   // C:\Users\{user}\AppData\Roaming\bilibili-dd-monitor\storage

@@ -16,16 +16,16 @@ export class FollowListService {
         name: '默认分组',
         list: []
       }
-      settings.setSync(FollowListService.FOLLOW_LISTS, JSON.stringify([defaultFollowList]))
+      settings.setSync(FollowListService.FOLLOW_LISTS, [defaultFollowList] as {})
     }
   }
 
   static getFollowListsSync (): FollowList[] {
-    return JSON.parse(settings.getSync(FollowListService.FOLLOW_LISTS) as string)
+    return settings.getSync(FollowListService.FOLLOW_LISTS) as []
   }
 
   static setFollowListsSync (followLists: FollowList[]): void {
-    settings.setSync(FollowListService.FOLLOW_LISTS, JSON.stringify(followLists))
+    settings.setSync(FollowListService.FOLLOW_LISTS, followLists as [])
   }
 
   /**
@@ -109,15 +109,6 @@ export class FollowListService {
 
     this.setFollowListsSync(followLists)
   }
-
-  // static followByRoomInfoSync (info: any): boolean {
-  //   const mid = info.mid;
-  //   // 遍历所有的关注列表，
-  //   // - 如果之前已经关注过，那么返回消息，告知已经关注，操作无效。
-  //   // - 如果之前没有关注过，那么将其添加过默认关注列表(group index 0),返回消息，告知关注成功。
-  //   // this.toggleFollowSync(mid)
-  //   return true
-  // }
 
   /**
    * add mids to certain follow list with parameter id

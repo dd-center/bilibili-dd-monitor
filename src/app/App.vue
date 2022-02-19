@@ -112,7 +112,7 @@ export default {
       this.$store.dispatch('toggleShowUpdateAvailableModal', this.updateInfo)
       ipcRenderer.send('user-confirm-download')
       // here should unlock UI
-      // (doge 年轻人要讲武德，点到即止（这里更好的做法是锁UI，防止重复的快速点击）
+      // (doge 这里更好的做法是锁UI，防止重复的快速点击
     },
     handleClickCancel () {
       this.$store.dispatch('toggleShowUpdateAvailableModal', this.updateInfo)

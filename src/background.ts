@@ -3,7 +3,6 @@
 import { app, protocol, BrowserWindow, ipcMain, IpcMainEvent } from 'electron'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 import { configureSettings } from "@/electron/utils/OldGlobalSettings";
-import { _printDefaultDataPath, _printDataPath, _getDemo, _getSyncDemo, _setDemo, _hasDemo } from "@/electron/utils/TestGlobalSettings";
 import { autoUpdater } from 'electron-updater'
 
 import { FollowListService, SettingService, VtbInfoService, RoomService } from '@/electron/services'
@@ -32,14 +31,6 @@ const initSettingsConfiguration = () => {
   configureSettings()
   // init follow setting
   FollowListService.initFollowListsSync()
-
-  // new
-  _printDefaultDataPath()
-  _printDataPath()
-  _getDemo()
-  _getSyncDemo()
-  _setDemo()
-  _hasDemo()
 }
 
 const initServices = () => {

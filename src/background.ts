@@ -260,8 +260,7 @@ app.on('ready', async () => {
   initServices()
 
   // tray mode
-  // notice build path: D:\Code\WebStormProjects\bilibili-dd-monitor\dist_electron\
-  const iconPath = path.join(__dirname, '/bundled/icon.png')
+  const iconPath = path.join(__dirname, './icon.png')
   tray = new Tray(iconPath)
 
   function showMainWindow () {

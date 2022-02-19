@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ~~播放器画质切换无效的严重BUG(HELP WANTED)~~
   > 由于b站服务器限制，游客身份不能观看高清以上清晰度的直播。
 
-## [0.10.0] - 2022-2-19
+## [0.10.1] - 2022-2-19
 ### Added
 - 提升DD_CENTER界面列表显示体验，增加“仅显示在线”按钮，TOP 10 online 页面标注。
 - 新增最小化到托盘的模式(Tray mode)
@@ -111,8 +111,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - follow router doesn't highlight when navigate to its sub route.
 - 对当前在线某个vtb进行关注，马上取关，触发奇怪的下播提醒。
 
-[Unreleased]: https://github.com/wdpm/bilibili-dd-monitor/compare/v0.10.0...HEAD
-[0.10.0]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.10.0
+[Unreleased]: https://github.com/wdpm/bilibili-dd-monitor/compare/v0.10.1...HEAD
+[0.10.1]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.10.1
 [0.9.4]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.9.4
 [0.9.3]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.9.3
 [0.9.0]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.9.0

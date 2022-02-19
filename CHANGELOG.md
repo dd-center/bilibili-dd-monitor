@@ -6,7 +6,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [ ] Tray mode
 - [ ] highlight search result text
 - [ ] 多开window 之后，如果删除其中一些窗口，再次重排窗口无效。该bug不稳定重现。
 
@@ -14,9 +13,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ~~use VtbInfoLite version NOT VtbInfo to reduce data size~~
   > 过度设计，没这个必要。
 - ~~添加非socket.io获取数据信息的模式~~
-  > 非socket.io获取方式代码成本过大，决定只使用vtb的API。
+  > 非socket.io获取方式代码成本过大，决定主要使用DD_CENTER的API。
 - ~~播放器画质切换无效的严重BUG(HELP WANTED)~~
   > 由于b站服务器限制，游客身份不能观看高清以上清晰度的直播。
+
+## [0.10.0] - 2022-2-19
+### Added
+- 提升DD_CENTER界面列表显示体验，增加“仅显示在线”按钮，TOP 10 online 页面标注。
+- 新增最小化到托盘的模式(Tray mode)
+- 在设置页面，新增打开配置文件路径的功能
+
+### Fixed
+- 修复因为DD_CENTER API变化而导致的直播在线/离线状态的错误显示问题
+
+### Refactor
+- 重构关注用户的功能。
+
+### Internal
+- 冻结应用依赖库(package.json)中一些工具库的版本号。
 
 ## [0.9.4] - 2021-10-25
 ### Fixed
@@ -97,7 +111,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - follow router doesn't highlight when navigate to its sub route.
 - 对当前在线某个vtb进行关注，马上取关，触发奇怪的下播提醒。
 
-[Unreleased]: https://github.com/wdpm/bilibili-dd-monitor/compare/v0.9.3...HEAD
+[Unreleased]: https://github.com/wdpm/bilibili-dd-monitor/compare/v0.10.0...HEAD
+[0.10.0]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.10.0
 [0.9.4]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.9.4
 [0.9.3]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.9.3
 [0.9.0]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.9.0

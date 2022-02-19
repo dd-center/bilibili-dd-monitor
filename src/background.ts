@@ -2,7 +2,8 @@
 
 import { app, protocol, BrowserWindow, ipcMain, IpcMainEvent } from 'electron'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
-import settings from 'electron-settings'
+import { configureSettings } from "@/electron/utils/OldGlobalSettings";
+import { _printDefaultDataPath, _printDataPath, _getDemo, _getSyncDemo, _setDemo, _hasDemo } from "@/electron/utils/TestGlobalSettings";
 import { autoUpdater } from 'electron-updater'
 
 import { FollowListService, SettingService, VtbInfoService, RoomService } from '@/electron/services'
@@ -26,12 +27,19 @@ protocol.registerSchemesAsPrivileged([
 
 const initSettingsConfiguration = () => {
   log.debug('INIT SettingsConfiguration')
-  settings.configure({
-    numSpaces: 2,
-    prettify: true
-  })
+
+  // old
+  configureSettings()
   // init follow setting
   FollowListService.initFollowListsSync()
+
+  // new
+  _printDefaultDataPath()
+  _printDataPath()
+  _getDemo()
+  _getSyncDemo()
+  _setDemo()
+  _hasDemo()
 }
 
 const initServices = () => {
@@ -178,6 +186,10 @@ const initIpcMainListeners = () => {
   ipcMain.on('getPathOfSettings', (event: Electron.IpcMainEvent) => {
     event.reply('getPathOfSettingsReply', SettingService.getPathOfSettings())
   })
+
+  ipcMain.on('openPathOfSettings', (event: Electron.IpcMainEvent) => {
+    SettingService.openPathOfSettings()
+  })
 }
 
 const onMainWindowClose = () => {
@@ -240,6 +252,7 @@ app.on('ready', async () => {
   } else {
     log.debug('No alive CDN')
   }
+
 
   initIpcMainListeners()
   mainWindow = await createMainWindow(app, playerObjMap)

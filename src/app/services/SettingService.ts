@@ -33,6 +33,13 @@ export default class SettingService {
           })
           break
         }
+        // case 'openPathOfSettingsReply': {
+        //   this.ipcRenderer.once('openPathOfSettingsReply', (e: Electron.IpcRendererEvent) => {
+        //     observer.next(null) //don't care feedback
+        //     observer.complete()
+        //   })
+        //   break
+        // }
       }
     }
   }
@@ -50,5 +57,10 @@ export default class SettingService {
   getPathOfSettings (): Observable<boolean> {
     this.ipcRenderer.send('getPathOfSettings')
     return new Observable<boolean>(this.sequenceSubscriber('getPathOfSettingsReply'))
+  }
+
+  openPathOfSettings (): void {
+    this.ipcRenderer.send('openPathOfSettings')
+    // return new Observable<boolean>(this.sequenceSubscriber('openPathOfSettingsReply'))
   }
 }

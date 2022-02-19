@@ -6,14 +6,14 @@
         type="checkbox"
         @click="handleIsNotifiedOnStartChange()"
         :checked="isNotifiedOnStart"
-        class="setting-item-toggle-button"
+        class="setting-item-notify-me-about-live-when-start"
       />
     </div>
     <div class="setting-item">
       <p class="setting-item-description">
         配置文件路径: <span class="setting-item-settings-path">{{ settingsPath }}</span>
       </p>
-      <button class="setting-item-open-settings-path">打开</button>
+      <button class="setting-item-open-settings-path" @click="openSettingsPath()">打开</button>
     </div>
   </div>
 </template>
@@ -43,6 +43,9 @@ export default {
       this.settingService.setIsNotifiedOnStart(!this.isNotifiedOnStart).subscribe((isNotifiedOnStart) => {
         this.isNotifiedOnStart = isNotifiedOnStart
       })
+    },
+    openSettingsPath () {
+      this.settingService.openPathOfSettings()
     }
   }
 }
@@ -66,7 +69,7 @@ export default {
   }
 
   // modified from https://www.youtube.com/watch?v=BQSNBa3gZJU
-  &-toggle-button {
+  &-notify-me-about-live-when-start {
     position: relative;
     width: 45px;
     height: 20px;

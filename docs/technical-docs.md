@@ -182,3 +182,8 @@ https://api.vtbs.moe/v1/living
 
 ## 调研b站官方vtuber直播状态的API[TODO]
 这个是最终fallback的策略。
+
+## 迁移electron 配置文件
+- [ ] electron-settings (缺少维护，过于简单，难以定制，决定在0.9.4之后抛弃)
+- [ ] electron-store (需求不契合，不需要链式点访问语法)
+- [x] electron-json-storage (采纳，json形式)

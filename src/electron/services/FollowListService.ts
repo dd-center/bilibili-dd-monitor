@@ -1,5 +1,5 @@
 import { FollowList } from '@/interfaces'
-import * as setting from 'electron-settings'
+import settings from 'electron-settings'
 import { FollowListItem } from "@/interfaces/FollowList";
 
 export class FollowListService {
@@ -10,22 +10,22 @@ export class FollowListService {
   }
 
   static initFollowListsSync () {
-    if (!setting.hasSync(FollowListService.FOLLOW_LISTS)) {
+    if (!settings.hasSync(FollowListService.FOLLOW_LISTS)) {
       const defaultFollowList: FollowList = {
         id: 0,
         name: '默认分组',
         list: []
       }
-      setting.setSync(FollowListService.FOLLOW_LISTS, JSON.stringify([defaultFollowList]))
+      settings.setSync(FollowListService.FOLLOW_LISTS, JSON.stringify([defaultFollowList]))
     }
   }
 
   static getFollowListsSync (): FollowList[] {
-    return JSON.parse(setting.getSync(FollowListService.FOLLOW_LISTS) as string)
+    return JSON.parse(settings.getSync(FollowListService.FOLLOW_LISTS) as string)
   }
 
   static setFollowListsSync (followLists: FollowList[]): void {
-    setting.setSync(FollowListService.FOLLOW_LISTS, JSON.stringify(followLists))
+    settings.setSync(FollowListService.FOLLOW_LISTS, JSON.stringify(followLists))
   }
 
   /**

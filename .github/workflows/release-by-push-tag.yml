@@ -1,4 +1,5 @@
-name: Release all platform
+name: release-by-push-tag
+# bug: separately publish release of one tag
 
 on:
   push:
@@ -27,6 +28,7 @@ jobs:
       - name: npm install
         run: |
           npm install
+
       - name: build/publish windows app
         if: matrix.os == 'windows-latest'
         run: |

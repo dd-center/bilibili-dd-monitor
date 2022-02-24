@@ -74,3 +74,11 @@ const socket = io(this.socketIOUrl, this.defaultSocketOptions)
 1. 本地修改代码
 2. 提升package.json version字段，以及git 标记对应tag，例如v0.9.3。
 3. push tag and commits
+
+## github actions 单独发布了3个release，对应三个平台
+3个平台的构建是并行的，猜测是electron build时候无法正常识别已经存在的release。
+```
+• creating GitHub release  reason=release doesn't exist tag=v0.10.1 version=0.10.1
+```
+于是需要定位依赖库，找回之前可以正常工作的依赖库版本。
+

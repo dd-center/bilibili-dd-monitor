@@ -33,7 +33,6 @@
     "@fortawesome/vue-fontawesome": "~2.0.0",
     "@types/electron-json-storage": "^4.5.0",
     "core-js": "^3.6.5",
-    "electron-builder": "~22.10.0",
     "electron-json-storage": "^4.5.0",
     "electron-settings": "^4.0.2",
     "electron-updater": "4.3.9",
@@ -81,7 +80,7 @@
     "sass-loader": "^8.0.2",
     "sync-request": "^6.1.0",
     "typescript": "~3.9.3",
-    "vue-cli-plugin-electron-builder": "~2.0.0-rc.5",
+    "vue-cli-plugin-electron-builder": "2.0.0",
     "vue-template-compiler": "^2.6.11"
   }
 }

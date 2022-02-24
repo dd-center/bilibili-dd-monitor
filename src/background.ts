@@ -186,8 +186,6 @@ const initIpcMainListeners = () => {
   })
 
   ipcMain.on('openPathOfSettings', (event: Electron.IpcMainEvent) => {
-    console.log('electron: open path of settings')
-    console.log('mainwindow is alive?', mainWindow)
     SettingService.openPathOfSettings()
   })
 }

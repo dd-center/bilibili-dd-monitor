@@ -1,39 +1,41 @@
 import { PlayerObj } from '@/interfaces'
 import { BrowserWindow } from 'electron'
 
+// ContextMap in here is BrowserWindow
+// another way: make a field called map. DON't extend Map
 export default class ContextMap<K, V> extends Map {
-  private context: BrowserWindow | undefined | null;
+  private context: BrowserWindow | undefined | null
 
   constructor () {
     super()
   }
 
-  delete (key: number): boolean {
-    const result = super.delete(key)
+  deleteAndNotify (key: number): boolean {
+    const result = this.delete(key)
     this.handlePlayerWindowCountChange(this.size)
     return result
   }
 
-  set (key: number, value: PlayerObj): this {
-    const map = super.set(key, value)
+  setAndNotify (key: number, value: PlayerObj): this {
+    const map = this.set(key, value)
     this.handlePlayerWindowCountChange(this.size)
     return map
   }
 
-  clear (): void {
-    super.clear()
-    this.handlePlayerWindowCountChange(this.size)
+  private handlePlayerWindowCountChange (count: number) {
+    try {
+      if (this.context && this.context.webContents && this.context.webContents.send) {
+        this.context.webContents.send('updatePlayerWindowCount', count)
+      }
+    } catch (e) {
+      // TypeError: Object has been destroyed
+      console.log(e)
+    }
   }
 
   attachContext (context: BrowserWindow) {
     if (context) {
       this.context = context
-    }
-  }
-
-  handlePlayerWindowCountChange (count: number) {
-    if (this.context) {
-      this.context.webContents.send('updatePlayerWindowCount', count)
     }
   }
 

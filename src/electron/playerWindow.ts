@@ -56,16 +56,20 @@ export const createPlayerWindow = (app: Electron.App, vtbInfo: VtbInfo, playerOb
   // example https://www.bilibili.com/blackboard/live/live-activity-player.html?enterTheRoom=0&cid=21320551
   win.loadURL(`https://www.bilibili.com/blackboard/live/live-activity-player.html?enterTheRoom=0&cid=${vtbInfo.roomid}`)
     .then(() => {
-    // inject custom CSS rules
+      // inject custom CSS rules
       win.webContents.insertCSS('.bilibili-live-player-video-logo{display:none}')
     })
   // endregion
 
   // win.webContents.openDevTools()
   win.setMenu(null)
+
   win.on('close', () => {
+    console.log('try to close player window(roomid):', vtbInfo.roomid)
     if (vtbInfo.roomid) {
-      playerObjMap.delete(vtbInfo.roomid)
+      if (playerObjMap && playerObjMap.size > 0) {
+        playerObjMap.deleteAndNotify(vtbInfo.roomid)
+      }
     }
   })
 

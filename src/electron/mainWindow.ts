@@ -9,7 +9,7 @@ const mainWindowIconPath = 'public/icons/icon.ico'
 
 export const createMainWindow = async (app: Electron.App, playerObjMap: ContextMap<number, PlayerObj>) => {
   // Create the browser window.
-  let win = new BrowserWindow({
+  const win = new BrowserWindow({
     width: 1280,
     height: 820,
     maximizable: true,
@@ -22,6 +22,7 @@ export const createMainWindow = async (app: Electron.App, playerObjMap: ContextM
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: (process.env.ELECTRON_NODE_INTEGRATION as unknown) as boolean,
+      contextIsolation: false,
       webSecurity: false, // fix connect_error Error: websocket error
       preload: path.join(__dirname, 'preload.js')
     }
@@ -45,15 +46,9 @@ export const createMainWindow = async (app: Electron.App, playerObjMap: ContextM
     win.setMenu(menu)
   }
 
-  win.on('closed', (event: any) => {
-    win.destroy();
-  });
-
-  win.on('close', (event) => {
-    win.hide();
-    win.setSkipTaskbar(true);
-    event.preventDefault();
-  });
+  // todo to fix: window resize will flash screen
+  // solution: debounce resize event at a fixed rate, when resize finished, do resize
+  // win.on('resize', ()=>{})
 
   playerObjMap.attachContext(win)
 

@@ -2,7 +2,7 @@
 
 import { app, protocol, BrowserWindow, ipcMain, IpcMainEvent, nativeImage, Tray, Menu } from 'electron'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
-import { configureSettings } from "@/electron/utils/OldGlobalSettings";
+import { configureSettings } from '@/electron/utils/OldGlobalSettings'
 import { autoUpdater } from 'electron-updater'
 
 import { FollowListService, SettingService, VtbInfoService, RoomService } from '@/electron/services'
@@ -22,7 +22,13 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
-  { scheme: 'app', privileges: { secure: true, standard: true } }
+  {
+    scheme: 'app',
+    privileges: {
+      secure: true,
+      standard: true
+    }
+  }
 ])
 
 const initSettingsConfiguration = () => {
@@ -53,8 +59,8 @@ const initServices = () => {
       // 现在正在直播的vtbs
       const nowLiveFollowedVtbs =
         allVtbInfos
-        .filter((vtbInfo: VtbInfo) => (followVtbs.includes(vtbInfo.mid) && !!vtbInfo.liveStatus))
-        .map((vtbInfo: VtbInfo) => vtbInfo.mid)
+          .filter((vtbInfo: VtbInfo) => (followVtbs.includes(vtbInfo.mid) && !!vtbInfo.liveStatus))
+          .map((vtbInfo: VtbInfo) => vtbInfo.mid)
 
       // 上播vtbs
       const upLiveFollowedVtbs: number[] = []
@@ -136,7 +142,7 @@ const initIpcMainListeners = () => {
   })
   ipcMain.on('toggleFollow', (event: Electron.IpcMainEvent, followListItem: FollowListItem) => {
     FollowListService.toggleFollowSync(followListItem)
-    const followListsSync = FollowListService.getFollowListsSync();
+    const followListsSync = FollowListService.getFollowListsSync()
     event.reply('toggleFollowReply', followListsSync)
   })
   ipcMain.on('setFollowList', (event: Electron.IpcMainEvent, followListItems: FollowListItem[], listId: number) => {
@@ -163,7 +169,7 @@ const initIpcMainListeners = () => {
           face: (vtbInfo && vtbInfo.face) || ''
         }
 
-        playerObjMap.set(roomid, createPlayerWindow(app, vtbInfoNeed as VtbInfo, playerObjMap))
+        playerObjMap.setAndNotify(roomid, createPlayerWindow(app, vtbInfoNeed as VtbInfo, playerObjMap))
       }
     }
   })
@@ -171,7 +177,7 @@ const initIpcMainListeners = () => {
 
   // room
   ipcMain.on('getInfoByRoom', async (event: Electron.IpcMainEvent, roomid: number) => {
-    const res = await RoomService.getInfoByRoom(roomid);
+    const res = await RoomService.getInfoByRoom(roomid)
     event.reply('getInfoByRoomReply', res)
   })
 
@@ -180,28 +186,29 @@ const initIpcMainListeners = () => {
   })
 
   ipcMain.on('openPathOfSettings', (event: Electron.IpcMainEvent) => {
+    console.log('electron: open path of settings')
+    console.log('mainwindow is alive?', mainWindow)
     SettingService.openPathOfSettings()
   })
 }
 
-const onMainWindowClose = () => {
-  // BUG: this method will call twice on dev environment
+const mainWindowOnClose = () => {
   if (mainWindow) {
-    mainWindow.on('close', () => {
-      // stop vtbInfo service
-      if (vtbInfosService) vtbInfosService.stopUpdate()
+    // CLOSE
+    mainWindow.on('close', (event) => {
+      console.log('main window close.')
+      mainWindow.hide()
+      mainWindow.setSkipTaskbar(true)
+      event.preventDefault()
+    })
+  }
+}
 
-      // clean ipcMain listeners
-      ipcMain.removeAllListeners()
-
-      // clean up playerObjMap
-      playerObjMap.forEach((playerObj: PlayerObj) => {
-        if (playerObj.playerWindow) playerObj.playerWindow.close()
-      })
-      playerObjMap.clear()
-
-      // exit app
-      app.quit()
+const mainWindowOnClosed = () => {
+  if (mainWindow) {
+    // CLOSED
+    mainWindow.on('closed', () => {
+      console.log('main window closed.')
     })
   }
 }
@@ -254,42 +261,77 @@ app.on('ready', async () => {
 
   initIpcMainListeners()
   mainWindow = await createMainWindow(app, playerObjMap)
-  onMainWindowClose()
+  mainWindowOnClose()
+  mainWindowOnClosed()
 
   // post setup
   initServices()
 
   // tray mode
-  const iconPath = path.join(__dirname, './icon.png')
+  // development root folder: ./dist_electron/
+  // prod root folder: ./dist_electron/bundled/
+  const iconPath = isDevelopment ? path.join(__dirname, './bundled/icon.png') : path.join(__dirname, './icon.png')
   tray = new Tray(iconPath)
 
   function showMainWindow () {
     if (!mainWindow.isVisible()) {
       mainWindow.setSkipTaskbar(false)
     }
-    // 更好的做法：类似clash。当窗口已经置顶并可见时，取消调用win.show()方法
+    // 更好的做法：类似clash。当窗口已经置顶并可见(思考难点)时，取消调用win.show()方法
     mainWindow.show()
+  }
+
+  function quitApp () {
+    // 1.stop all services
+    if (vtbInfosService) vtbInfosService.stopUpdate()
+    console.log('1. Stop all services done.')
+
+    // 2.close all player windows
+    // NOTE: every close event of player window has been handled by itself
+    // KNOWN BUG: player window close event call twice, now just ignore it
+    // try to close player window(roomid): 47867
+    // try to close player window(roomid): 6374209
+    // try to close player window(roomid): 47867
+    // try to close player window(roomid): 6374209
+    playerObjMap.forEach((playerObj: PlayerObj) => {
+      if (playerObj.playerWindow) {
+        playerObj.playerWindow.close()
+      }
+    })
+    console.log('2. Close all player windows.')
+
+    // 3.clear all ipcMain listeners
+    ipcMain.removeAllListeners()
+    console.log('3. Clear all ipcMain listeners.')
+
+    // 4.close main window
+    // 强制关闭窗口, 除了closed之外，close，unload 和 beforeunload 都不会被触发
+    // refer: https://www.electronjs.org/zh/docs/latest/api/browser-window#%E4%BA%8B%E4%BB%B6-close
+    if (mainWindow) mainWindow.destroy()
+    console.log('4. Close main window.')
+
+    // exit app
+    app.quit()
   }
 
   const trayMenu = Menu.buildFromTemplate([
     {
       label: '显示主界面',
       click: () => {
-        showMainWindow();
+        showMainWindow()
       }
     },
     {
       label: '退出应用',
       click: () => {
-        mainWindow.destroy()
-        // app.quit()
+        quitApp()
       }
     }
-  ]);
+  ])
   tray.setToolTip('bilibili-dd-monitor')
   tray.setContextMenu(trayMenu)
   tray.on('click', () => {
-    showMainWindow();
+    showMainWindow()
   })
 })
 

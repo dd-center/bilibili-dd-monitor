@@ -1,5 +1,4 @@
 import { IpcRenderer } from 'electron'
-import { VtbInfo } from '@/interfaces'
 import store from '../../store'
 import { Store } from 'vuex'
 

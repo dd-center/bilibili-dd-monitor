@@ -1,15 +1,19 @@
 import { dialog, Menu, MenuItem, screen, shell } from 'electron'
 import { PlayerObj } from '@/interfaces'
 import { checkForUpdates } from '@/electron/updater'
+import ContextMap from '@/electron/utils/ContextMap'
 
-export const createMainWindowMenu = (app: Electron.App, players: Map<number, PlayerObj>) => {
+export const createMainWindowMenu = (app: Electron.App, players: ContextMap<number, PlayerObj>) => {
   const primaryDisplays: Electron.Display[] = screen.getAllDisplays()
   const autoSetPlayerBounds = (display: Electron.Display) => {
     // example: 1080/1920 =0.55
     const displayProportion = display.size.height / display.size.width
     const playerNum = players.size
     if (playerNum > 0) {
-      const { width, height } = display.workAreaSize
+      const {
+        width,
+        height
+      } = display.workAreaSize
       const getProportion = (playerNum: number, rowNum: number) => {
         const colNum = Math.ceil(playerNum / rowNum)
         return (rowNum / colNum) * displayProportion // (rowNum / colNum)的值越接近于1，最终值越接近displayProportion
@@ -114,10 +118,11 @@ export const createMainWindowMenu = (app: Electron.App, players: Map<number, Pla
         {
           label: '关闭所有播放器',
           click: () => {
-            players.forEach((player: PlayerObj) => {
-              player.playerWindow.close()
+            players.forEach((playerObj: PlayerObj) => {
+              if (playerObj.playerWindow) {
+                playerObj.playerWindow.close()
+              }
             })
-            players.clear()
           }
         }
       ]

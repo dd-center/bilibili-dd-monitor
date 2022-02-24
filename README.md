@@ -116,6 +116,7 @@ Bilibili-dd-monitor是一个专为bilibili dd 设计的多屏观看vtuber直播�
 - core-js | JS 标准库，用于ESLint
 - electron-settings | electron本地设置库
 - electron-updater | electron自动更新工具库
+- electron-json-storage | electron json配置工具库，暂时没有使用
 - lodash | JS实用库
 - ping | API健康监测
 - pretty-log | NodeJS环境下的控制台输出美化库

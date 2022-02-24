@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [ ] highlight search result text
 - [ ] 多开window 之后，如果删除其中一些窗口，再次重排窗口无效。该bug不稳定重现。
+- [ ] 严重BUG：托盘模式下，重新点开主界面后，大部分功能失效。
 
 ### won't fix
 - ~~use VtbInfoLite version NOT VtbInfo to reduce data size~~

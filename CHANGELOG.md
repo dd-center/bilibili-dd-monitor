@@ -8,7 +8,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [ ] highlight search result text
 - [ ] 多开window 之后，如果删除其中一些窗口，再次重排窗口无效。该bug不稳定重现。
-- [ ] 严重BUG：托盘模式下，重新点开主界面后，大部分功能失效。
 
 ### won't fix
 - ~~use VtbInfoLite version NOT VtbInfo to reduce data size~~
@@ -17,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   > 非socket.io获取方式代码成本过大，决定主要使用DD_CENTER的API。
 - ~~播放器画质切换无效的严重BUG(HELP WANTED)~~
   > 由于b站服务器限制，游客身份不能观看高清以上清晰度的直播。
+  
+## [0.10.1] - 2022-2-24
+### Fixed
+- 修复托盘模式下，重新点开主界面后，大部分功能失效的严重BUG。
 
 ## [0.10.1] - 2022-2-19
 ### Added
@@ -112,7 +115,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - follow router doesn't highlight when navigate to its sub route.
 - 对当前在线某个vtb进行关注，马上取关，触发奇怪的下播提醒。
 
-[Unreleased]: https://github.com/wdpm/bilibili-dd-monitor/compare/v0.10.1...HEAD
+[Unreleased]: https://github.com/wdpm/bilibili-dd-monitor/compare/v0.10.2...HEAD
+[0.10.2]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.10.2
 [0.10.1]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.10.1
 [0.9.4]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.9.4
 [0.9.3]: https://github.com/wdpm/bilibili-dd-monitor/releases/tag/v0.9.3

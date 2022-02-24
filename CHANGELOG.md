@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ~~播放器画质切换无效的严重BUG(HELP WANTED)~~
   > 由于b站服务器限制，游客身份不能观看高清以上清晰度的直播。
   
-## [0.10.1] - 2022-2-24
+## [0.10.2] - 2022-2-24
 ### Fixed
 - 修复托盘模式下，重新点开主界面后，大部分功能失效的严重BUG。
 

@@ -62,8 +62,13 @@ jobs:
 
       - name: cleanup artifacts for windows
         if: matrix.os == 'windows-latest'
+        # windows batch script 难用到令人发指 连一个OR逻辑判断都是伪实现，积重难返
+        # for %f in (*) do if not %~xf==.txt or .exe del "%f"
+
+        # for %f in (*) do if not %~xf==.exe del "%f"
+        # TODO npx rimraf "dist_electron/!(*.exe|*.exe.blockmap|*.yml)"
         run: |
-          set +H && npx rimraf "dist_electron/!(*.exe|*.exe.blockmap|*.yml)"
+          npx rimraf "dist_electron/!(*.exe)"
 
       # create release
       - name: release

@@ -76,6 +76,8 @@ const socket = io(this.socketIOUrl, this.defaultSocketOptions)
 3. push tag and commits
 
 ## github actions 单独发布了3个release，对应三个平台
+> 参阅： https://zhuanlan.zhihu.com/p/164901026
+
 3个平台的构建是并行的，猜测是electron build时候无法正常识别已经存在的release。
 ```
 • creating GitHub release  reason=release doesn't exist tag=v0.10.1 version=0.10.1

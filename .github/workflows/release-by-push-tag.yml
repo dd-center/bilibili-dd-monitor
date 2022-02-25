@@ -1,5 +1,4 @@
 name: release-by-push-tag
-# bug: separately publish release of one tag
 
 on:
   push:
@@ -29,23 +28,65 @@ jobs:
         run: |
           npm install
 
-      - name: build/publish windows app
+      - name: build windows app
         if: matrix.os == 'windows-latest'
         run: |
-          npm run electron:publish-win
+          npm run electron:build-win
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: build/publish mac app
+      - name: build mac app
         if: matrix.os == 'macos-latest'
         run: |
-          npm run electron:publish-mac
+          npm run electron:build-mac
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: build/publish linux app
+      - name: build linux app
         if: matrix.os == 'ubuntu-latest'
         run: |
-          npm run electron:publish-linux
+          npm run electron:build-linux
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # upload artifacts for win
+      - name: upload artifacts of win app
+        uses: actions/upload-artifact@v2
+        if: matrix.os == 'windows-latest'
+        with:
+          name: ${{ matrix.os }}
+          path: |
+            dist_electron/*.exe
+            dist_electron/*.exe.blockmap
+            dist_electron/*.yml
+
+      # upload artifacts for mac
+      - name: upload artifacts of mac app
+        uses: actions/upload-artifact@v2
+        if: matrix.os == 'macos-latest'
+        with:
+          name: ${{ matrix.os }}
+          path: |
+            dist_electron/*.zip
+            dist_electron/*.dmg
+            dist_electron/*.dmg.blockmap
+            dist_electron/*.yml
+
+      # upload artifacts for linux
+      - name: upload artifacts of linux app
+        uses: actions/upload-artifact@v2
+        if: matrix.os == 'ubuntu-latest'
+        with:
+          name: ${{ matrix.os }}
+          path: |
+            dist_electron/*.AppImage
+            dist_electron/*.yml
+
+      # create release
+      - name: release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: "dist_electron/**"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

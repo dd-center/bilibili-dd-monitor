@@ -80,5 +80,39 @@ const socket = io(this.socketIOUrl, this.defaultSocketOptions)
 ```
 • creating GitHub release  reason=release doesn't exist tag=v0.10.1 version=0.10.1
 ```
-于是需要定位依赖库，找回之前可以正常工作的依赖库版本。
+~~于是需要定位依赖库，找回之前可以正常工作的依赖库版本。~~
 
+最终方案：重构build file中的构建流程，不依赖electron-builder的release功能。
+
+## 保持git commit历史简洁
+> 参阅： [Git 压缩多个commit为单个commit](https://kinboyw.github.io/2019/04/09/Git-%E5%8E%8B%E7%BC%A9%E5%A4%9A%E4%B8%AAcommit%E4%B8%BA%E5%8D%95%E4%B8%AAcommit/)
+
+有时，因为某些实验，会造成多次琐碎的提交历史，此时应该：
+1. 拉取远程最新提交，
+2. 然后本地squash 需要压缩的历史提交记录。这步使用的是git rebase -i
+3. 然后push到远程。如果是个人项目，可以暴力--force。如果是多人合作项目，不建议--force。
+
+## 了解Electron打包
+> https://zhuanlan.zhihu.com/p/45250432
+
+两个关键点：
+- electron 应用很大，是因为electron.exe本身就很大（>50MB）。
+- 另外，项目依赖库 node_modules（prod模式）被全部打包进来。
+
+## release file list
+```
+bilibili-dd-monitor-0.10.1-mac.zip 72.8 MB
+bilibili-dd-monitor-0.10.1.dmg 75.1 MB
+bilibili-dd-monitor-0.10.1.dmg.blockmap 81.7 KB
+latest-mac.yml 584 Bytes
+
+bilibili-dd-monitor-0.10.1-setup.exe 54.2 MB  
+bilibili-dd-monitor-0.10.1-setup.exe.blockmap 58.7 KB
+latest.yml 404 Bytes
+
+bilibili-dd-monitor-0.10.1.AppImage 74.9 MB
+latest-linux.yml 426 Bytes
+
+Source code (zip)
+Source code (tar.gz)
+```

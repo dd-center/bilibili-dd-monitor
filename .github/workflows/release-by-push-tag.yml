@@ -49,38 +49,21 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # upload artifacts for win
-      - name: upload artifacts of win app
-        uses: actions/upload-artifact@v2
-        if: matrix.os == 'windows-latest'
-        with:
-          name: ${{ matrix.os }}
-          path: |
-            dist_electron/*.exe
-            dist_electron/*.exe.blockmap
-            dist_electron/*.yml
-
-      # upload artifacts for mac
-      - name: upload artifacts of mac app
-        uses: actions/upload-artifact@v2
-        if: matrix.os == 'macos-latest'
-        with:
-          name: ${{ matrix.os }}
-          path: |
-            dist_electron/*.zip
-            dist_electron/*.dmg
-            dist_electron/*.dmg.blockmap
-            dist_electron/*.yml
-
-      # upload artifacts for linux
-      - name: upload artifacts of linux app
-        uses: actions/upload-artifact@v2
+      # cleanup needless artifacts in dist_electron
+      - name: cleanup artifacts for windows
         if: matrix.os == 'ubuntu-latest'
-        with:
-          name: ${{ matrix.os }}
-          path: |
-            dist_electron/*.AppImage
-            dist_electron/*.yml
+        run: |
+          npx rimraf "dist_electron/!(*.AppImage|*.yml)"
+
+      - name: cleanup artifacts for macos
+        if: matrix.os == 'macos-latest'
+        run: |
+          npx rimraf "dist_electron/!(*.dmg|*.zip|*.dmg.blockmap|*.yml)"
+
+      - name: cleanup artifacts for linux
+        if: matrix.os == 'windows-latest'
+        run: |
+          set +H && npx rimraf "dist_electron/!(*.exe|*.exe.blockmap|*.yml)"
 
       # create release
       - name: release

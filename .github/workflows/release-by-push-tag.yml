@@ -50,7 +50,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # cleanup needless artifacts in dist_electron
-      - name: cleanup artifacts for windows
+      - name: cleanup artifacts for linux
         if: matrix.os == 'ubuntu-latest'
         run: |
           npx rimraf "dist_electron/!(*.AppImage|*.yml)"
@@ -60,7 +60,7 @@ jobs:
         run: |
           npx rimraf "dist_electron/!(*.dmg|*.zip|*.dmg.blockmap|*.yml)"
 
-      - name: cleanup artifacts for linux
+      - name: cleanup artifacts for windows
         if: matrix.os == 'windows-latest'
         run: |
           set +H && npx rimraf "dist_electron/!(*.exe|*.exe.blockmap|*.yml)"

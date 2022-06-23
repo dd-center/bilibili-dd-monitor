@@ -1,9 +1,6 @@
-/**
- * @deprecated migrated to other utility library
- */
 import settings from 'electron-settings'
 
-export function configureSettings(){
+export function configureSettings () {
   // make global configuration referenced to: https://electron-settings.js.org/index.html#configure
   settings.configure({
     numSpaces: 2,

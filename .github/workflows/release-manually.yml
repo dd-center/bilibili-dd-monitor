@@ -1,3 +1,4 @@
+# This workflow has bug. DON'T USE IT.
 # This is a basic workflow to help you get started with Actions
 
 name: release-manually

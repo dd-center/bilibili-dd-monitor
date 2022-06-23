@@ -26,6 +26,7 @@ autoUpdater.autoInstallOnAppQuit = false
 autoUpdater.on('error', (error: any) => {
   // error.stack or error is ugly text
   dialog.showErrorBox('更新错误: ', error == null ? 'unknown' : '暂无可用更新')
+  console.error(`autoUpdater onError: ${error}`)
   updater.enabled = true
 })
 
@@ -73,5 +74,8 @@ export function checkForUpdates (menuItem: MenuItem, focusedWindow: BrowserWindo
   updater = menuItem
   parentWindow = focusedWindow
   updater.enabled = false
-  autoUpdater.checkForUpdates()
+  autoUpdater.checkForUpdates().then(
+    r => console.log(`autoUpdater.checkForUpdates() fulfill: ${r}`),
+    reason => console.log(`autoUpdater.checkForUpdates() reject: ${reason}`))
+    .catch((err) => console.log(`autoUpdater.checkForUpdates() catch: ${err}`))
 }

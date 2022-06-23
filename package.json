@@ -2,7 +2,7 @@
   "name": "bilibili-dd-monitor",
   "version": "0.10.2",
   "private": true,
-  "description": "bilibili-dd-monitior desktop app.",
+  "description": "bilibili-dd-monitor desktop app.",
   "author": "wdpm",
   "scripts": {
     "serve": "vue-cli-service serve",

@@ -1,0 +1,4 @@
+# copy this file to build folder(/dist_electron) when test autoUpdate locally
+owner: wdpm
+repo: bilibili-dd-monitor
+provider: github

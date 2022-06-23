@@ -34,7 +34,6 @@ protocol.registerSchemesAsPrivileged([
 const initSettingsConfiguration = () => {
   log.debug('INIT SettingsConfiguration')
 
-  // old
   configureSettings()
   // init follow setting
   FollowListService.initFollowListsSync()

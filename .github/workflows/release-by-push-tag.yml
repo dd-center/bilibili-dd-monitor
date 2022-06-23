@@ -77,7 +77,8 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           prerelease: true
-          fail_on_unmatched_files: true
+          # don't turn on fail_on_unmatched_files
+          fail_on_unmatched_files: false
 #          files: "dist_electron/**"
 #          dist_electron/(*.AppImage|*.dmg|*.zip|*.dmg.blockmap|*.exe|*.exe.blockmap|*.yml)
           files: |

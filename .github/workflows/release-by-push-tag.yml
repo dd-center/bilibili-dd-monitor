@@ -77,7 +77,16 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           prerelease: true
+          fail_on_unmatched_files: true
 #          files: "dist_electron/**"
-          files: "dist_electron/(*.AppImage|*.dmg|*.zip|*.dmg.blockmap|*.exe|*.exe.blockmap|*.yml)"
+#          dist_electron/(*.AppImage|*.dmg|*.zip|*.dmg.blockmap|*.exe|*.exe.blockmap|*.yml)
+          files: |
+            "dist_electron/*.AppImage"
+            "dist_electron/*.dmg"
+            "dist_electron/*.zip"
+            "dist_electron/*.dmg.blockmap"
+            "dist_electron/*.exe"
+            "dist_electron/*.exe.blockmap"
+            "dist_electron/*.yml"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

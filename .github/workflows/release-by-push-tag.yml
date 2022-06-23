@@ -67,9 +67,9 @@ jobs:
 
         # for %f in (*) do if not %~xf==.exe del "%f"
         # TODO npx rimraf "dist_electron/!(*.exe|*.exe.blockmap|*.yml)"
-        run: |
+#        run: |
 #          npx rimraf "dist_electron/!(*.exe)"
-           echo "keep all assets on Windows OS."
+        run: echo "keep all assets on Windows OS."
 
       # create release
       - name: release
@@ -78,6 +78,6 @@ jobs:
         with:
           prerelease: true
 #          files: "dist_electron/**"
-           files: "dist_electron/(*.AppImage|*.dmg|*.zip|*.dmg.blockmap|*.exe|*.exe.blockmap|*.yml)"
+          files: "dist_electron/(*.AppImage|*.dmg|*.zip|*.dmg.blockmap|*.exe|*.exe.blockmap|*.yml)"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

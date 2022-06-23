@@ -81,12 +81,12 @@ jobs:
 #          files: "dist_electron/**"
 #          dist_electron/(*.AppImage|*.dmg|*.zip|*.dmg.blockmap|*.exe|*.exe.blockmap|*.yml)
           files: |
-            "dist_electron/*.AppImage"
-            "dist_electron/*.dmg"
-            "dist_electron/*.zip"
-            "dist_electron/*.dmg.blockmap"
-            "dist_electron/*.exe"
-            "dist_electron/*.exe.blockmap"
-            "dist_electron/*.yml"
+            dist_electron/*.AppImage
+            dist_electron/*.dmg
+            dist_electron/*.zip
+            dist_electron/*.dmg.blockmap
+            dist_electron/*.exe
+            dist_electron/*.exe.blockmap
+            dist_electron/*.yml
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

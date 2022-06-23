@@ -69,12 +69,6 @@ const socket = io(this.socketIOUrl, this.defaultSocketOptions)
 
 在 node_modules 搜索 `'fs/promises'` 定位到 electron-updater 包。版本问题。 解决方法： "electron-updater": "4.3.9" 直接冻结版本。
 
-## 发布
-
-1. 本地修改代码
-2. 提升package.json version字段，以及git 标记对应tag，例如v0.9.3。
-3. push tag and commits
-
 ## github actions 单独发布了3个release，对应三个平台
 > 参阅： https://zhuanlan.zhihu.com/p/164901026
 

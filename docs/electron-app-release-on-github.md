@@ -84,3 +84,19 @@ npx rimraf "dist_electron/!(*.exe|*.exe.blockmap|*.yml)"
 The reason is Windows OS can't parse `|` operator correctly.
 
 So, we need other workaround to make this code logic work.
+
+### workaround
+See `.github/workflows/release-by-push-tag.yml`
+
+```shell
+Run softprops/action-gh-release@v1
+🤔 Pattern 'dist_electron/*.AppImage' does not match any files.
+🤔 Pattern 'dist_electron/*.dmg' does not match any files.
+🤔 Pattern 'dist_electron/*.zip' does not match any files.
+🤔 Pattern 'dist_electron/*.dmg.blockmap' does not match any files.
+⬆️ Uploading bilibili-dd-monitor-0.10.3-setup.exe...
+⬆️ Uploading bilibili-dd-monitor-0.10.3-setup.exe.blockmap...
+♻️ Deleting previously uploaded asset builder-debug.yml...
+⬆️ Uploading latest.yml...
+⬆️ Uploading builder-debug.yml...
+```

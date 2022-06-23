@@ -1,6 +1,6 @@
 {
   "name": "bilibili-dd-monitor",
-  "version": "0.10.2",
+  "version": "0.10.3",
   "private": true,
   "description": "bilibili-dd-monitor desktop app.",
   "author": "wdpm",

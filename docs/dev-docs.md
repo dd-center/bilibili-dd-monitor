@@ -112,3 +112,7 @@ latest-linux.yml 426 Bytes
 Source code (zip)
 Source code (tar.gz)
 ```
+
+## generate markdown toc
+- https://github.com/thlorenz/doctoc
+- https://github.com/jonschlinkert/markdown-toc

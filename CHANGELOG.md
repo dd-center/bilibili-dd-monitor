@@ -6,8 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [ ] highlight search result text
-- [ ] 多开window 之后，如果删除其中一些窗口，再次重排窗口无效。该bug不稳定重现。
+### TODO
+- [ ] 持久化 DD_CENTER 列表的用户偏好设置，例如【仅显示在线】功能。（该偏好应当使用本地设置文件保存）
+- [ ] highlight search result text. [minor]
+- [ ] 多开window 之后，如果删除其中一些窗口，再次重排窗口无效。该bug不稳定重现。[minor]
 
 ### won't fix
 - ~~use VtbInfoLite version NOT VtbInfo to reduce data size~~

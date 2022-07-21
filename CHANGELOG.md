@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### TODO
-- [ ] 持久化 DD_CENTER 列表的用户偏好设置，例如【仅显示在线】功能。（该偏好应当使用本地设置文件保存）
+- [ ] DD_CENTER 列表中，对于每一个列表项，添加右键菜单：1.跳转到b站个人空间主页；2.跳转到b站直播间页面。
+- [ ] 侧边栏添加新TAB，用于进行直播数据统计。显示例如按人气分段的人数分布，等等。
+- [ ] 持久化 DD_CENTER 列表的用户偏好设置，例如【仅显示在线】功能。（该偏好的可能保存方式：本地设置文件或浏览器数据库，需要进一步考虑。）
 - [ ] highlight search result text. [minor]
 - [ ] 多开window 之后，如果删除其中一些窗口，再次重排窗口无效。该bug不稳定重现。[minor]
 

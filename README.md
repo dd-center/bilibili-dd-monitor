@@ -8,6 +8,9 @@
 
 <p align="center">
   <a href="#">
+    <img src="https://img.shields.io/badge/Maintenance%20Level-Inactively%20Maintained-yellowgreen.svg" alt="Maintained Levels">
+  </a>
+  <a href="#">
     <img src="https://img.shields.io/github/issues/wdpm/bilibili-dd-monitor" alt="GitHub issues">
   </a>
   <a href="https://app.fossa.com/projects/git%2Bgithub.com%2Fwdpm%2Fbilibili-dd-monitor?ref=badge_shield">

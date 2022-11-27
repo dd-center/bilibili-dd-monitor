@@ -8,6 +8,9 @@
 
 <p align="center">
   <a href="#">
+    <img src="https://img.shields.io/badge/仓库治理模式-仁慈的独裁者（BDL）-green.svg" alt="Maintained Levels">
+  </a>
+  <a href="#">
     <img src="https://img.shields.io/badge/Maintenance%20Level-Inactively%20Maintained-yellowgreen.svg" alt="Maintained Levels">
   </a>
   <a href="#">
